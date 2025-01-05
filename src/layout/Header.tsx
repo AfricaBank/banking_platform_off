@@ -60,7 +60,7 @@ export const Header = () => {
               bg="primary.dogerBlue.102"
             >
               Deconnexion{" "}
-              <BoxIcon>
+              <BoxIcon width="20px" height="20px" bg="white">
                 <RiArrowRightLine color="blue" />
               </BoxIcon>
             </SimpleButton>

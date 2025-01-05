@@ -9,9 +9,6 @@ export const BoxIcon = React.forwardRef<HTMLDivElement, BoxIconInterface>(
       <Box
         ref={ref}
         {...props}
-        width="20px"
-        height="20px"
-        bg="white"
         borderRadius="4px"
         display="flex"
         justifyContent="center"
