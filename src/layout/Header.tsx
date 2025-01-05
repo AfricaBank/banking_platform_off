@@ -1,16 +1,18 @@
-import {
-  Grid,
-  GridItem,
-  Text,
-  Flex,
-  createListCollection,
-  IconButton,
-  Icon,
-} from "@chakra-ui/react";
+import { Grid, GridItem, Text, Flex, Icon } from "@chakra-ui/react";
 import { LuSearch } from "react-icons/lu";
-import { Button } from "@chakra-ui/react";
 import { RiArrowRightLine } from "react-icons/ri";
 import { TfiAlignRight } from "react-icons/tfi";
+import {
+  SelectContent,
+  SelectItem,
+  SelectRoot,
+  SelectTrigger,
+  SelectValueText,
+} from "@/components/ui/select";
+import { applicationLanguages } from "@/serviceLogic/languages";
+import { SimpleIconButton } from "@/components/customButtons/SimpleIconButton";
+import { SimpleButton } from "@/components/customButtons/SimpleButton";
+import { BoxIcon } from "@/components/customButtons/BoxIcon";
 
 export const Header = () => {
   return (
@@ -31,22 +33,40 @@ export const Header = () => {
             marginTop="12px"
             marginRight="120px"
           >
-            <IconButton aria-label="Search database">
+            <SelectRoot
+              collection={applicationLanguages}
+              size="xs"
+              width="310px"
+            >
+              <SelectTrigger>
+                <SelectValueText placeholder="Langue" />
+              </SelectTrigger>
+              <SelectContent>
+                {applicationLanguages.items.map((languageName) => (
+                  <SelectItem item={languageName} key={languageName.value}>
+                    {languageName.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </SelectRoot>
+            <SimpleIconButton aria-label="Search database">
               <LuSearch />
-            </IconButton>
+            </SimpleIconButton>
             <Text>Username </Text>
-            <Button colorPalette="teal">
-              Deconnexion <RiArrowRightLine />
-            </Button>
+            <SimpleButton
+              colorPalette="primary.dogerBlue.102"
+              size="xs"
+              borderRadius="7px"
+              bg="primary.dogerBlue.102"
+            >
+              Deconnexion{" "}
+              <BoxIcon>
+                <RiArrowRightLine color="blue" />
+              </BoxIcon>
+            </SimpleButton>
           </Flex>
         </GridItem>
       </Grid>
     </>
   );
 };
-const frameworks = createListCollection({
-  items: [
-    { label: "Français", value: "react" },
-    { label: "Anglais", value: "vue" },
-  ],
-});
