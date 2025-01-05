@@ -1,0 +1,9 @@
+.navLinkHover {
+  padding: 10px; /* Adjust as needed */
+  font-size: 14px; /* Adjust as needed */
+  border-radius: 7px; /* Adjust as needed */
+}
+
+.navLinkHover:hover {
+  background-color: #1e90ff80;
+}

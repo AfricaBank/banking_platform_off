@@ -1,0 +1,52 @@
+import ReactDOM from "react-dom/client";
+import { StrictMode } from "react";
+import { ChakraProvider } from "@chakra-ui/react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { App } from "./App";
+import { Dashboard } from "./pages/Dashboard";
+import { Gestionsgroupes } from "./pages/Gestiongroupes";
+import { Gestionroles } from "./pages/Gestionroles";
+import { Tachesactives } from "./pages/Tachesactives";
+import { Gestiondossiers } from "./pages/Gestiondossiers";
+import { system } from "./theme";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "groupes",
+        element: <Gestionsgroupes />,
+      },
+      {
+        path: "roles",
+        element: <Gestionroles />,
+      },
+      {
+        path: "agents",
+        element: <Gestionroles />,
+      },
+      {
+        path: "taches",
+        element: <Tachesactives />,
+      },
+      {
+        path: "dossiers",
+        element: <Gestiondossiers />,
+      },
+    ],
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <ChakraProvider value={system}>
+      <RouterProvider router={router} />
+    </ChakraProvider>
+  </StrictMode>
+);
