@@ -39,7 +39,6 @@ export const RootLayout = () => {
           paddingLeft="2"
           border="1px solid red"
           borderColor="gray.500"
-          background="primary.dogerBlue.50"
         >
           <Outlet />
         </GridItem>

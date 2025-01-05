@@ -95,7 +95,14 @@ export const system = createSystem(defaultConfig, {
         heading: { value: "Afterglow" },
         mono: { value: "Lato, monospace" },
       },
-      sizes: {}, // to configure if needed
+      sizes: {
+        base: { value: "0px" },
+        sm: { value: "480px" },
+        md: { value: "768px" },
+        lg: { value: "992px" },
+        xl: { value: "120em" },
+        "2xl": { value: "1536px" },
+      }, // to configure if needed
       fontSizes: {
         sm: { value: "14px" },
         md: { value: "15px" },
