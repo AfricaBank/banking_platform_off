@@ -50,18 +50,21 @@ export const Header = () => {
               </SelectContent>
             </SelectRoot>
             <SimpleIconButton aria-label="Search database">
-              <LuSearch />
+              <Icon>
+                <LuSearch />
+              </Icon>
             </SimpleIconButton>
             <Text>Username </Text>
             <SimpleButton
-              colorPalette="primary.dogerBlue.102"
               size="xs"
               borderRadius="7px"
               bg="primary.dogerBlue.102"
             >
               Deconnexion{" "}
               <BoxIcon width="20px" height="20px" bg="white">
-                <RiArrowRightLine color="blue" />
+                <Icon color="primary.dogerBlue.102">
+                  <RiArrowRightLine />
+                </Icon>
               </BoxIcon>
             </SimpleButton>
           </Flex>
