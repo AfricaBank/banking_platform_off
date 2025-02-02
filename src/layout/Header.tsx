@@ -14,12 +14,12 @@ import { SimpleIconButton } from "@/components/customButtons/SimpleIconButton";
 import { SimpleButton } from "@/components/customButtons/SimpleButton";
 import { BoxIcon } from "@/components/customButtons/BoxIcon";
 
-export const Header = () => {
+export const Header = ({ toggleSidebar }) => {
   return (
     <>
       <Grid templateColumns="repeat(7, 1fr)">
         <GridItem colSpan={1} height="4rem">
-          <Flex marginTop="25px" marginLeft="10px">
+          <Flex marginTop="25px" marginLeft="10px" onClick={toggleSidebar} cursor="pointer">
             <Icon>
               <TfiAlignRight />
             </Icon>

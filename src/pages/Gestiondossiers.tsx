@@ -1,9 +1,5 @@
-import { Text } from "@chakra-ui/react";
+import TableauGestionDeDossier from "@/components/pageContents/TableauGestionDeDossier.tsx";
 
 export const Gestiondossiers = () => {
-  return (
-    <>
-      <Text>je suis gestion des dossiers </Text>
-    </>
-  );
+  return <TableauGestionDeDossier/>
 };
