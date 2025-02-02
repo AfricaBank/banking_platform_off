@@ -17,7 +17,7 @@ import { BoxIcon } from "@/components/customButtons/BoxIcon";
 export const Header = ({ toggleSidebar }) => {
   return (
     <>
-      <Grid templateColumns="repeat(7, 1fr)">
+      <Grid templateColumns="repeat(4, 1fr)">
         <GridItem colSpan={1} height="4rem">
           <Flex marginTop="25px" marginLeft="10px" onClick={toggleSidebar} cursor="pointer">
             <Icon>
@@ -25,10 +25,10 @@ export const Header = ({ toggleSidebar }) => {
             </Icon>
           </Flex>
         </GridItem>
-        <GridItem colStart={4} colSpan={4} height="4em">
+        <GridItem colStart={3} colSpan={3} height="4em">
           <Flex
             align="center"
-            gap="4"
+            gap="2"
             justify="space-around"
             marginTop="12px"
             marginRight="120px"
