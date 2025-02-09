@@ -27,7 +27,7 @@ export const RootLayout = () => {
         zIndex="1"
         height="70px"
         width="100%"
-        maxWidth="1200px"
+        maxWidth="1615px"
         border="1px solid green"
         position="sticky"
         margin="0 auto"
@@ -49,7 +49,7 @@ export const RootLayout = () => {
         border="1px solid red"
         borderColor="gray.500"
         w="100%"
-        maxWidth="1200px"
+        maxWidth="1615px"
         margin="0 auto"
         padding="20px"
         overflowY="auto"
@@ -62,7 +62,7 @@ export const RootLayout = () => {
         area={"footer"}
         border="1px solid black"
         w="100%"
-        maxWidth="1200px"
+        maxWidth="1615px"
         margin="0 auto"
         scrollbarWidth="none"
       >
