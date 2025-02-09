@@ -1,3 +1,10 @@
+import { NombreDossierParStatut } from "@/components/pageContents/NombreDossierParStatut";
+
 export const Tachesactives = () => {
-  return <div>Tâches actives</div>;
+  return (
+    <div>
+      Tâches actives
+      <NombreDossierParStatut />
+    </div>
+  );
 };
