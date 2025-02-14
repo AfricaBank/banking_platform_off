@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValueText,
 } from "@/components/ui/select";
+import { enCours, rejected } from "@/dataObject/graphicData";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -45,9 +46,6 @@ const frameworks = createListCollection({
 export const NombreDossierParStatut: React.FC<BarChartProps> = () => {
   // 📌 Labels pour l'axe des abscisses (jours de la semaine)
   const labels = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
-  // 📌 Données fictives : Nombre de dossiers acceptés et rejetés par jour
-  const enCours = [2000, 3000, 4000, 5000, 6000, 7000, 8000]; // Acceptés
-  const rejected = [1500, 2500, 4000, 4500, 5200, 6000, 3000]; // Rejetés
   // 📌 Données du graphique
   const data = {
     labels,
