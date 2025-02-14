@@ -22,6 +22,7 @@ export const system = createSystem(defaultConfig, {
             102: { value: "#1E90FF" }, // Active menu color
             200: { value: "#00BFFF" },
             300: { value: "#1E90FF" },
+            400: { value: "#fcfcff" },
           },
           darkGrey: {
             0: { value: "#E2E5E5" },
