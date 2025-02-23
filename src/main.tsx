@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         element: <Gestiondossiers />,
       },
         {
-            path: "dossiers/initiation-dossier",
+            path: "initiation",
             element: <InitiationDossier />,
         },
     ],

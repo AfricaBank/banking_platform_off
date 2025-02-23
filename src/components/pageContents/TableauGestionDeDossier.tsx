@@ -1,8 +1,11 @@
 import {Box, IconButton, Flex, Button, Container, Table} from "@chakra-ui/react";
 import {useState} from "react";
-import { useNavigate } from "react-router-dom";
-import { icons } from "@/customIcon/iconApp";
+import {Link, useNavigate } from "react-router-dom";
 import FilterForm from "@/components/pageContents/FilterForm.tsx";
+import {LuEye, LuPencil, LuTrash2} from "react-icons/lu";
+import {HiFilter, HiPencil, HiPlus} from "react-icons/hi";
+import { FaShareFromSquare } from "react-icons/fa6";
+
 
 const data = [
     {
@@ -122,7 +125,7 @@ const Tableau = () => {
     const navigate = useNavigate();
 
     const handleInitiateDossier = () => {
-        navigate('/dossiers/initiation-dossier');
+        navigate('/initiation');
       };
 
     return (
@@ -131,46 +134,67 @@ const Tableau = () => {
                 {/* Formulaire de filtre */}
                 <Box mb={4} paddingTop={2}>
                     <Flex justifyContent="flex-end" mr={10} gap={4}>
-                        <Button onClick={handleInitiateDossier} colorScheme="teal" bg="primary.dogerBlue.300" width={"150px"}>
-                            <IconButton
-                                aria-label="Modifier"
-                                color='#FFFFF'
-                                size='sm'
-                                icon={<icons.google_plus_icon color= "primary.dogerBlue.300" fontSize="30px" paddingTop={3} paddingLeft={2.5}/>}
-                                mr={1}
-                            />
-                            Démarrer EER
-                        </Button>
-
+                        <Link to="/initiation" style={{ textDecoration: 'none' }}> {/* Enveloppez le Button dans un Link */}
+                            <Button
+                                onClick={(e) => {
+                                    // Ajoutez ici votre logique personnalisée avant la navigation
+                                    handleInitiateDossier(); // Appel de votre fonction
+                                    // e.preventDefault(); // Si vous voulez empêcher la navigation par défaut (ce n'est pas nécessaire ici)
+                                }}
+                                colorScheme="teal"
+                                bg="primary.dogerBlue.300"
+                                width={"150px"}
+                            >
+                                <IconButton
+                                    aria-label="Modifier"
+                                    size='sm'
+                                    color="primary.dogerBlue.300"
+                                    bg="white"
+                                    borderRadius="20%"
+                                    mr={1}
+                                >
+                                    <HiPlus />
+                                </IconButton>
+                                Démarrer EER
+                            </Button>
+                        </Link>
                         <Button onClick={handleInitiateDossier} colorScheme="teal" bg={"blue"} width={"185px"}>
                             <IconButton
                                 aria-label="Modifier"
-                                color='#FFFFF'
+                                bg="white"
+                                color="primary.dogerBlue.300"
                                 size='sm'
-                                icon={<icons.edit_icon color={"blue"} fontSize="30px" paddingTop={3} paddingLeft={2.5}/>}
+                                borderRadius="20%"
                                 mr={1}
-                            />
+                            >
+                                <HiPencil/>
+                            </IconButton>
                             Réviser un compte
                         </Button>
 
                         <Button onClick={handleInitiateDossier} colorScheme="teal" width={"210px"}>
                             <IconButton
                                 aria-label="Modifier"
-                                color='#FFFFF'
+                                bg="white"
+                                color="teal"
                                 size='sm'
-                                icon={<icons.upload_file_icon color={"teal"} fontSize="20px" paddingTop={1} paddingLeft={1}/>}
+                                borderRadius="20%"
                                 mr={1}
-                            />
+                            >
+                                <FaShareFromSquare/>
+                            </IconButton>
                             Exporter des comptes
                         </Button>
                         <IconButton
                             aria-label="Modifier"
-                            color='#FFFFF'
-                            size='sm'
-                            bg="primary.dogerBlue.200"
-                            icon={<icons.display_filter_icon fontSize="30px" color={"white"}  paddingTop={2.5}/>}
+                            size='lg'
+                            bg="state.orange.300"
                             mr={1}
-                        />
+                            color="white"
+                        >
+                            <HiFilter />
+
+                        </IconButton>
 
                     </Flex>
                 </Box>
@@ -217,27 +241,32 @@ const Tableau = () => {
                                         <Flex>
                                             <IconButton
                                                 aria-label="Modifier"
-                                                colorScheme='blue'
+                                                bg="primary.dogerBlue.300"
                                                 size='sm'
-                                                 icon={<icons.edit_icons/>}
                                                 //onClick={() => handleEdit(item)}
                                                 mr={2}
-                                            />
+                                                borderRadius="md"
+                                            >
+                                                <LuEye/>
+                                            </IconButton>
                                             <IconButton
                                                 aria-label="Modifier"
                                                 size='sm'
                                                 bg="state.orange.0"
-                                                icon={<icons.edit_icon fontSize="30px" paddingTop={2.5} paddingLeft={2.5}/>}
                                                 //onClick={() => handleEdit(item)}
                                                 mr={2}
-                                            />
+                                                borderRadius="md"
+                                            >
+                                                <LuPencil color={"white"} />
+                                            </IconButton>
                                             <IconButton
                                                 aria-label="Supprimer"
-                                                colorScheme='red'
+                                                bg="state.red.300"
                                                 size='sm'
-                                                icon={<icons.delete_icon fontSize="30px" paddingTop={2.5} paddingLeft={2.5}/>}
-                                                //onClick={() => handleDelete(item)}
-                                            />
+                                                borderRadius="md"
+                                            >
+                                                <LuTrash2 color={"white"}/>
+                                            </IconButton>
                                         </Flex>
                                     </Table.Cell>
                                 </Table.Row>

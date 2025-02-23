@@ -3,13 +3,15 @@ import { useState, useEffect } from "react";
 import {
     Box,
     Input,
-    Select,
     Button,
     VStack,
     HStack,
     Center,
-    Text,
+    Text, Flex,
 } from "@chakra-ui/react";
+import {InputTextField} from "@/components/customFormFields/InputTextField.tsx";
+import {FaCheck} from "react-icons/fa";
+import {CgCloseR} from "react-icons/cg";
 
 const InitiationDossier = () => {
     const [currentDate, setCurrentDate] = useState("");
@@ -27,75 +29,74 @@ const InitiationDossier = () => {
 
     return (
         <Box>
-            <Box h="50px" bg="#C9E1F8" mt="10px" display="flex" alignItems="center" pl="20px">
+            <Box h="50px" bg="#C9E1F8" mt="10px" display="flex" alignItems="center" pl="20px" borderRadius="md">
                 <Text fontWeight="bold">INITIALISATION DE DOSSIER</Text>
             </Box>
             <Center h="100vh" bg="gray.100">
-                <Box p={8} borderWidth={1} borderRadius="lg" bg="white" boxShadow="lg" w="full" maxW="800px">
-                    <VStack spacing={4} align="stretch">
-                        <HStack spacing={4}>
-                            <Box>
-                                <Text fontSize="sm" fontWeight="bold">Date de création</Text>
-                                <Input type="date" value={currentDate} isReadOnly bg="gray.100" />
-                            </Box>
-                            <Box>
-                                <Text fontSize="sm" fontWeight="bold">Type de personne</Text>
-                                <Select>
-                                    <option value="PP">Personne Physique</option>
-                                    <option value="PM">Personne Morale</option>
-                                </Select>
-                            </Box>
+                <Box p={8} borderWidth={1} borderRadius="lg" bg="white" boxShadow="lg" w="full" maxW="790px">
+                    <VStack>
+                        <HStack>
+                            <Flex gap="48">
+                                <Box>
+                                    <Text fontSize="sm" fontWeight="bold">Date de création</Text>
+                                    <InputTextField/>
+                                </Box>
+                                <Box>
+                                    <Text fontSize="sm" fontWeight="bold">Type de personne</Text>
+                                    <InputTextField/>
+                                </Box>
+                            </Flex>
                         </HStack>
-
-                        <HStack spacing={4}>
-                            <Box>
-                                <Text fontSize="sm" fontWeight="bold">Code Siège</Text>
-                                <Select>
-                                    <option value="code1">Code 1</option>
-                                    <option value="code2">Code 2</option>
-                                    <option value="code3">Code 3</option>
-                                </Select>
-                            </Box>
-                            <Box>
-                                <Text fontSize="sm" fontWeight="bold">Nature de la relation</Text>
-                                <Input type="text" placeholder="Nature de la relation" />
-                            </Box>
+                        <HStack spacing={8}>
+                            <Flex gap="48">
+                                <Box>
+                                    <Text fontSize="sm" fontWeight="bold">Date de création</Text>
+                                    <InputTextField/>
+                                </Box>
+                                <Box>
+                                    <Text fontSize="sm" fontWeight="bold">Type de personne</Text>
+                                    <InputTextField/>
+                                </Box>
+                            </Flex>
                         </HStack>
-
-                        <HStack spacing={4}>
-                            <Box>
-                                <Text fontSize="sm" fontWeight="bold">Code exploitant</Text>
-                                <Select>
-                                    <option value="type1">Code ex 1</option>
-                                    <option value="type2">Code ex 2</option>
-                                    <option value="type3">Code ex 3</option>
-                                </Select>
-                            </Box>
-                            <Box>
-                                <Text fontSize="sm" fontWeight="bold">Nom de la collectivité</Text>
-                                <Input type="text" placeholder="Nom de la collectivité" />
-                            </Box>
+                        <HStack spacing={8}>
+                            <Flex gap="48">
+                                <Box>
+                                    <Text fontSize="sm" fontWeight="bold">Date de création</Text>
+                                    <InputTextField/>
+                                </Box>
+                                <Box>
+                                    <Text fontSize="sm" fontWeight="bold">Type de personne</Text>
+                                    <InputTextField/>
+                                </Box>
+                            </Flex>
                         </HStack>
-
-                        <HStack spacing={4}>
-                            <Box>
-                                <Text fontSize="sm" fontWeight="bold">Nom de l'exploitant</Text>
-                                <Input type="text" placeholder="Issaga Gaye" bg="primary.dogerBlue.300" />
-                            </Box>
-                            <Box>
-                                <Text fontSize="sm" fontWeight="bold">Civilité de la collectivité</Text>
-                                <Select>
-                                    <option value="mr">Monsieur</option>
-                                    <option value="mme">Madame</option>
-                                    <option value="mlle">Mademoiselle</option>
-                                </Select>
-                            </Box>
+                        <HStack spacing={8}>
+                            <Flex gap="48">
+                                <Box>
+                                    <Text fontSize="sm" fontWeight="bold">Date de création</Text>
+                                    <InputTextField/>
+                                </Box>
+                                <Box>
+                                    <Text fontSize="sm" fontWeight="bold">Type de personne</Text>
+                                    <InputTextField/>
+                                </Box>
+                            </Flex>
                         </HStack>
-
                         <HStack spacing={8} justify="center" mt={4}>
-                            <Button bg="primary.dogerBlue.500" color="white">Instruire le dossier</Button>
-                            <Button colorScheme="red" variant="outline" onClick={handleAbandoner}>
-                                Abandonner
+                            <Button
+                                color="white"
+                                bg="primary.dogerBlue.300"
+                                _hover={{ bg: "white", color: "primary.dogerBlue.300", borderColor:"primary.dogerBlue.300"}}>
+                                <FaCheck />Instruire le dossier
+                            </Button>
+                            <Button
+                                color="state.red.300"
+                                variant="outline"
+                                borderColor="state.red.300"
+                                _hover={{ bg: "state.red.300", color: "white" }}
+                                onClick={handleAbandoner}>
+                                <CgCloseR /> Abandonner
                             </Button>
                         </HStack>
                     </VStack>

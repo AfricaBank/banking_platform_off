@@ -1,19 +1,26 @@
-import { Box, Input, Button, Flex, IconButton, useStyleConfig } from "@chakra-ui/react";
+import { Box, Input, Button, Flex, Icon, IconButton } from "@chakra-ui/react";
 import { useState } from "react";
-import { LuSearch } from "react-icons/lu";
+import {LuAArrowDown, LuArrowDown, LuCircleChevronLeft, LuSearch} from "react-icons/lu";
+import { HiArrowCircleRight, HiArrowCircleDown } from "react-icons/hi";
 
 const Filtre = () => {
-    const [activeForm, setActiveForm] = useState(null);
+    const [activeForm, setActiveForm] = useState("nom"); // "nom" affiché par défaut
+    const [isFormVisible, setIsFormVisible] = useState(true); // Formulaire visible par défaut
 
     const handleButtonClick = (formName) => {
         setActiveForm(formName);
+        setIsFormVisible(true); // Réafficher le formulaire si on change de filtre
+    };
+
+    const toggleFormVisibility = () => {
+        setIsFormVisible((prev) => !prev);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
         const filterData = Object.fromEntries(formData);
-        console.log(filterData); // Traiter les données ici
+        console.log(filterData);
     };
 
     const handleReset = (event) => {
@@ -24,29 +31,52 @@ const Filtre = () => {
         _placeholder: { color: "gray.400" },
     };
 
-    const buttonStyle = (formName) => ({
-        bg: activeForm === formName ? "blue.500" : "transparent",
-        color: activeForm === formName ? "white" : "blue.500",
-        _hover: { bg: "primary.dogerBlue.300", color: "white" },
-        border: "1px solid",
-        borderColor: "blue.500",
-        position: "relative",
-        w: "160px",
-        m: "10px",
-    });
-
     return (
         <Box p={4} bg="gray.100" maxW="1200px" boxShadow="md" mb={5} mx="auto">
-            <Flex justify="center">
-                <Box display="flex" flexDirection="column" mr={5} ml={10}>
+            <Flex justify="space-between" align="flex-start">
+                {/* Boutons à gauche */}
+                <Box display="flex" flexDirection="column" alignItems="flex-start">
                     {["nom", "siege", "idNational", "idBeneficiaire"].map((item) => (
-                        <Button key={item} sx={buttonStyle(item)} onClick={() => handleButtonClick(item)}>
-                            {item.charAt(0).toUpperCase() + item.slice(1)}
-                        </Button>
+                        <Box key={item} position="relative" width="160px" m="10px">
+                            <Button
+                                variant="outline"
+                                borderColor="primary.dogerBlue.300"
+                                color={activeForm === item ? "white" : "primary.dogerBlue.300"}
+                                bg={activeForm === item ? "primary.dogerBlue.300" : "transparent"}
+                                _hover={{ bg: "primary.dogerBlue.300", color: "white" }}
+                                transition="all 0.3s ease-in-out"
+                                w="100%"
+                                onClick={() => handleButtonClick(item)}
+                                display="flex"
+                                justifyContent="flex-start"
+                                alignItems="center"
+                                position="relative"
+                            >
+                                <Box position="absolute" right="-11px" top="50%" transform="translateY(-50%)">
+                                    <HiArrowCircleRight size={30} />
+                                </Box>
+                                {item.charAt(0).toUpperCase() + item.slice(1)}
+                            </Button>
+                        </Box>
                     ))}
                 </Box>
-                <Box bg="white" width="45%" boxShadow="md" p={4}>
-                    {activeForm && (
+
+                {/* Composant contenant le formulaire à droite */}
+                <Box bg="white" width="45%" boxShadow="md" p={4} ml="auto" position="relative">
+                    {/* Toggle Visibility */}
+                    <IconButton
+                        bg="primary.dogerBlue.300"
+                        aria-label="Toggle form visibility"
+                        onClick={toggleFormVisibility}
+                        variant="outline"
+                        _hover={{ bg: "gray.200" }}
+                        position="absolute"
+                        top={-7}
+                        right={2}
+                        borderRadius = "100%"
+                    ><LuArrowDown size={24} color="white"/> </IconButton>
+
+                    {isFormVisible && (
                         <form onSubmit={handleSubmit} onReset={handleReset}>
                             <Box mb={4}>
                                 {activeForm === "nom" && (
@@ -74,10 +104,16 @@ const Filtre = () => {
                                     <Input name="idBeneficiaire" placeholder="Id Bénéficiaire" sx={inputPlaceholderStyle} mb={4} />
                                 )}
                                 <Flex justify="flex-end" mt={4}>
-                                    <Button type="submit" colorScheme="blue" mr={4} leftIcon={<LuSearch />}>
+                                    <Button type="submit" borderRadius="sm" borderColor="primary.dogerBlue.300" bg="primary.dogerBlue.300" mr={4}>
+                                        <Icon bg="white" color="primary.dogerBlue.300" borderRadius="md">
+                                            <LuSearch />
+                                        </Icon>
                                         Chercher
                                     </Button>
-                                    <Button type="reset" colorScheme="red" variant="outline">
+                                    <Button type="reset" borderRadius="md" borderColor="state.red.300" color="state.red.300" variant="outline">
+                                        <Icon bg="white" color="State.red.300" borderRadius="md">
+                                            <LuCircleChevronLeft />
+                                        </Icon>{" "}
                                         Réinitialiser
                                     </Button>
                                 </Flex>
