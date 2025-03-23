@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, InputProps, Text } from "@chakra-ui/react";
+import { Input, InputProps, Text, Box } from "@chakra-ui/react";
 
 interface inputInterface extends InputProps {
   label: string;
@@ -10,9 +10,9 @@ export const InputTextField = React.forwardRef<
   inputInterface
 >(({ label, ...props }, ref) => {
   return (
-    <>
-      <Text>{label}</Text>
-      <Input ref={ref} {...props} rounded="7px" />
-    </>
+    <Box width="30%">
+      <Text color="#6E7C7C">{label}</Text>
+      <Input ref={ref} {...props} rounded="7px" bg="white" width="100%" />
+    </Box>
   );
 });

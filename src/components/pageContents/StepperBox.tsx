@@ -11,8 +11,8 @@ export const StepperBox: React.FC<StepperBoxProps> = ({ children }) => {
       p={4}
       borderRadius="md"
       boxShadow="sm"
-      height="100%"
-      width="17%"
+      width="200px"
+      height="700px"
       backgroundColor="primary.dogerBlue.400"
     >
       {children}
