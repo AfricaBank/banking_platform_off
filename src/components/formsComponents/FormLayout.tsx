@@ -2,8 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 import { StepperBox } from "../pageContents/StepperBox";
 import { StepperComponent } from "../pageContents/StepperComponent";
 import { ajoutPersonnePhysique } from "@/dataObject/stepsObjects";
-import { FormFieldSet } from "./FormFieldSet";
-import { InputTextField } from "../customFormFields/InputTextField";
+import { UserIdentificationForms } from "./UserIdentificationForms";
 
 export const FormLayout = () => {
   return (
@@ -24,25 +23,8 @@ export const FormLayout = () => {
         <Box pb="12px">
           <Text color="black">Ajout du titulaire </Text>
         </Box>
-        <Box>
-          <FormFieldSet label="Informations utilisateur">
-            <InputTextField label="Nom" placeholder="Nom" />
-            <InputTextField label="Email" placeholder="Email" />
-            <InputTextField label="Téléphone" placeholder="Téléphone" />
-            <InputTextField label="Téléphone" placeholder="Téléphone" />
-            <InputTextField label="Téléphone" placeholder="Téléphone" />
-            <InputTextField label="Téléphone" placeholder="Téléphone" />
-          </FormFieldSet>
-          <FormFieldSet label="Détails du produit">
-            <InputTextField label="Téléphone" placeholder="Téléphone" />
-            <InputTextField label="Téléphone" placeholder="Téléphone" />
-            <InputTextField label="Téléphone" placeholder="Téléphone" />
-          </FormFieldSet>
-          <FormFieldSet label="Détails du produit">
-            <InputTextField label="Téléphone" placeholder="Téléphone" />
-            <InputTextField label="Téléphone" placeholder="Téléphone" />
-            <InputTextField label="Téléphone" placeholder="Téléphone" />
-          </FormFieldSet>
+        <Box pb="10px">
+          <UserIdentificationForms />
         </Box>
       </Box>
     </Box>
