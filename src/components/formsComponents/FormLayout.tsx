@@ -1,8 +1,8 @@
 import { Box, Text } from "@chakra-ui/react";
 import { StepperBox } from "../pageContents/StepperBox";
 import { StepperComponent } from "../pageContents/StepperComponent";
-import { ajoutPersonnePhysique } from "@/dataObject/stepsObjects";
-import { UserIdentificationForms } from "./UserIdentificationForms";
+import { ajoutTitulaire } from "@/dataObject/stepsObjects";
+import { UserIdentificationForms } from "./titulaireEtCoTitulaire/UserIdentificationForms";
 
 export const FormLayout = () => {
   return (
@@ -17,7 +17,7 @@ export const FormLayout = () => {
       overflow="auto"
     >
       <StepperBox>
-        <StepperComponent steps={ajoutPersonnePhysique} />
+        <StepperComponent steps={ajoutTitulaire} />
       </StepperBox>
       <Box width="100%" height="100%" padding="10px">
         <Box pb="12px">
