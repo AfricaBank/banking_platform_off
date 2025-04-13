@@ -2,7 +2,7 @@ import { Box, Text } from "@chakra-ui/react";
 import { StepperBox } from "../pageContents/StepperBox";
 import { StepperComponent } from "../pageContents/StepperComponent";
 import { ajoutTitulaire } from "@/dataObject/stepsObjects";
-import { UserIdentificationForms } from "./UserIdentificationForms";
+import { UserIdentificationForms } from "./titulaireEtCoTitulaire/UserIdentificationForms";
 
 export const FormLayout = () => {
   return (

@@ -1,5 +1,5 @@
-import { FormFieldSet } from "./FormFieldSet";
-import { InputTextField } from "../customFormFields/InputTextField";
+import { FormFieldSet } from "../FormFieldSet";
+import { InputTextField } from "@/components/customFormFields/InputTextField";
 
 export const LegalFinancialForms = () => {
   return (
