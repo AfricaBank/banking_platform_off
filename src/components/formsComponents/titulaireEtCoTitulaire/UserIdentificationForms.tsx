@@ -1,5 +1,6 @@
 import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "../../customFormFields/InputTextField";
+import { CustomDatePicker } from "@/components/customFormFields/CustomDatePicker";
 
 export const UserIdentificationForms = () => {
   return (
@@ -19,10 +20,7 @@ export const UserIdentificationForms = () => {
         <InputTextField label="Nom abrégé" placeholder="Nom abrégé" />
         <InputTextField label="Civilité " placeholder="Civilité" />
         <InputTextField label="Sexe" placeholder="Sexe" />
-        <InputTextField
-          label="Date de naissance"
-          placeholder="Date de naissance"
-        />
+        <CustomDatePicker nomDuChamp="Date de nissance/" />
         <InputTextField
           label="Lieu de nqissqnce"
           placeholder="Lieu de naissance"

@@ -23,9 +23,7 @@ export const CalendarField: React.FC<DatePickerProps> = ({
 }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-      {label && (
-        <label style={{ fontSize: "15px", fontWeight: "bold" }}>{label}</label>
-      )}
+      {label && <label style={{ fontSize: "16px" }}>{label}</label>}
       <input
         type="date"
         value={selectedDate || ""}
@@ -41,7 +39,8 @@ export const CalendarField: React.FC<DatePickerProps> = ({
           border: "1px solid rgba(51, 51, 51, 0.25)",
           fontSize: "16px",
           cursor: isDisabled ? "not-allowed" : "pointer",
-          height: 47,
+          height: 40,
+          color: "#6E7C7C",
         }}
       />
     </div>
