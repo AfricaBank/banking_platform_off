@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { CalendarField } from "./CalendarField";
 
-export function CustomDatePicker() {
+interface CustomDatePickerInterface {
+  nomDuChamp: string;
+}
+
+export function CustomDatePicker({ nomDuChamp }: CustomDatePickerInterface) {
   const [date, setDate] = useState<string>("");
 
   return (
-    <div style={{ padding: "20px" }}>
-      <CalendarField
-        label="Date de naissance"
-        selectedDate={date}
-        onChange={setDate}
-        isRequired={true}
-      />
+    <div style={{ width: "30%" }}>
+      <p>{nomDuChamp}</p>
+      <CalendarField selectedDate={date} onChange={setDate} isRequired={true} />
     </div>
   );
 }
