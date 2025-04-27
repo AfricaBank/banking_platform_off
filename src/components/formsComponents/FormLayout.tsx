@@ -14,12 +14,11 @@ export const FormLayout = () => {
       boxShadow="0px 0px 6px 2px rgba(70, 70, 118, 0.1)"
       display="flex"
       gap={4}
-      overflow="auto"
     >
       <StepperBox>
         <StepperComponent steps={ajoutTitulaire} />
       </StepperBox>
-      <Box width="100%" height="100%" padding="10px">
+      <Box width="100%" height="100%" padding="10px" overflow="auto">
         <Box pb="12px">
           <Text color="black">Ajout du titulaire </Text>
         </Box>
