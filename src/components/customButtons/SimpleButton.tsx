@@ -8,7 +8,7 @@ export const SimpleButton = React.forwardRef<
   SimpleButtonInterface
 >(({ children, ...props }, ref) => {
   return (
-    <Button ref={ref} {...props}>
+    <Button ref={ref} {...props} rounded="6%">
       {children}
     </Button>
   );
