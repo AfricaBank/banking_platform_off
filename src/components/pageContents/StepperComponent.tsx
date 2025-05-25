@@ -16,21 +16,22 @@ interface Step {
 
 interface StepperComponentProps {
   steps: Step[];
-  initialStep?: number;
+  currentStep?: number;
+  onStepChange: (newStep: number) => void;
   chakraProps?: any;
 }
 
 export const StepperComponent: React.FC<StepperComponentProps> = ({
   steps,
-  initialStep = 0,
+  currentStep, // Utiliser cette prop
+  onStepChange, // Utiliser cette prop
   chakraProps,
 }) => {
-  const [step, setStep] = useState(initialStep);
   return (
     <StepsRoot
       size="sm"
-      step={step}
-      onStepChange={(e) => setStep(e.step)}
+      step={currentStep}
+      onStepChange={(e) => onStepChange(e.step)}
       variant="subtle"
       orientation="vertical"
       count={steps.length}
