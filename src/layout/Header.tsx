@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValueText,
 } from "@/components/ui/select";
-import { applicationLanguages } from "@/serviceLogic/languages";
+import { applicationLanguages } from "@/dataObject/languages";
 import { SimpleIconButton } from "@/components/customButtons/SimpleIconButton";
 import { SimpleButton } from "@/components/customButtons/SimpleButton";
 import { BoxIcon } from "@/components/customButtons/BoxIcon";
