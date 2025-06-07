@@ -9,6 +9,7 @@ import { Gestionroles } from "./pages/Gestionroles";
 import { Tachesactives } from "./pages/Tachesactives";
 import { Gestiondossiers } from "./pages/Gestiondossiers";
 import { system } from "./theme";
+import InitiationDossier from "@/components/pageContents/InitiationDossier.tsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
         path: "dossiers",
         element: <Gestiondossiers />,
       },
+        {
+            path: "initiation",
+            element: <InitiationDossier />,
+        },
     ],
   },
 ]);
