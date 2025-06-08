@@ -1,26 +1,18 @@
-import {
-  Box,
-  Flex,
-  Icon,
-  Text,
-  Grid,
-  GridItem,
-} from '@chakra-ui/react';
-import { FaRegClipboard } from 'react-icons/fa';
+import { Box, Flex, Icon, Text, Grid, GridItem } from "@chakra-ui/react";
+import { FaRegClipboard } from "react-icons/fa";
 
 const GeneralInfoBlock = () => {
   return (
     <Flex
-      direction={{ base: 'column', md: 'row' }}
+      direction={{ base: "column", md: "row" }}
       gap={6}
-      p={6} 
-      bg="#F4F6FA" 
+      p={6}
+      bg="#F4F6FA"
       borderRadius="xl"
     >
-  
       <Flex
         direction="column"
-        w={{ base: '100%', md: '280px' }}
+        w={{ base: "100%", md: "280px" }}
         minW="280px"
         bg="white"
         borderRadius="xl"
@@ -44,7 +36,6 @@ const GeneralInfoBlock = () => {
         </Box>
       </Flex>
 
-   
       <Flex
         direction="column"
         flex="1"
@@ -58,7 +49,7 @@ const GeneralInfoBlock = () => {
         </Text>
 
         <Box>
-          <Grid templateColumns={{ base: '1fr', md: 'repeat(5, 1fr)' }} gap={6}>
+          <Grid templateColumns={{ base: "1fr", md: "repeat(5, 1fr)" }} gap={6}>
             <GridItem>
               <Text fontWeight="semibold">Référence du dossier</Text>
               <Text color="gray.500">AB-EER-2023</Text>
