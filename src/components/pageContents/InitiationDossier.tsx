@@ -36,6 +36,11 @@ const InitiationDossier = () => {
             {children}
         </Box>
     );
+    const customList = [
+        { label: "Option A", value: "a" },
+        { label: "Option B", value: "b" },
+        { label: "Option C", value: "c" },
+    ];
 
     return (
         <Box>
@@ -43,63 +48,40 @@ const InitiationDossier = () => {
                 <Text fontWeight="bold">INITIALISATION DE DOSSIER</Text>
             </Box>
             <Flex justify="center" align="center" minH="100vh" bg="gray.100" px={4}>
-                <Box p={8} borderWidth={1} borderRadius="lg" bg="white" boxShadow="lg" w="full" maxW="800px" paddingLeft="100px">
-                    <VStack spacing={6}>
-                        <SimpleGrid columns={{ base: 1, md: 2 }} spacingX={8} spacingY={4} w="100%">
-                            <Box w="200%">
-                                <Text fontSize="sm" fontWeight="bold" mb={1}>Date de création</Text>
-                                <CustomDatePicker value={currentDate} />
-                            </Box>
-                            <Box w="200%">
-                                <Text fontSize="sm" fontWeight="bold" mb={1}>Type de personne</Text>
-                                <DropDownList collection={undefined} label={""} />
-                            </Box>
+                <Box p={8} borderWidth={1} borderRadius="lg" bg="white" boxShadow="lg" w="full" maxW="800px">
+                    <Flex justify="center" gap={10} mt={10} wrap="wrap">
+                        <CustomDatePicker nomDuChamp="Date de création" />
+                        <DropDownList label={" Type de personne"} items={customList} />
+                    </Flex>
+                    <Flex justify="center" gap={10} mt={10} wrap="wrap">
+                        <DropDownList  label={" Code siège"} items={customList} />
+                        <DropDownList  label={"Nature de la relation"} items={customList}  />
+                    </Flex>
 
-                            <Box w="200%">
-                                <Text fontSize="sm" fontWeight="bold" mb={1}>Code siège</Text>
-                                <DropDownList collection={undefined} label={""} />
-                            </Box>
-                            <Box w="200%">
-                                <Text fontSize="sm" fontWeight="bold" mb={1}>Nature de la relation</Text>
-                                <DropDownList collection={undefined} label={""} />
-                            </Box>
-
-                            <Box w="200%">
-                                <Text fontSize="sm" fontWeight="bold" mb={1}>Code exploitant</Text>
-                                <InputTextField label={""} />
-                            </Box>
-                            <Box w="200%">
-                                <Text fontSize="sm" fontWeight="bold" mb={1}>Nom de la collectivité</Text>
-                                <InputTextField label={""} />
-                            </Box>
-
-                            <Box w="200%">
-                                <Text fontSize="sm" fontWeight="bold" mb={1}>Nom de l'exploitant</Text>
-                                <InputTextField label={""} />
-                            </Box>
-                            <Box w="200%">
-                                <Text fontSize="sm" fontWeight="bold" mb={1}>Civilité de la collectivité</Text>
-                                <DropDownList collection={undefined} label={""} />
-                            </Box>
-                        </SimpleGrid>
-
-                        <Flex justify="center" gap={4} mt={4} wrap="wrap">
-                            <Button
-                                color="white"
-                                bg="primary.dogerBlue.300"
-                                _hover={{ bg: "white", color: "primary.dogerBlue.300", borderColor: "primary.dogerBlue.300" }}>
-                                <FaCheck /> Instruire le dossier
-                            </Button>
-                            <Button
-                                color="state.red.300"
-                                variant="outline"
-                                borderColor="state.red.300"
-                                _hover={{ bg: "state.red.300", color: "white" }}
-                                onClick={handleAbandoner}>
-                                <CgCloseR /> Abandonner
-                            </Button>
-                        </Flex>
-                    </VStack>
+                    <Flex justify="center" gap={10} mt={10} wrap="wrap">
+                        <InputTextField label={"Code exploitant"} />
+                        <InputTextField label={"Nom de la collectivité"} />
+                    </Flex>
+                    <Flex justify="center" gap={10} mt={10} wrap="wrap">
+                        <InputTextField label={"Nom de l'exploitant"} />
+                        <DropDownList  label={"Civilité de la collectivité"} items={customList} />
+                    </Flex>
+                    <Flex justify="center" gap={4} mt={4} wrap="wrap">
+                        <Button
+                            color="white"
+                            bg="primary.dogerBlue.300"
+                            _hover={{ bg: "white", color: "primary.dogerBlue.300", borderColor: "primary.dogerBlue.300" }}>
+                            <FaCheck /> Instruire le dossier
+                        </Button>
+                        <Button
+                            color="state.red.300"
+                            variant="outline"
+                            borderColor="state.red.300"
+                            _hover={{ bg: "state.red.300", color: "white" }}
+                            onClick={handleAbandoner}>
+                            <CgCloseR /> Abandonner
+                        </Button>
+                    </Flex>
                 </Box>
             </Flex>
         </Box>
