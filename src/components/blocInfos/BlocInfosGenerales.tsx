@@ -1,39 +1,33 @@
-import {
-  Box,
-  Flex,
-  Icon,
-  Text,
-  Grid,
-  GridItem,
-} from '@chakra-ui/react';
-import { FaRegClipboard } from 'react-icons/fa';
+import { Box, Flex, Icon, Text, Grid, GridItem } from "@chakra-ui/react";
+import { FaRegClipboard } from "react-icons/fa";
 
 const GeneralInfoBlock = () => {
   return (
     <Flex
-      direction={{ base: 'column', md: 'row' }}
+      direction={{ base: "column", md: "row" }}
       gap={6}
-      p={4}
-      align="stretch"
+      p={6}
+      bg="#F4F6FA"
+      borderRadius="xl"
     >
       <Flex
         direction="column"
-        w={{ base: '100%', md: '280px' }}
-        h="100%"
-        bg="#FCFCFF"
-        borderRadius="lg"
-        p={4}
+        w={{ base: "100%", md: "280px" }}
+        minW="280px"
+        bg="white"
+        borderRadius="xl"
+        p={6}
+        boxShadow="lg"
       >
-        <Text fontWeight="semibold" mb={3}>
+        <Text fontWeight="semibold" mb={4} whiteSpace="nowrap">
           Informations général du dossier
         </Text>
 
         <Box
-          bg="white"
+          bg="#FCFCFF"
           flex="1"
           p={4}
           borderRadius="xl"
-          boxShadow="md"
           display="flex"
           alignItems="center"
           justifyContent="center"
@@ -41,26 +35,21 @@ const GeneralInfoBlock = () => {
           <Icon as={FaRegClipboard} boxSize={150} color="gray.600" />
         </Box>
       </Flex>
+
       <Flex
         direction="column"
         flex="1"
-        h="100%"
-        bg="#FCFCFF"
-        borderRadius="lg"
-        p={4}
+        bg="white"
+        borderRadius="xl"
+        p={6}
+        boxShadow="lg"
       >
-        <Text fontWeight="semibold" mb={3}>
+        <Text fontWeight="semibold" mb={4}>
           Infos
         </Text>
 
-        <Box
-          bg="white"
-          flex="1"
-          p={8}
-          borderRadius="xl"
-          boxShadow="md"
-        >
-          <Grid templateColumns={{ base: '1fr', md: 'repeat(5, 1fr)' }} gap={6}>
+        <Box>
+          <Grid templateColumns={{ base: "1fr", md: "repeat(5, 1fr)" }} gap={6}>
             <GridItem>
               <Text fontWeight="semibold">Référence du dossier</Text>
               <Text color="gray.500">AB-EER-2023</Text>
@@ -100,7 +89,7 @@ const GeneralInfoBlock = () => {
           </Grid>
         </Box>
       </Flex>
-    </Flex> 
+    </Flex>
   );
 };
 
