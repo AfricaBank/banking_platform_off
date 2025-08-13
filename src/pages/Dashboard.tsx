@@ -13,7 +13,7 @@ export const Dashboard = () => {
       <Box>
         <Text>je suis dashboard</Text>
         <CustomDatePicker nomDuChamp="Date de naissance" />
-        <DropDownList collection={collectionList} label="Pays" />
+        <DropDownList  collection={collectionList} label="Pays"/>
         <Box
           display="flex"
           width="25%"

@@ -9,10 +9,14 @@ import groupe from "../assets/icons/vector2.png";
 import dossier from "../assets/icons/vector6.png";
 import "../styles/sidebar.css";
 
-const Sidebar = ({ isCollapsed }) => {
+interface SidebarProps{
+    isCollapsed: boolean;
+    path:string;
+}
+const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
     const location = useLocation();
 
-    const isActive = (path) => location.pathname === path;
+    const isActive = (path:string) => location.pathname === path;
 
     return (
         <Grid
