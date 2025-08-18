@@ -7,3 +7,10 @@ export const collectionList = createListCollection({
     { label: "Svelte", value: "svelte" },
   ],
 });
+
+export const col2 = createListCollection({
+  items: [
+    { label: "Boyka", value: "Scott adkins" },
+    { label: "Denzel ", value: "Washington" },
+  ],
+});
