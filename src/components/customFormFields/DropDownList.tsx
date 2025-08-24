@@ -1,54 +1,55 @@
 "use client";
-import { Portal, Select} from "@chakra-ui/react";
-import { ComponentProps} from "react";
-import { collectionList } from "@/dataObject/ListCollection.ts";
+import { Portal, Select, ListCollection } from "@chakra-ui/react";
+import React from "react";
 
 interface DropDownListProps {
-    label: string;
-    items: { label: string; value: string }[];
-    highlightColor?: string;
-    withIndicator?: boolean;
+  highlightColor?: string;
+  withIndicator?: boolean;
+  label: string;
+  collection: ListCollection<{ label: string; value: string }>;
+  placeholder?: string;
+  width?: string;
+  size?: "sm" | "md" | "lg";
 }
 
-type MySelectProps = ComponentProps<typeof Select.Root> & DropDownListProps;
+export const DropDownList: React.FC<DropDownListProps> = ({
+  highlightColor = "blue.200",
+  withIndicator = true,
+  label,
+  collection,
+  placeholder = "Select an option",
+  width = "30%",
+  size = "md",
+}) => {
+  return (
+    <Select.Root collection={collection} size={size} width={width}>
+      <Select.HiddenSelect />
+      <Select.Label>{label}</Select.Label>
+      <Select.Control>
+        <Select.Trigger>
+          <Select.ValueText placeholder={placeholder} />
+        </Select.Trigger>
+        <Select.IndicatorGroup>
+          {withIndicator && <Select.Indicator />}
+        </Select.IndicatorGroup>
+      </Select.Control>
 
-export const DropDownList = ({
-                                 highlightColor = "blue",
-                                 withIndicator = true,
-                                 label,
-                                 ...chakraProps
-                             }: MySelectProps) => {
-    return (
-        <Select.Root
-            {...chakraProps}
-            size="md"
-            colorPalette="gray"
-            collection={collectionList}
-        >
-            <Select.HiddenSelect />
-            <Select.Label color="#6E7C7C">{label}</Select.Label>
-            <Select.Control>
-                <Select.Trigger>
-                    <Select.ValueText placeholder={label} color="#6E7C7C" />
-                </Select.Trigger>
-                {withIndicator && (
-                    <Select.IndicatorGroup>
-                        <Select.Indicator />
-                    </Select.IndicatorGroup>
-                )}
-            </Select.Control>
-            <Portal>
-                <Select.Positioner>
-                    <Select.Content>
-                        {collectionList.items.map((item) => (
-                            <Select.Item item={item} key={item.value}>
-                                <span style={{ color: highlightColor }}>{item.label}</span>
-                                {withIndicator && <Select.ItemIndicator />}
-                            </Select.Item>
-                        ))}
-                    </Select.Content>
-                </Select.Positioner>
-            </Portal>
-        </Select.Root>
-    );
+      <Portal>
+        <Select.Positioner>
+          <Select.Content>
+            {collection.items.map((item) => (
+              <Select.Item
+                key={item.value}
+                item={item}
+                _highlighted={{ bg: highlightColor }}
+              >
+                {item.label}
+                {withIndicator && <Select.ItemIndicator />}
+              </Select.Item>
+            ))}
+          </Select.Content>
+        </Select.Positioner>
+      </Portal>
+    </Select.Root>
+  );
 };

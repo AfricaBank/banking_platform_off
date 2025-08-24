@@ -1,5 +1,6 @@
 import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "../../customFormFields/InputTextField";
+
 export const ProfessionnalActivities = () => {
   return (
     <>
