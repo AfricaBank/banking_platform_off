@@ -1,8 +1,7 @@
 import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "../../customFormFields/InputTextField";
 import { CustomDatePicker } from "@/components/customFormFields/CustomDatePicker";
-import {useFormContext} from "react-hook-form";
-import {Lists} from "@/components/constants/Lists.tsx";
+import {useFormContext, Controller} from "react-hook-form";
 import {
   Text,
   VStack,
@@ -10,22 +9,23 @@ import {
 } from "@chakra-ui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import {DropDownList} from "@/components/customFormFields/DropDownList.tsx";
+import {col2} from "@/dataObject/ListCollection.ts";
 
 export const UserIdentificationForms = () => {
   const {
     register,
     formState: { errors },
-    control
+    control,
+    watch
   } = useFormContext();
 
-  const customList1 = [
-    { label: "Titulaire", value: "a" },
-    { label: "Cotitulaire", value: "b" },
-  ];
-  const customList2 = [
-    { label: "Retail", value: "a" },
-    { label: "Ent Indiv", value: "b" },
-  ];
+  // Surveillez les valeurs problématiques
+  const tiersValue = watch("tiers");
+  const dateNaissanceValue = watch("date_naissance");
+
+  console.log("tiers value:", tiersValue);
+  console.log("date_naissance value:", dateNaissanceValue);
+  console.log("errors:", errors);
 
   return (
       <>
@@ -33,9 +33,19 @@ export const UserIdentificationForms = () => {
           <HStack width="100%" justifyContent="space-between" mb={4}>
             <VStack align="flex-start" gap={1} flex="1">
               {/* Utiliser Controller pour le DropDownList */}
-              <DropDownList
-                  collection={customList1} label={"Type du tiers"}
+              <Controller
+                  name="tiers"
+                  control={control}
+                  rules={{ required: "Le type de tiers est obligatoire" }}
+                  render={({ field }) => (
+                      <DropDownList
+                          label={"Type du tiers"}
+                          collection={col2}
+                          value={field.value}
+                          onValueChange={field.onChange}
                       />
+                  )}
+              />
               <ErrorMessage
                   errors={errors}
                   name="tiers"
@@ -49,7 +59,7 @@ export const UserIdentificationForms = () => {
             <VStack align="flex-start" gap={1} flex="1" mx={2}>
               <DropDownList
                   label="Catégorie clientèle "
-                  collection={Lists.categorieClient}/>
+                  collection={col2}/>
             </VStack>
             <VStack align="flex-start" gap={1} flex="1">
               <InputTextField
@@ -125,8 +135,18 @@ export const UserIdentificationForms = () => {
               />
             </VStack>
             <VStack align="flex-start" gap={1} flex="1">
-              <CustomDatePicker nomDuChamp="Date de nissance/"
-                                {...register("date_naissance", { required: "La date de naissance est obligatoire" })}/>
+              <Controller
+                  name="date_naissance"
+                  control={control}
+                  rules={{ required: "La date de naissance est obligatoire" }}
+                  render={({ field }) => (
+                      <CustomDatePicker
+                          nomDuChamp="Date de naissance"
+                          value={field.value} // Passez la valeur
+                          onChange={field.onChange} // Passez le gestionnaire de changement
+                      />
+                  )}
+              />
               <ErrorMessage
                   errors={errors}
                   name="date_naissance"
@@ -183,7 +203,7 @@ export const UserIdentificationForms = () => {
               <InputTextField
                   label="Pays de nationalité"
                   placeholder="Pays de nationalité"
-                  {...register("nationalité", { required: "La nationalité est obligatoire" })}/>
+                  {...register("nationalite", { required: "La nationalité est obligatoire" })}/>
               <ErrorMessage
                   errors={errors}
                   name="nationalite"

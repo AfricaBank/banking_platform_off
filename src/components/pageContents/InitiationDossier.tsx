@@ -11,7 +11,7 @@ import { FaCheck } from "react-icons/fa";
 import { CgCloseR } from "react-icons/cg";
 import { CustomDatePicker } from "@/components/customFormFields/CustomDatePicker.tsx";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
-import {Lists} from "@/components/constants/Lists.tsx";
+import {col2} from "@/dataObject/ListCollection.ts";
 
 const InitiationDossier = () => {
     const [currentDate, setCurrentDate] = useState("");
@@ -33,11 +33,6 @@ const InitiationDossier = () => {
             {children}
         </Box>
     );
-    const customList = [
-        { label: "Option A", value: "a" },
-        { label: "Option B", value: "b" },
-        { label: "Option C", value: "c" },
-    ];
 
     return (
         <Box>
@@ -48,11 +43,11 @@ const InitiationDossier = () => {
                 <Box p={8} borderWidth={1} borderRadius="lg" bg="white" boxShadow="lg" w="full" maxW="800px">
                     <Flex justify="center" gap={10} mt={10} wrap="wrap">
                         <CustomDatePicker nomDuChamp="Date de création" />
-                        <DropDownList label={" Type de personne"} collection={Lists.categorieClient} />
+                        <DropDownList label={" Type de personne"} collection={col2} />
                     </Flex>
                     <Flex justify="center" gap={10} mt={10} wrap="wrap">
-                        <DropDownList label={" Code siège"} collection={Lists.categorieClient} />
-                        <DropDownList label={"Nature de la relation"} collection={Lists.categorieClient}  />
+                        <DropDownList label={" Code siège"} collection={col2} />
+                        <DropDownList label={"Nature de la relation"} collection={col2}  />
                     </Flex>
 
                     <Flex justify="center" gap={10} mt={10} wrap="wrap">
@@ -61,7 +56,7 @@ const InitiationDossier = () => {
                     </Flex>
                     <Flex justify="center" gap={10} mt={10} wrap="wrap">
                         <InputTextField label={"Nom de l'exploitant"} />
-                        <DropDownList label={"Civilité de la collectivité"} collection={Lists.categorieClient} />
+                        <DropDownList label={"Civilité de la collectivité"} collection={col2} />
                     </Flex>
                     <Flex justify="center" gap={4} mt={4} wrap="wrap">
                         <Button

@@ -1,17 +1,24 @@
-import { useState } from "react";
 import { CalendarField } from "./CalendarField";
 
 interface CustomDatePickerInterface {
-  nomDuChamp: string;
+    nomDuChamp: string;
+    value?: string; // Ajoutez value
+    onChange?: (date: string) => void; // Ajoutez onChange
 }
 
-export function CustomDatePicker({ nomDuChamp }: CustomDatePickerInterface) {
-  const [date, setDate] = useState<string>("");
-
-  return (
-    <div style={{ width: "100%" }}>
-      <p>{nomDuChamp}</p>
-      <CalendarField selectedDate={date} onChange={setDate} isRequired={true} />
-    </div>
-  );
+export function CustomDatePicker({
+                                     nomDuChamp,
+                                     value,
+                                     onChange
+                                 }: CustomDatePickerInterface) {
+    return (
+        <div style={{ width: "100%" }}>
+            <p>{nomDuChamp}</p>
+            <CalendarField
+                selectedDate={value} // Utilisez value au lieu de l'état local
+                onChange={onChange || (() => {})} // Utilisez le onChange passé en prop
+                isRequired={true}
+            />
+        </div>
+    );
 }
