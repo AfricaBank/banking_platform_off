@@ -32,7 +32,6 @@ export const UserIdentificationForms = () => {
         <FormFieldSet label="Informations personnelles">
           <HStack width="100%" justifyContent="space-between" mb={4}>
             <VStack align="flex-start" gap={1} flex="1">
-              {/* Utiliser Controller pour le DropDownList */}
               <Controller
                   name="tiers"
                   control={control}
@@ -41,7 +40,7 @@ export const UserIdentificationForms = () => {
                       <DropDownList
                           label={"Type du tiers"}
                           collection={col2}
-                          value={field.value}
+                          value={field.value} // la valeur ne s'affiche pas
                           onValueChange={field.onChange}
                       />
                   )}
@@ -57,9 +56,18 @@ export const UserIdentificationForms = () => {
               />
             </VStack>
             <VStack align="flex-start" gap={1} flex="1" mx={2}>
-              <DropDownList
-                  label="Catégorie clientèle "
-                  collection={col2}/>
+              <Controller
+                  name="caegre-cliente"
+                  control={control}
+                  render={({ field }) => (
+                      <DropDownList
+                          label={"Catégorie clientèle"}
+                          collection={col2}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                      />
+                  )}
+              />
             </VStack>
             <VStack align="flex-start" gap={1} flex="1">
               <InputTextField
@@ -107,8 +115,18 @@ export const UserIdentificationForms = () => {
 
           <HStack width="100%" justifyContent="space-between" mb={4}>
             <VStack align="flex-start" gap={1} flex="1">
-              <InputTextField label="Civilité " placeholder="Civilité"
-                              {...register("civilite", { required: "La civilité est obligatoire" })}
+              <Controller
+                  name="civilite"
+                  control={control}
+                  render={({ field }) => (
+                      <DropDownList
+                          label={"Civilité"}
+                          collection={col2}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          {...register("civilite", { required: "La civilité est obligatoire" })}
+                      />
+                  )}
               />
               <ErrorMessage
                   errors={errors}
@@ -121,8 +139,18 @@ export const UserIdentificationForms = () => {
               />
             </VStack>
             <VStack align="flex-start" gap={1} flex="1" mx={2}>
-              <InputTextField label="Sexe" placeholder="Sexe"
-                              {...register("sexe", { required: "Le genre est obligatoire" })}
+              <Controller
+                  name="sexe"
+                  control={control}
+                  render={({ field }) => (
+                      <DropDownList
+                          label={"Sexe"}
+                          collection={col2}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          {...register("sexe", { required: "Le genre est obligatoire" })}
+                      />
+                  )}
               />
               <ErrorMessage
                   errors={errors}
@@ -142,8 +170,8 @@ export const UserIdentificationForms = () => {
                   render={({ field }) => (
                       <CustomDatePicker
                           nomDuChamp="Date de naissance"
-                          value={field.value} // Passez la valeur
-                          onChange={field.onChange} // Passez le gestionnaire de changement
+                          value={field.value}
+                          onChange={field.onChange}
                       />
                   )}
               />
@@ -176,10 +204,19 @@ export const UserIdentificationForms = () => {
               />
             </VStack>
             <VStack align="flex-start" gap={1} flex="1" mx={2}>
-              <InputTextField
-                  label="Pays de naissance "
-                  placeholder="Pays de naissance"
-                  {...register("pays_naissance", { required: "Le pays de naissance est obligatoire" })}/>
+              <Controller
+                  name="pays_naissance"
+                  control={control}
+                  render={({ field }) => (
+                      <DropDownList
+                          label={"Pays de naissance"}
+                          collection={col2}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          {...register("pays_naissance", { required: "Le pays de naissance est obligatoire" })}
+                      />
+                  )}
+              />
               <ErrorMessage
                   errors={errors}
                   name="pays_naissance"
@@ -198,12 +235,21 @@ export const UserIdentificationForms = () => {
             </VStack>
           </HStack>
 
-          <HStack width="100%" justifyContent="space-between" mb={4}>
+          <HStack width="60%" justifyContent="space-between" mb={4}>
             <VStack align="flex-start" gap={1} flex="1">
-              <InputTextField
-                  label="Pays de nationalité"
-                  placeholder="Pays de nationalité"
-                  {...register("nationalite", { required: "La nationalité est obligatoire" })}/>
+                <Controller
+                    name="nationalite"
+                    control={control}
+                    render={({ field }) => (
+                        <DropDownList
+                            label={"Pays de natonalité"}
+                            collection={col2}
+                            value={field.value}
+                            onValueChange={field.onChange}
+                            {...register("nationalite", { required: "La nationalité est obligatoire" })}
+                        />
+                    )}
+                />
               <ErrorMessage
                   errors={errors}
                   name="nationalite"
@@ -215,12 +261,19 @@ export const UserIdentificationForms = () => {
               />
             </VStack>
             <VStack align="flex-start" gap={1} flex="1" mx={2}>
-              <InputTextField
-                  label="Pays de double nationalité"
-                  placeholder="Pays de double nationalité"
-              />
+                <Controller
+                    name="double_naionalte"
+                    control={control}
+                    render={({ field }) => (
+                        <DropDownList
+                            label={"Pays de double natonalité"}
+                            collection={col2}
+                            value={field.value}
+                            onValueChange={field.onChange}
+                        />
+                    )}
+                />
             </VStack>
-            {/* Troisième espace */}
           </HStack>
         </FormFieldSet>
 
@@ -261,7 +314,7 @@ export const UserIdentificationForms = () => {
             </VStack>
           </HStack>
 
-          <HStack width="100%" justifyContent="space-between" mb={4}>
+          <HStack width="32%" justifyContent="space-between" mb={4}>
             <VStack align="flex-start" gap={1} flex="1">
               <InputTextField
                   label="Nombre d’enfants en charge "
@@ -297,8 +350,18 @@ export const UserIdentificationForms = () => {
 
           <HStack width="100%" justifyContent="space-between" mb={4}>
             <VStack align="flex-start" gap={1} flex="1">
-              <InputTextField label="Date d’EER" placeholder="Date d’EER"
-                              {...register("date_EER", { required: "Date EER est obligatoire" })}/>
+                <Controller
+                    name="date_EER"
+                    control={control}
+                    rules={{ required: "La date EER est obligatoire" }}
+                    render={({ field }) => (
+                        <CustomDatePicker
+                            nomDuChamp="Date de naissance"
+                            value={field.value}
+                            onChange={field.onChange}
+                        />
+                    )}
+                />
               <ErrorMessage
                   errors={errors}
                   name="date_EER"
@@ -340,12 +403,21 @@ export const UserIdentificationForms = () => {
             </VStack>
           </HStack>
 
-          <HStack width="100%" justifyContent="space-between" mb={4}>
+          <HStack width="32%" justifyContent="space-between" mb={4}>
             <VStack align="flex-start" gap={1} flex="1">
-              <InputTextField
-                  label="Pays de réalisation KYC "
-                  placeholder="Pays de réalisation KYC "
-                  {...register("pays_kyc", { required: "Pays KYC est obligatoire" })}/>
+                <Controller
+                    name="pays_kyc"
+                    control={control}
+                    render={({ field }) => (
+                        <DropDownList
+                            label={"Pays de natonalité"}
+                            collection={col2}
+                            value={field.value}
+                            onValueChange={field.onChange}
+                            {...register("pays_kyc", { required: "Pays KYC est obligatoire" })}
+                        />
+                    )}
+                />
               <ErrorMessage
                   errors={errors}
                   name="pays_kyc"

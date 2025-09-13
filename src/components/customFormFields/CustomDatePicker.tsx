@@ -15,8 +15,8 @@ export function CustomDatePicker({
         <div style={{ width: "100%" }}>
             <p>{nomDuChamp}</p>
             <CalendarField
-                selectedDate={value} // Utilisez value au lieu de l'état local
-                onChange={onChange || (() => {})} // Utilisez le onChange passé en prop
+                selectedDate={value}
+                onChange={onChange || (() => {})}
                 isRequired={true}
             />
         </div>
