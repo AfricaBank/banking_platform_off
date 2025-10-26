@@ -1,5 +1,6 @@
 import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "../../customFormFields/InputTextField";
+import { HStack } from "@chakra-ui/react";
 
 export const Civility = () => {
   return (
@@ -12,6 +13,7 @@ export const Civility = () => {
           label="Nom de famille  "
           placeholder="Nom de famille  "
         />
+
         <InputTextField
           label="Pays de nationalité  "
           placeholder="Pays de nationalité  "
