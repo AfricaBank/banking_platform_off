@@ -8,6 +8,7 @@ import { Gestionsgroupes } from "./pages/Gestiongroupes";
 import { Gestionroles } from "./pages/Gestionroles";
 import { Tachesactives } from "./pages/Tachesactives";
 import { Gestiondossiers } from "./pages/Gestiondossiers";
+import { Gestionagents } from "./pages/Gestionagents.tsx";
 import { system } from "./theme";
 import InitiationDossier from "@/components/pageContents/InitiationDossier.tsx";
 
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "agents",
-        element: <Gestionroles />,
+        element: <Gestionagents />,
       },
       {
         path: "taches",
@@ -40,10 +41,10 @@ const router = createBrowserRouter([
         path: "dossiers",
         element: <Gestiondossiers />,
       },
-        {
-            path: "initiation",
-            element: <InitiationDossier />,
-        },
+      {
+        path: "initiation",
+        element: <InitiationDossier />,
+      },
     ],
   },
 ]);
