@@ -1,37 +1,61 @@
 import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "../../customFormFields/InputTextField";
-import { HStack } from "@chakra-ui/react";
+import { HStack, VStack } from "@chakra-ui/react";
 
 export const Civility = () => {
   return (
     <>
       <FormFieldSet label="Identitié">
-        <InputTextField label="Civilité" placeholder="Civilité " />
-        <InputTextField label="Sexe" placeholder="Sexe" />
-        <InputTextField label="Prénom" placeholder="Prénom" />
-        <InputTextField
-          label="Nom de famille  "
-          placeholder="Nom de famille  "
-        />
+        <HStack width="100%" justifyContent="space-between" mb={4}>
+          <VStack align="flex-start" gap={1} flex="1">
+            <InputTextField label="Civilité" placeholder="Civilité" />
+          </VStack>
+          <VStack align="flex-start" gap={1} flex="1">
+            <InputTextField label="Sexe" placeholder="Sexe" />
+          </VStack>
+          <VStack align="flex-start" gap={1} flex="1">
+            <InputTextField label="Prénom" placeholder="Prénom" />
+          </VStack>
+        </HStack>
+        <HStack width="100%" justifyContent="space-between" mb={4}>
+          <VStack align="flex-start" gap={1} flex="1">
+            <InputTextField
+              label="Nom de famille  "
+              placeholder="Nom de famille  "
+            />
+          </VStack>
+          <VStack align="flex-start" gap={1} flex="1">
+            <InputTextField
+              label="Pays de nationalité  "
+              placeholder="Pays de nationalité  "
+            />
+          </VStack>
+          <VStack align="flex-start" gap={1} flex="1">
+            <InputTextField label="Nom abrégé " placeholder="Nom abrégé " />
+          </VStack>
+        </HStack>
 
-        <InputTextField
-          label="Pays de nationalité  "
-          placeholder="Pays de nationalité  "
-        />
-        <InputTextField label="Nom abrégé " placeholder="Nom abrégé " />
-        <InputTextField
-          label="Pays de double nationalité "
-          placeholder="Pays de double nationalité "
-        />
-        <InputTextField label="NIN" placeholder="NIN" />
-        <InputTextField
-          label="Document d’identification"
-          placeholder="Document d’identification"
-        />
-        <InputTextField
-          label="Pays d’émission du document "
-          placeholder="Pays d’émission du document "
-        />
+        <HStack width="100%" justifyContent="space-between" mb={4}>
+          <VStack align="flex-start" gap={1} flex="1">
+            <InputTextField
+              label="Pays de double nationalité "
+              placeholder="Pays de double nationalité "
+            />
+          </VStack>
+          <VStack align="flex-start" gap={1} flex="1">
+            <InputTextField
+              label="Document d’identification"
+              placeholder="Document d’identification"
+            />
+          </VStack>
+          <VStack align="flex-start" gap={1} flex="1">
+            <InputTextField
+              label="Pays d’émission du document "
+              placeholder="Pays d’émission du document "
+            />
+          </VStack>
+        </HStack>
+
         <InputTextField
           label="Date de délivrance "
           placeholder="Date de délivrance "

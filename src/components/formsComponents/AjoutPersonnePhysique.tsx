@@ -66,7 +66,7 @@ export const AjoutPersonnePhysique = () => {
           </GridItem>
           <GridItem>
             {/* Formulaire principal de l'étape */}
-            <Box width="100%" padding="10px" overflow="auto">
+            <Box width="100%" padding="10px" overflow="wrapper">
               <Box pb="12px">
                 <Text color="black">Ajout de personne liée physique </Text>
               </Box>
