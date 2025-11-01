@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import {DropDownList} from "@/components/customFormFields/DropDownList.tsx";
-import {col2} from "@/dataObject/ListCollection.ts";
+import {categori_clientel, civilite, col2, sexe, type_Tiers} from "@/dataObject/ListCollection.ts";
 
 export const UserIdentificationForms = () => {
   const {
@@ -39,7 +39,7 @@ export const UserIdentificationForms = () => {
                   render={({ field }) => (
                       <DropDownList
                           label={"Type du tiers"}
-                          collection={col2}
+                          collection={type_Tiers}
                           value={field.value} // la valeur ne s'affiche pas
                           onValueChange={field.onChange}
                       />
@@ -57,12 +57,12 @@ export const UserIdentificationForms = () => {
             </VStack>
             <VStack align="flex-start" gap={1} flex="1" mx={2}>
               <Controller
-                  name="caegre-cliente"
+                  name="categre-cliente"
                   control={control}
                   render={({ field }) => (
                       <DropDownList
                           label={"Catégorie clientèle"}
-                          collection={col2}
+                          collection={categori_clientel}
                           value={field.value}
                           onValueChange={field.onChange}
                       />
@@ -121,7 +121,7 @@ export const UserIdentificationForms = () => {
                   render={({ field }) => (
                       <DropDownList
                           label={"Civilité"}
-                          collection={col2}
+                          collection={civilite}
                           value={field.value}
                           onValueChange={field.onChange}
                           {...register("civilite", { required: "La civilité est obligatoire" })}
@@ -145,7 +145,7 @@ export const UserIdentificationForms = () => {
                   render={({ field }) => (
                       <DropDownList
                           label={"Sexe"}
-                          collection={col2}
+                          collection={sexe}
                           value={field.value}
                           onValueChange={field.onChange}
                           {...register("sexe", { required: "Le genre est obligatoire" })}
