@@ -14,3 +14,17 @@ export const col2 = createListCollection({
     { label: "Denzel ", value: "Washington" },
   ],
 });
+
+export const civility = createListCollection({
+  items: [
+    { label: "Mr", value: "monsieur" },
+    { label: "Mme ", value: "mme" },
+  ],
+});
+
+export const sexe = createListCollection({
+  items: [
+    { label: "Homme", value: "homme" },
+    { label: "Femme  ", value: "femme" },
+  ],
+});

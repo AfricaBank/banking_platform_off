@@ -1,6 +1,8 @@
 import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "../../customFormFields/InputTextField";
 import { HStack, VStack } from "@chakra-ui/react";
+import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
+import { civility, sexe } from "@/dataObject/ListCollection.ts";
 
 export const Civility = () => {
   return (
@@ -8,10 +10,14 @@ export const Civility = () => {
       <FormFieldSet label="Identitié">
         <HStack width="100%" justifyContent="space-between" mb={4}>
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField label="Civilité" placeholder="Civilité" />
+            <DropDownList
+              collection={civility}
+              label="Civilité"
+              placeholder="Civilité"
+            />
           </VStack>
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField label="Sexe" placeholder="Sexe" />
+            <DropDownList collection={sexe} label="sexe" placeholder="Genre" />
           </VStack>
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField label="Prénom" placeholder="Prénom" />
