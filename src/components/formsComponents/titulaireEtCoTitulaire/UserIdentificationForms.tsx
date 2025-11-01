@@ -4,6 +4,8 @@ import { CustomDatePicker } from "@/components/customFormFields/CustomDatePicker
 import { useFormContext, Controller } from "react-hook-form";
 import { Text, VStack, HStack } from "@chakra-ui/react";
 import { ErrorMessage } from "@hookform/error-message";
+import {DropDownList} from "@/components/customFormFields/DropDownList.tsx";
+import {categori_clientel, civilite, col2, sexe, type_Tiers} from "@/dataObject/ListCollection.ts";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
 import { col2 } from "@/dataObject/ListCollection.ts";
 
@@ -24,6 +26,55 @@ export const UserIdentificationForms = () => {
   console.log("errors:", errors);
 
   return (
+      <>
+        <FormFieldSet label="Informations personnelles">
+          <HStack width="100%" justifyContent="space-between" mb={4}>
+            <VStack align="flex-start" gap={1} flex="1">
+              <Controller
+                  name="tiers"
+                  control={control}
+                  rules={{ required: "Le type de tiers est obligatoire" }}
+                  render={({ field }) => (
+                      <DropDownList
+                          label={"Type du tiers"}
+                          collection={type_Tiers}
+                          value={field.value} // la valeur ne s'affiche pas
+                          onValueChange={field.onChange}
+                      />
+                  )}
+              />
+              <ErrorMessage
+                  errors={errors}
+                  name="tiers"
+                  render={({ message }) => (
+                      <Text color="red.500" fontSize="sm">
+                        {message}
+                      </Text>
+                  )}
+              />
+            </VStack>
+            <VStack align="flex-start" gap={1} flex="1" mx={2}>
+              <Controller
+                  name="categre-cliente"
+                  control={control}
+                  render={({ field }) => (
+                      <DropDownList
+                          label={"Catégorie clientèle"}
+                          collection={categori_clientel}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                      />
+                  )}
+              />
+            </VStack>
+            <VStack align="flex-start" gap={1} flex="1">
+              <InputTextField
+                  label="Matricule de l'agent"
+                  placeholder="Matricule de l'agent"
+              />
+            </VStack>
+          </HStack>
+=======
     <>
       <FormFieldSet label="Informations personnelles">
         <HStack width="100%" justifyContent="space-between" mb={4}>
@@ -113,6 +164,79 @@ export const UserIdentificationForms = () => {
           </VStack>
         </HStack>
 
+          <HStack width="100%" justifyContent="space-between" mb={4}>
+            <VStack align="flex-start" gap={1} flex="1">
+              <Controller
+                  name="civilite"
+                  control={control}
+                  render={({ field }) => (
+                      <DropDownList
+                          label={"Civilité"}
+                          collection={civilite}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          {...register("civilite", { required: "La civilité est obligatoire" })}
+                      />
+                  )}
+              />
+              <ErrorMessage
+                  errors={errors}
+                  name="civilite"
+                  render={({ message }) => (
+                      <Text color="red.500" fontSize="sm">
+                        {message}
+                      </Text>
+                  )}
+              />
+            </VStack>
+            <VStack align="flex-start" gap={1} flex="1" mx={2}>
+              <Controller
+                  name="sexe"
+                  control={control}
+                  render={({ field }) => (
+                      <DropDownList
+                          label={"Sexe"}
+                          collection={sexe}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          {...register("sexe", { required: "Le genre est obligatoire" })}
+                      />
+                  )}
+              />
+              <ErrorMessage
+                  errors={errors}
+                  name="sexe"
+                  render={({ message }) => (
+                      <Text color="red.500" fontSize="sm">
+                        {message}
+                      </Text>
+                  )}
+              />
+            </VStack>
+            <VStack align="flex-start" gap={1} flex="1">
+              <Controller
+                  name="date_naissance"
+                  control={control}
+                  rules={{ required: "La date de naissance est obligatoire" }}
+                  render={({ field }) => (
+                      <CustomDatePicker
+                          nomDuChamp="Date de naissance"
+                          value={field.value}
+                          onChange={field.onChange}
+                      />
+                  )}
+              />
+              <ErrorMessage
+                  errors={errors}
+                  name="date_naissance"
+                  render={({ message }) => (
+                      <Text color="red.500" fontSize="sm">
+                        {message}
+                      </Text>
+                  )}
+              />
+            </VStack>
+          </HStack>
         <HStack width="100%" justifyContent="space-between" mb={4}>
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
