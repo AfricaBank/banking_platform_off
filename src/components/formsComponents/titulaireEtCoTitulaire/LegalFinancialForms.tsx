@@ -8,7 +8,13 @@ import {
 import {useFormContext, Controller} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
 import {DropDownList} from "@/components/customFormFields/DropDownList.tsx";
-import {col2} from "@/dataObject/ListCollection.ts";
+import {
+    activiteARisque,
+    col2,
+    natureJuridique,
+    secteurActivite,
+    segmentSecuriteFinanciere
+} from "@/dataObject/ListCollection.ts";
 
 export const LegalFinancialForms = () => {
 
@@ -16,7 +22,6 @@ export const LegalFinancialForms = () => {
     register,
     formState: { errors },
     control,
-    watch
   } = useFormContext();
   return (
       <>
@@ -29,7 +34,7 @@ export const LegalFinancialForms = () => {
                   render={({ field }) => (
                       <DropDownList
                           label={"Capacité juridique"}
-                          collection={col2}
+                          collection={natureJuridique}
                           value={field.value}
                           onValueChange={field.onChange}
                           {...register("capacite_juridique", { required: "La capacité juridique est obligatoire" })}
@@ -76,7 +81,7 @@ export const LegalFinancialForms = () => {
                   render={({ field }) => (
                       <DropDownList
                           label={"Segment de sécurité financièere"}
-                          collection={col2}
+                          collection={segmentSecuriteFinanciere}
                           value={field.value}
                           onValueChange={field.onChange}
                       />
@@ -119,7 +124,7 @@ export const LegalFinancialForms = () => {
                   render={({ field }) => (
                       <DropDownList
                           label={"Secteur d’acitivié économique "}
-                          collection={col2}
+                          collection={secteurActivite}
                           value={field.value}
                           onValueChange={field.onChange}
                           {...register("secteur_activite_eco", { required: "Le secteur économique est obligatoire" })}
@@ -143,7 +148,7 @@ export const LegalFinancialForms = () => {
                   render={({ field }) => (
                       <DropDownList
                           label={"Activité à risque"}
-                          collection={col2}
+                          collection={activiteARisque}
                           value={field.value}
                           onValueChange={field.onChange}
                           {...register("activite_risque", { required: "L'activité à risque est obligatoire" })}

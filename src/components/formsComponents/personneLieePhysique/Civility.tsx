@@ -2,7 +2,7 @@ import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "../../customFormFields/InputTextField";
 import { HStack, VStack } from "@chakra-ui/react";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
-import { civility, sexe } from "@/dataObject/ListCollection.ts";
+import { civilite, sexe } from "@/dataObject/ListCollection.ts";
 
 export const Civility = () => {
   return (
@@ -11,7 +11,7 @@ export const Civility = () => {
         <HStack width="100%" justifyContent="space-between" mb={4}>
           <VStack align="flex-start" gap={1} flex="1">
             <DropDownList
-              collection={civility}
+              collection={civilite}
               label="Civilité"
               placeholder="Civilité"
             />
