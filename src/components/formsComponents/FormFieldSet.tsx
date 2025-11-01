@@ -22,9 +22,7 @@ export const FormFieldSet: React.FC<FormFieldSetProps> = ({
         <Box mb="12px">
           <Text>{label}</Text>
         </Box>
-        <Box gap="6" display="flex" flexWrap="wrap" mb="15px">
-          {children}
-        </Box>
+        <Box mb="15px">{children}</Box>
       </Box>
     </>
   );

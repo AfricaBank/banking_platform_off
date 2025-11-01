@@ -52,54 +52,54 @@ export const FormLayout = () => {
   };
 
   return (
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Box>
-            <GeneralInfoBlock />
-          </Box>
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box>
+          <GeneralInfoBlock />
+        </Box>
 
-          <Box
-              width="100%"
-              padding="4"
-              borderRadius="10px"
-              boxShadow="0px 0px 6px 2px rgba(70, 70, 118, 0.1)"
-              display="flex"
-              gap={4}
-          >
-            {/* Barre latérale des étapes */}
-            <StepperBox>
-              <StepperComponent
-                  steps={stepsWithTitlesOnly}
-                  currentStep={currentStep}
-                  onStepChange={setCurrentStep}
-              />
-            </StepperBox>
+        <Box
+          width="100%"
+          padding="4"
+          borderRadius="10px"
+          boxShadow="0px 0px 6px 2px rgba(70, 70, 118, 0.1)"
+          display="flex"
+          gap={4}
+        >
+          {/* Barre latérale des étapes */}
+          <StepperBox>
+            <StepperComponent
+              steps={stepsWithTitlesOnly}
+              currentStep={currentStep}
+              onStepChange={setCurrentStep}
+            />
+          </StepperBox>
 
-            {/* Formulaire principal de l'étape */}
-            <Box width="100%" padding="10px" overflow="auto">
-              <Box pb="12px">
-                <Text color="black">Ajout du titulaire</Text>
-              </Box>
+          {/* Formulaire principal de l'étape */}
+          <Box width="100%" padding="10px" overflow="auto">
+            <Box pb="12px">
+              <Text color="black">Ajout du titulaire</Text>
+            </Box>
 
-              <Box pb="10px">{formComponents[currentStep]}</Box>
+            <Box pb="10px">{formComponents[currentStep]}</Box>
 
-              {/* Boutons de navigation */}
-              <Box pb="10px" display="flex" justifyContent="center" gap={4}>
-                <SimpleButton>Enregistrer le brouillon</SimpleButton>
+            {/* Boutons de navigation */}
+            <Box pb="10px" display="flex" justifyContent="center" gap={4}>
+              <SimpleButton>Enregistrer le brouillon</SimpleButton>
 
-                <SimpleButton variant="outline" onClick={handlePrevious}>
-                  Précédent
-                </SimpleButton>
+              <SimpleButton variant="outline" onClick={handlePrevious}>
+                Précédent
+              </SimpleButton>
 
-                {currentStep < totalSteps ? (
-                    <SimpleButton onClick={handleNext}>Suivant</SimpleButton>
-                ) : (
-                    <SimpleButton type="submit">Terminer</SimpleButton>
-                )}
-              </Box>
+              {currentStep < totalSteps ? (
+                <SimpleButton onClick={handleNext}>Suivant</SimpleButton>
+              ) : (
+                <SimpleButton type="submit">Terminer</SimpleButton>
+              )}
             </Box>
           </Box>
-        </form>
-      </FormProvider>
+        </Box>
+      </form>
+    </FormProvider>
   );
 };

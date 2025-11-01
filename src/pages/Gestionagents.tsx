@@ -1,3 +1,5 @@
+import { AjoutPersonnePhysique } from "@/components/formsComponents/AjoutPersonnePhysique.tsx";
+
 export const Gestionagents = () => {
-  return <div>Gestion des agents</div>;
+  return <AjoutPersonnePhysique />;
 };
