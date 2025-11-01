@@ -72,7 +72,7 @@ export const BankAccountForms = () => {
             </VStack>
             <VStack align="flex-start" gap={1} flex="1">
               <InputTextField
-                  label="Motif ouverture"gi
+                  label="Motif ouverture"
                   placeholder="Motif ouverture"
                   {...register(`accounts[${accountIndex}].motif_ouverture`)}
               />
