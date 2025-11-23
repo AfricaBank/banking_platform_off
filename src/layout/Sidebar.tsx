@@ -9,149 +9,184 @@ import groupe from "../assets/icons/vector2.png";
 import dossier from "../assets/icons/vector6.png";
 import "../styles/sidebar.css";
 
-interface SidebarProps{
-    isCollapsed: boolean;
-    path:string;
+interface SidebarProps {
+  isCollapsed: boolean;
+  path?: string;
 }
 const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
-    const location = useLocation();
+  const location = useLocation();
 
-    const isActive = (path:string) => location.pathname === path;
+  const isActive = (path: string) => location.pathname === path;
 
-    return (
-        <Grid
-            templateAreas={`"logo"
+  return (
+    <Grid
+      templateAreas={`"logo"
                       "dashboard"
                       "groupes"
                       "roles"
                       "agents"
                       "taches"
                       "dossiers"`}
-            gridTemplateRows="auto repeat(6, 30px)"
-            gap={6}
-            color="black"
-            alignItems="center"
-            fontWeight="bold"
-            padding={isCollapsed ? 2 : 10}
-            width={isCollapsed ? "80px" : "299px"}
-            transition="width 0.3s ease-in-out"
-            position="fixed"
+      gridTemplateRows="auto repeat(6, 30px)"
+      gap={6}
+      color="black"
+      alignItems="center"
+      fontWeight="bold"
+      padding={isCollapsed ? 2 : 10}
+      width={isCollapsed ? "80px" : "299px"}
+      transition="width 0.3s ease-in-out"
+      position="fixed"
+    >
+      <GridItem>
+        <Link to="/dashboard">
+          <img
+            src={logo1}
+            alt="Logo"
+            width={isCollapsed ? 40 : 170}
+            height={40}
+          />
+        </Link>
+      </GridItem>
+
+      <GridItem>
+        <Link
+          to="/dashboard"
+          className="navLinkHover"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: isActive("/dashboard")
+              ? "dodgerblue"
+              : "transparent",
+            padding: "5px",
+            borderRadius: "5px",
+            height: 40,
+          }}
         >
-            <GridItem>
-                <Link to="/dashboard">
-                    <img src={logo1} alt="Logo" width={isCollapsed ? 40 : 170} height={40} />
-                </Link>
-            </GridItem>
+          <img
+            src={icondashboard}
+            alt="Dashboard"
+            style={{ marginRight: isCollapsed ? "0" : "10px" }}
+          />
+          {!isCollapsed && "Dashboard"}
+        </Link>
+      </GridItem>
 
-            <GridItem>
-                <Link
-                    to="/dashboard"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/dashboard") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={icondashboard} alt="Dashboard" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Dashboard"}
-                </Link>
-            </GridItem>
+      <GridItem>
+        <Link
+          to="/groupes"
+          className="navLinkHover"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: isActive("/groupes")
+              ? "dodgerblue"
+              : "transparent",
+            padding: "5px",
+            borderRadius: "5px",
+            height: 40,
+          }}
+        >
+          <img
+            src={groupe}
+            alt="Gestion des groupes"
+            style={{ marginRight: isCollapsed ? "0" : "10px" }}
+          />
+          {!isCollapsed && "Gestion des groupes"}
+        </Link>
+      </GridItem>
 
-            <GridItem>
-                <Link
-                    to="/groupes"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/groupes") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={groupe} alt="Gestion des groupes" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Gestion des groupes"}
-                </Link>
-            </GridItem>
+      <GridItem>
+        <Link
+          to="/roles"
+          className="navLinkHover"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: isActive("/roles") ? "dodgerblue" : "transparent",
+            padding: "5px",
+            borderRadius: "5px",
+            height: 40,
+          }}
+        >
+          <img
+            src={role}
+            alt="Gestion des rôles"
+            style={{ marginRight: isCollapsed ? "0" : "10px" }}
+          />
+          {!isCollapsed && "Gestion des rôles"}
+        </Link>
+      </GridItem>
 
-            <GridItem>
-                <Link
-                    to="/roles"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/roles") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={role} alt="Gestion des rôles" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Gestion des rôles"}
-                </Link>
-            </GridItem>
+      <GridItem>
+        <Link
+          to="/agents"
+          className="navLinkHover"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: isActive("/agents") ? "dodgerblue" : "transparent",
+            padding: "5px",
+            borderRadius: "5px",
+            height: 40,
+          }}
+        >
+          <img
+            src={agent}
+            alt="Gestion des agents"
+            style={{ marginRight: isCollapsed ? "0" : "10px" }}
+          />
+          {!isCollapsed && "Gestion des agents"}
+        </Link>
+      </GridItem>
 
-            <GridItem>
-                <Link
-                    to="/agents"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/agents") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={agent} alt="Gestion des agents" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Gestion des agents"}
-                </Link>
-            </GridItem>
+      <GridItem>
+        <Link
+          to="/taches"
+          className="navLinkHover"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: isActive("/taches") ? "dodgerblue" : "transparent",
+            padding: "5px",
+            borderRadius: "5px",
+            height: 40,
+          }}
+        >
+          <img
+            src={tachesactives}
+            alt="Taches actives"
+            style={{ marginRight: isCollapsed ? "0" : "10px" }}
+          />
+          {!isCollapsed && "Taches actives"}
+        </Link>
+      </GridItem>
 
-            <GridItem>
-                <Link
-                    to="/taches"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/taches") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={tachesactives} alt="Taches actives" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Taches actives"}
-                </Link>
-            </GridItem>
-
-            <GridItem>
-                <Link
-                    to="/dossiers"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/dossiers") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={dossier} alt="Gestion des dossiers" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Gestion des dossiers"}
-                </Link>
-            </GridItem>
-        </Grid>
-    );
+      <GridItem>
+        <Link
+          to="/dossiers"
+          className="navLinkHover"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: isActive("/dossiers")
+              ? "dodgerblue"
+              : "transparent",
+            padding: "5px",
+            borderRadius: "5px",
+            height: 40,
+          }}
+        >
+          <img
+            src={dossier}
+            alt="Gestion des dossiers"
+            style={{ marginRight: isCollapsed ? "0" : "10px" }}
+          />
+          {!isCollapsed && "Gestion des dossiers"}
+        </Link>
+      </GridItem>
+    </Grid>
+  );
 };
 
 export default Sidebar;
