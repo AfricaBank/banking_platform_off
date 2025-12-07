@@ -1,12 +1,14 @@
 import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "../../customFormFields/InputTextField";
 import { HStack, VStack, Text } from "@chakra-ui/react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-
+import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
+import { countries, sexe } from "@/dataObject/ListCollection.ts";
 export const PersonalInformations = () => {
   const {
     register,
+    control,
     formState: { errors },
   } = useFormContext();
   return (
@@ -14,6 +16,7 @@ export const PersonalInformations = () => {
       <FormFieldSet label="Naissance">
         <HStack width="100%" justifyContent="space-between" mb={4}>
           <VStack align="flex-start" gap={1} flex="1">
+            {/* Date de naissance (laissé en InputTextField car c'est une date) */}
             <InputTextField
               label="Date de naissance"
               placeholder="Date de naissance"
@@ -31,13 +34,24 @@ export const PersonalInformations = () => {
               )}
             />
           </VStack>
+
+          {/* CHAMP CONVERTIT : Pays de naissance */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Pays de naissance"
-              placeholder="Pays de naissance"
-              {...register("pays_naissance", {
+            <Controller
+              name="pays_naissance"
+              control={control}
+              rules={{
                 required: "Le pays de naissance est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Pays de naissance"
+                  placeholder="Pays de naissance"
+                  collection={countries} // Collection de pays
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -49,6 +63,7 @@ export const PersonalInformations = () => {
               )}
             />
           </VStack>
+
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Lieu de naissance"
@@ -69,8 +84,8 @@ export const PersonalInformations = () => {
           </VStack>
         </HStack>
 
+        {/* Reste du FormFieldSet Naissance non modifié (Inputs) */}
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Prénom du père */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Prénom du père"
@@ -89,8 +104,6 @@ export const PersonalInformations = () => {
               )}
             />
           </VStack>
-
-          {/* Prénom de la mère */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Prénom de la mère"
@@ -109,8 +122,6 @@ export const PersonalInformations = () => {
               )}
             />
           </VStack>
-
-          {/* Nom de jeune fille de la mère */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Nom de jeune fille de la mère"
@@ -130,8 +141,6 @@ export const PersonalInformations = () => {
             />
           </VStack>
         </HStack>
-
-        {/* Naissance présumée */}
         <VStack align="flex-start" gap={1} flex="1">
           <InputTextField
             label="Naissance présumée"
@@ -154,14 +163,23 @@ export const PersonalInformations = () => {
       ---
       <FormFieldSet label="Situation de famille">
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Situation familiale */}
+          {/* CHAMP CONVERTIT : Situation familiale */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Situation familiale"
-              placeholder="Situation familiale"
-              {...register("situation_familiale", {
+            <Controller
+              name="situation_familiale"
+              control={control}
+              rules={{
                 required: "La situation familiale est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Situation familiale"
+                  placeholder="Situation familiale"
+                  collection={sexe} // Collection de situations familiales
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -174,7 +192,6 @@ export const PersonalInformations = () => {
             />
           </VStack>
 
-          {/* Adresse fiscale */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Adresse fiscale"
@@ -193,8 +210,6 @@ export const PersonalInformations = () => {
               )}
             />
           </VStack>
-
-          {/* Code postal */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Code postal"
@@ -218,7 +233,6 @@ export const PersonalInformations = () => {
       ---
       <FormFieldSet label="Contact et adresse">
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Numéro de téléphone */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Numéro de téléphone"
@@ -238,14 +252,23 @@ export const PersonalInformations = () => {
             />
           </VStack>
 
-          {/* Régime matrimonial */}
+          {/* CHAMP CONVERTIT : Régime matrimonial */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Régime matrimonial"
-              placeholder="Régime matrimonial"
-              {...register("regime_matrimonial", {
+            <Controller
+              name="regime_matrimonial"
+              control={control}
+              rules={{
                 required: "Le régime matrimonial est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Régime matrimonial"
+                  placeholder="Régime matrimonial"
+                  collection={countries} // Collection des régimes matrimoniaux
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -258,7 +281,6 @@ export const PersonalInformations = () => {
             />
           </VStack>
 
-          {/* Nom marital */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Nom marital"
@@ -280,14 +302,23 @@ export const PersonalInformations = () => {
         </HStack>
 
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Localité */}
+          {/* CHAMP CONVERTIT : Localité */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Localité"
-              placeholder="Localité"
-              {...register("localite", {
+            <Controller
+              name="localite"
+              control={control}
+              rules={{
                 required: "La localité est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Localité"
+                  placeholder="Localité"
+                  collection={countries} // Collection de localités
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -300,14 +331,23 @@ export const PersonalInformations = () => {
             />
           </VStack>
 
-          {/* Pays */}
+          {/* CHAMP CONVERTIT : Pays */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Pays"
-              placeholder="Pays"
-              {...register("pays", {
+            <Controller
+              name="pays"
+              control={control}
+              rules={{
                 required: "Le pays est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Pays"
+                  placeholder="Pays"
+                  collection={countries} // Collection de pays
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -320,14 +360,23 @@ export const PersonalInformations = () => {
             />
           </VStack>
 
-          {/* Statut de résidence */}
+          {/* CHAMP CONVERTIT : Statut de résidence (Nommé 'RESIDENT' dans votre liste) */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Statut de résidence"
-              placeholder="Statut de résidence"
-              {...register("statut_residence", {
+            <Controller
+              name="statut_residence" // Utilisation de l'ancien nom de champ
+              control={control}
+              rules={{
                 required: "Le statut de résidence est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Statut de résidence"
+                  placeholder="Statut de résidence"
+                  collection={sexe} // Collection des statuts de résidence
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -342,14 +391,23 @@ export const PersonalInformations = () => {
         </HStack>
 
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Wilaya */}
+          {/* CHAMP CONVERTIT : Wilaya */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Wilaya"
-              placeholder="Wilaya"
-              {...register("wilaya", {
+            <Controller
+              name="wilaya"
+              control={control}
+              rules={{
                 required: "La Wilaya est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Wilaya"
+                  placeholder="Wilaya"
+                  collection={sexe} // Collection des wilayas
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -362,14 +420,23 @@ export const PersonalInformations = () => {
             />
           </VStack>
 
-          {/* Commune */}
+          {/* CHAMP CONVERTIT : Commune */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Commune"
-              placeholder="Commune"
-              {...register("commune", {
+            <Controller
+              name="commune"
+              control={control}
+              rules={{
                 required: "La commune est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Commune"
+                  placeholder="Commune"
+                  collection={sexe} // Collection des communes
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -381,6 +448,7 @@ export const PersonalInformations = () => {
               )}
             />
           </VStack>
+
           {/* Espace vide pour alignement */}
           <VStack align="flex-start" gap={1} flex="1" />
         </HStack>

@@ -33,7 +33,20 @@ export const col2 = createListCollection({
     { label: "Denzel ", value: "Washington" },
   ],
 });
-
+export const modalite_eer = createListCollection({
+  items: [
+    { label: "Présentiel", value: "presentiel" },
+    { label: "Démarchage ", value: "demarchage" },
+    { label: "Recommandation d’un client ", value: "Recommandation" },
+  ],
+});
+export const motif_eer = createListCollection({
+  items: [
+    { label: "Ouverture de compte courant", value: "ouverture de compte" },
+    { label: "Souscription à un produit d’épargne ", value: "souscription" },
+    { label: "Demande de crédit ou financement ", value: "credit" },
+  ],
+});
 export const civilite = createListCollection({
   items: [
     { label: "M", value: "Monsieur" },

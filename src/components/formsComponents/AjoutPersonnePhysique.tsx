@@ -15,9 +15,9 @@ import { SimpleButton } from "../customButtons/SimpleButton.tsx";
 const formComponentsPp = [
   <Civility />,
   <OriginEER />,
-  <ConformityBankingRelation />,
   <PersonalInformations />,
   <ProfessionnalActivities />,
+  <ConformityBankingRelation />,
   null,
 ];
 

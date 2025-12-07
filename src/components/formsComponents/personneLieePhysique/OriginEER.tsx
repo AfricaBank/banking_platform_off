@@ -1,15 +1,17 @@
 import { FormFieldSet } from "../FormFieldSet";
-import { InputTextField } from "../../customFormFields/InputTextField";
 import { HStack, VStack, Text } from "@chakra-ui/react";
 import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
-import { categori_clientel } from "@/dataObject/ListCollection.ts";
+import {
+  categori_clientel,
+  modalite_eer,
+  motif_eer,
+} from "@/dataObject/ListCollection.ts";
 import { CustomDatePicker } from "@/components/customFormFields/CustomDatePicker.tsx";
 
 export const OriginEER = () => {
   const {
-    register,
     control,
     formState: { errors },
   } = useFormContext();
@@ -73,17 +75,23 @@ export const OriginEER = () => {
 
           {/* Modalité */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Modalité"
-              placeholder="Modalité"
-              {...register("date_eer", {
-                required: "La date d'entrée en relation est obligatoire",
-              })}
+            <Controller
+              name="modalite_eer"
+              control={control}
+              rules={{ required: "La modalité EER est obligatoire" }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Modalité EER "
+                  placeholder="Modalité EER "
+                  collection={modalite_eer}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
-
             <ErrorMessage
               errors={errors}
-              name="date_eer"
+              name="modalite_eer"
               render={({ message }) => (
                 <Text color="red.500" fontSize="sm">
                   {message}
@@ -94,14 +102,20 @@ export const OriginEER = () => {
         </HStack>
         {/* Motif EER */}
         <VStack align="flex-start" gap={1} flex="1">
-          <InputTextField
-            label="Motif EER"
-            placeholder="Motif EER"
-            {...register("motif_eer", {
-              required: "Le motif eer est obligatoire",
-            })}
+          <Controller
+            name="motif_eer"
+            control={control}
+            rules={{ required: "Le motif eer est obligatoire" }}
+            render={({ field }) => (
+              <DropDownList
+                label="Motif EER "
+                placeholder="Motif EER "
+                collection={motif_eer}
+                value={field.value}
+                onValueChange={field.onChange}
+              />
+            )}
           />
-
           <ErrorMessage
             errors={errors}
             name="motif_eer"
