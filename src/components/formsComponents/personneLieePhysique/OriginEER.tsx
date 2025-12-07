@@ -1,12 +1,16 @@
 import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "../../customFormFields/InputTextField";
 import { HStack, VStack, Text } from "@chakra-ui/react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
+import { categori_clientel } from "@/dataObject/ListCollection.ts";
+import { CustomDatePicker } from "@/components/customFormFields/CustomDatePicker.tsx";
 
 export const OriginEER = () => {
   const {
     register,
+    control,
     formState: { errors },
   } = useFormContext();
   return (
@@ -15,16 +19,23 @@ export const OriginEER = () => {
         <HStack width="100%" justifyContent="space-between" mb={4}>
           {/* Catégorie clientèle */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Catégorie clientèle"
-              placeholder="Catégorie clientèle"
-              {...register("categpryClient", {
-                required: "La Catégorie clientèle est obligatoire",
-              })}
+            <Controller
+              name="categori_clientel"
+              control={control}
+              rules={{ required: "La catégorie clientèle ets obligatoire " }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Catégorie clientèle "
+                  placeholder="Catégorie clientèle "
+                  collection={categori_clientel}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
-              name="categorie_clientele"
+              name="categori_clientel"
               render={({ message }) => (
                 <Text color="red.500" fontSize="sm">
                   {message}
@@ -35,12 +46,19 @@ export const OriginEER = () => {
 
           {/* Date EER */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Date EER"
-              placeholder="Date EER"
-              {...register("date_eer", {
+            <Controller
+              name="date_eer"
+              control={control}
+              rules={{
                 required: "La date d'entrée en relation est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <CustomDatePicker
+                  nomDuChamp="Date EER"
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}

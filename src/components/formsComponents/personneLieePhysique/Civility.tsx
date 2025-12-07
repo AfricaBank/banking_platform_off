@@ -2,9 +2,15 @@ import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "../../customFormFields/InputTextField";
 import { HStack, VStack, Text } from "@chakra-ui/react";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
-import { civilite, sexe } from "@/dataObject/ListCollection.ts";
+import {
+  civilite,
+  countries,
+  document_type,
+  sexe,
+} from "@/dataObject/ListCollection.ts";
 import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { CustomDatePicker } from "@/components/customFormFields/CustomDatePicker.tsx";
 
 export const Civility = () => {
   const {
@@ -112,10 +118,28 @@ export const Civility = () => {
 
           {/* Nationalité */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Pays de nationalité"
-              placeholder="Pays de nationalité"
-              {...register("paysNationalite")}
+            <Controller
+              name="nationality"
+              control={control}
+              rules={{ required: "Le pays de nationalité est obligatoire." }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Pays de nationalité"
+                  placeholder="Pays de nationalité"
+                  collection={countries}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="nationality"
+              render={({ message }) => (
+                <Text color="red.500" fontSize="sm">
+                  {message}
+                </Text>
+              )}
             />
           </VStack>
 
@@ -133,40 +157,136 @@ export const Civility = () => {
         <HStack width="100%" justifyContent="space-between" mb={4}>
           {/* Double nationalité */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Pays de double nationalité"
-              placeholder="Pays de double nationalité"
-              {...register("doubleNationalite")}
+            <Controller
+              name="doubleNationality"
+              control={control}
+              rules={{
+                required: "Le pays de double nationalité est obligatoire.",
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Pays de double nationalité"
+                  placeholder="Pays de double nationalité"
+                  collection={countries}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="doubleNationality"
+              render={({ message }) => (
+                <Text color="red.500" fontSize="sm">
+                  {message}
+                </Text>
+              )}
             />
           </VStack>
 
           {/* Document d’identification */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Document d’identification"
-              placeholder="Document d’identification"
-              {...register("documentId")}
+            <Controller
+              name="document_type"
+              control={control}
+              rules={{
+                required:
+                  "Le type de document d'identification est obligatoire",
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Document d'identification"
+                  placeholder="Document d'identification"
+                  collection={document_type}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="document_type"
+              render={({ message }) => (
+                <Text color="red.500" fontSize="sm">
+                  {message}
+                </Text>
+              )}
             />
           </VStack>
 
           {/* Pays d’émission */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
-              label="Pays d’émission du document"
-              placeholder="Pays d’émission du document"
-              {...register("paysEmission")}
+              label="Numéro du document"
+              placeholder="NUméro du document"
+              {...register("document_id", {
+                required: "Le numéro du document est obligatoire",
+              })}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="document_id"
+              render={({ message }) => (
+                <Text color="red.500" fontSize="sm">
+                  {message}
+                </Text>
+              )}
             />
           </VStack>
         </HStack>
 
-        {/* Date de délivrance */}
-        <VStack align="flex-start" gap={1} flex="1">
-          <InputTextField
-            label="Date de délivrance"
-            placeholder="Date de délivrance"
-            {...register("dateDelivrance")}
-          />
-        </VStack>
+        <HStack width="100%" justifyContent="space-between" mb={4}>
+          <VStack align="flex-start" gap={1} flex="1">
+            <Controller
+              name="deliver_country"
+              control={control}
+              rules={{
+                required: "Le Pays d'émission est obligatoire",
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Pays de délivrance"
+                  placeholder="Pays de délivrance"
+                  collection={countries}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="deliver_country"
+              render={({ message }) => (
+                <Text color="red.500" fontSize="sm">
+                  {message}
+                </Text>
+              )}
+            />
+          </VStack>
+          <VStack align="flex-start" gap={1} flex="1">
+            <Controller
+              name="delivered_date"
+              control={control}
+              rules={{ required: "La date d'émission est obligatoire" }}
+              render={({ field }) => (
+                <CustomDatePicker
+                  nomDuChamp="Date d'émission"
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="delivered_date"
+              render={({ message }) => (
+                <Text color="red.500" fontSize="sm">
+                  {message}
+                </Text>
+              )}
+            />
+          </VStack>
+        </HStack>
       </FormFieldSet>
     </>
   );

@@ -7,6 +7,12 @@ export const collectionList = createListCollection({
     { label: "Svelte", value: "svelte" },
   ],
 });
+export const document_type = createListCollection({
+  items: [
+    { label: "passeport", value: "Passeport" },
+    { label: "cin", value: "CIN" },
+  ],
+});
 export const categori_clientel = createListCollection({
   items: [
     { label: "Retail", value: "Retail" },
@@ -14,7 +20,13 @@ export const categori_clientel = createListCollection({
     { label: "Corporate ", value: "Corporate" },
   ],
 });
-
+export const countries = createListCollection({
+  items: [
+    { label: "Sénégal", value: "Sénégal" },
+    { label: "Comores ", value: "Comores" },
+    { label: "Guinée ", value: "Guinée" },
+  ],
+});
 export const col2 = createListCollection({
   items: [
     { label: "Boyka", value: "Scott adkins" },
