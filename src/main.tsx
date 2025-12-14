@@ -11,6 +11,7 @@ import { Gestiondossiers } from "./pages/Gestiondossiers";
 import { Gestionagents } from "./pages/Gestionagents.tsx";
 import { system } from "./theme";
 import InitiationDossier from "@/components/pageContents/InitiationDossier.tsx";
+import RecherchePersonne from "@/components/pageContents/RecherchePersonne.tsx";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "initiation",
         element: <InitiationDossier />,
+      },
+      {
+        path: "recherche",
+        element: <RecherchePersonne />,
       },
     ],
   },

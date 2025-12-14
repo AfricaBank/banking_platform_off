@@ -28,11 +28,6 @@ export const AjoutPersonnePhysique = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const totalSteps = ajoutPersonnePhysique.length - 1;
 
-  const stepsWithTitlesOnly = ajoutPersonnePhysique.map((step, index) => ({
-    index,
-    title: step.title,
-  }));
-
   const handleNext = async () => {
     const isStepValid = await trigger(); // Valide les champs visibles
     if (isStepValid) {

@@ -1,4 +1,27 @@
 import { createListCollection } from "@chakra-ui/react";
+//import { countries } from 'countries-list';
+import i18n from 'i18n-iso-countries';
+import fr from 'i18n-iso-countries/langs/fr.json';
+
+// Charger les traductions françaises
+i18n.registerLocale(fr);
+
+// Collection des pays en français
+export const countryCollection = createListCollection({
+  items: Object.entries(i18n.getNames('fr')).map(([code, name]) => ({
+    label: name,
+    value: code
+  }))
+});
+
+// Création de la collection des pays
+// export const countryCollection = createListCollection({
+//   items: Object.entries(countries).map(([code, country]) => ({
+//     label: country.name,
+//     value: code
+//   }))
+// });
+
 export const collectionList = createListCollection({
   items: [
     { label: "React.js", value: "react" },
