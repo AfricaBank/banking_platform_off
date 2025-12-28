@@ -1,26 +1,40 @@
 import { FormFieldSet } from "../FormFieldSet";
-import { InputTextField } from "../../customFormFields/InputTextField";
 import { HStack, VStack, Text } from "@chakra-ui/react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { RadioButton } from "@/components/customFormFields/RadioButton.tsx";
+import { DropDownList } from "../../customFormFields/DropDownList";
+import { categori_socio_pro as socio } from "@/dataObject/ListCollection.ts";
 
 export const ProfessionnalActivities = () => {
   const {
-    register,
+    control,
     formState: { errors },
   } = useFormContext();
+
   return (
     <>
       <FormFieldSet label="Catégories spécifiques">
-        <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Catégorie clientèle */}
+        <HStack
+          width="100%"
+          justifyContent="space-between"
+          mb={4}
+          align="flex-start"
+        >
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Catégorie clientèle"
-              placeholder="Catégorie clientèle"
-              {...register("categorie_clientele", {
-                required: "La catégorie clientèle est obligatoire",
-              })}
+            <Controller
+              name="categorie_clientele"
+              control={control}
+              rules={{ required: "La catégorie clientèle est obligatoire" }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Catégorie clientèle"
+                  placeholder="Catégorie clientèle"
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -33,14 +47,22 @@ export const ProfessionnalActivities = () => {
             />
           </VStack>
 
-          {/* Catégorie socio-professionnelle */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Catégorie socio-professionnelle"
-              placeholder="Catégorie socio-professionnelle"
-              {...register("categorie_socio_professionnelle", {
+            <Controller
+              name="categorie_socio_professionnelle"
+              control={control}
+              rules={{
                 required: "La catégorie socio-professionnelle est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Catégorie socio-professionnelle"
+                  placeholder="Catégorie socio-professionnelle"
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -52,148 +74,61 @@ export const ProfessionnalActivities = () => {
               )}
             />
           </VStack>
+        </HStack>
 
-          {/* Connaissance des informations internes */}
+        <HStack
+          width="100%"
+          justifyContent="space-between"
+          mb={4}
+          align="flex-start"
+        >
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Connaissance des informations internes"
-              placeholder="Connaissance des informations internes"
-              {...register("connaissance_info_internes", {
-                required:
-                  "L'information sur la connaissance interne est obligatoire",
-              })}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="connaissance_info_internes"
-              render={({ message }) => (
-                <Text color="red.500" fontSize="sm">
-                  {message}
-                </Text>
-              )}
-            />
+            <RadioButton label="Connaissance des informations internes" />
+          </VStack>
+          <VStack align="flex-start" gap={1} flex="1">
+            <RadioButton label="Dirigeant BE dans une société cotée" />
+          </VStack>
+          <VStack align="flex-start" gap={1} flex="1">
+            <RadioButton label="BE dans une société cotée" />
           </VStack>
         </HStack>
 
-        <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Dirigeant BE dans une société cotée */}
+        <HStack
+          width="100%"
+          justifyContent="space-between"
+          mb={4}
+          align="flex-start"
+        >
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Dirigeant BE dans une société cotée"
-              placeholder="Dirigeant BE dans une société cotée"
-              {...register("dirigeant_be_soc_cotee", {
-                required: "Cette information est obligatoire",
-              })}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="dirigeant_be_soc_cotee"
-              render={({ message }) => (
-                <Text color="red.500" fontSize="sm">
-                  {message}
-                </Text>
-              )}
-            />
+            <RadioButton label="Détention compte titre" />
           </VStack>
-
-          {/* BE dans une société cotée */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="BE dans une société cotée"
-              placeholder="BE dans une société cotée"
-              {...register("be_soc_cotee", {
-                required: "Cette information est obligatoire",
-              })}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="be_soc_cotee"
-              render={({ message }) => (
-                <Text color="red.500" fontSize="sm">
-                  {message}
-                </Text>
-              )}
-            />
+            <RadioButton label="Délégation KYC" />
           </VStack>
-
-          {/* Détention compte titre */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Détention compte titre"
-              placeholder="Détention compte titre"
-              {...register("detention_compte_titre", {
-                required:
-                  "L'information sur la détention de compte titre est obligatoire",
-              })}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="detention_compte_titre"
-              render={({ message }) => (
-                <Text color="red.500" fontSize="sm">
-                  {message}
-                </Text>
-              )}
-            />
+            <RadioButton label="Présence de flux international" />
           </VStack>
-        </HStack>
-
-        <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Délégation KYC */}
-          <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Délégation KYC"
-              placeholder="Délégation KYC"
-              {...register("delegation_kyc", {
-                required: "L'information sur la délégation KYC est obligatoire",
-              })}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="delegation_kyc"
-              render={({ message }) => (
-                <Text color="red.500" fontSize="sm">
-                  {message}
-                </Text>
-              )}
-            />
-          </VStack>
-
-          {/* Présence de flux international */}
-          <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Présence de flux international"
-              placeholder="Présence de flux international"
-              {...register("presence_flux_international", {
-                required:
-                  "L'information sur les flux internationaux est obligatoire",
-              })}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="presence_flux_international"
-              render={({ message }) => (
-                <Text color="red.500" fontSize="sm">
-                  {message}
-                </Text>
-              )}
-            />
-          </VStack>
-          {/* Espace vide pour alignement */}
-          <VStack align="flex-start" gap={1} flex="1" />
         </HStack>
       </FormFieldSet>
-      ---
+
       <FormFieldSet label="Activité économique">
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Secteur d’activité économique */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Secteur d’activité économique"
-              placeholder="Secteur d’activité économique"
-              {...register("secteur_activite_eco", {
+            <Controller
+              name="secteur_activite_eco"
+              control={control}
+              rules={{
                 required: "Le secteur d’activité économique est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Secteur d’activité économique"
+                  placeholder="Secteur d’activité économique"
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -206,14 +141,20 @@ export const ProfessionnalActivities = () => {
             />
           </VStack>
 
-          {/* Libellé APE */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Libellé APE"
-              placeholder="Libellé APE"
-              {...register("libelle_ape", {
-                required: "Le libellé APE est obligatoire",
-              })}
+            <Controller
+              name="libelle_ape"
+              control={control}
+              rules={{ required: "Le libellé APE est obligatoire" }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Libellé APE"
+                  placeholder="Libellé APE"
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -226,14 +167,22 @@ export const ProfessionnalActivities = () => {
             />
           </VStack>
 
-          {/* Date de création de l’activité */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Date de création de l’activité"
-              placeholder="Date de création de l’activité"
-              {...register("date_creation_activite", {
+            <Controller
+              name="date_creation_activite"
+              control={control}
+              rules={{
                 required: "La date de création de l’activité est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Date de création de l’activité"
+                  placeholder="Date de création de l’activité"
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -248,14 +197,22 @@ export const ProfessionnalActivities = () => {
         </HStack>
 
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Principal pays d’activité */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Principal pays d’activité"
-              placeholder="Principal pays d’activité"
-              {...register("principal_pays_activite", {
+            <Controller
+              name="principal_pays_activite"
+              control={control}
+              rules={{
                 required: "Le principal pays d’activité est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Principal pays d’activité"
+                  placeholder="Principal pays d’activité"
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -268,15 +225,23 @@ export const ProfessionnalActivities = () => {
             />
           </VStack>
 
-          {/* Activité à risque */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Activité à risque"
-              placeholder="Activité à risque"
-              {...register("activite_a_risque", {
+            <Controller
+              name="activite_a_risque"
+              control={control}
+              rules={{
                 required:
                   "L'information sur l'activité à risque est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Activité à risque"
+                  placeholder="Activité à risque"
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -289,14 +254,22 @@ export const ProfessionnalActivities = () => {
             />
           </VStack>
 
-          {/* Indicateur privé professionnel */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Indicateur privé professionnel"
-              placeholder="Indicateur privé professionnel"
-              {...register("indicateur_prive_pro", {
+            <Controller
+              name="indicateur_prive_pro"
+              control={control}
+              rules={{
                 required: "L'indicateur privé professionnel est obligatoire",
-              })}
+              }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Indicateur privé professionnel"
+                  placeholder="Indicateur privé professionnel"
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -310,14 +283,20 @@ export const ProfessionnalActivities = () => {
           </VStack>
         </HStack>
 
-        {/* Avoirs contrôlés */}
         <VStack align="flex-start" gap={1} flex="1">
-          <InputTextField
-            label="Avoirs contrôlés"
-            placeholder="Avoirs contrôlés"
-            {...register("avoirs_controles", {
-              required: "Les avoirs contrôlés sont obligatoires",
-            })}
+          <Controller
+            name="avoirs_controles"
+            control={control}
+            rules={{ required: "Les avoirs contrôlés sont obligatoires" }}
+            render={({ field }) => (
+              <DropDownList
+                label="Avoirs contrôlés"
+                placeholder="Avoirs contrôlés"
+                collection={socio}
+                value={field.value}
+                onValueChange={field.onChange}
+              />
+            )}
           />
           <ErrorMessage
             errors={errors}
@@ -330,17 +309,23 @@ export const ProfessionnalActivities = () => {
           />
         </VStack>
       </FormFieldSet>
-      ---
+
       <FormFieldSet label="Code sectoriel">
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Libellé */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Libellé"
-              placeholder="Libellé"
-              {...register("code_sectoriel_libelle", {
-                required: "Le libellé est obligatoire",
-              })}
+            <Controller
+              name="code_sectoriel_libelle"
+              control={control}
+              rules={{ required: "Le libellé est obligatoire" }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Libellé"
+                  placeholder="Libellé"
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -353,14 +338,20 @@ export const ProfessionnalActivities = () => {
             />
           </VStack>
 
-          {/* Pourcentage */}
           <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Pourcentage"
-              placeholder="Pourcentage"
-              {...register("code_sectoriel_pourcentage", {
-                required: "Le pourcentage est obligatoire",
-              })}
+            <Controller
+              name="code_sectoriel_pourcentage"
+              control={control}
+              rules={{ required: "Le pourcentage est obligatoire" }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Pourcentage"
+                  placeholder="Pourcentage"
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
             />
             <ErrorMessage
               errors={errors}
@@ -372,7 +363,6 @@ export const ProfessionnalActivities = () => {
               )}
             />
           </VStack>
-          {/* Espace vide pour alignement */}
           <VStack align="flex-start" gap={1} flex="1" />
         </HStack>
       </FormFieldSet>

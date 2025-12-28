@@ -5,6 +5,7 @@ import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
 import { countries, sexe } from "@/dataObject/ListCollection.ts";
+import { RadioButton } from "@/components/customFormFields/RadioButton.tsx";
 export const PersonalInformations = () => {
   const {
     register,
@@ -142,22 +143,7 @@ export const PersonalInformations = () => {
           </VStack>
         </HStack>
         <VStack align="flex-start" gap={1} flex="1">
-          <InputTextField
-            label="Naissance présumée"
-            placeholder="Naissance présumée"
-            {...register("naissance_presumee", {
-              required: "La naissance présumée est obligatoire",
-            })}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="naissance_presumee"
-            render={({ message }) => (
-              <Text color="red.500" fontSize="sm">
-                {message}
-              </Text>
-            )}
-          />
+          <RadioButton label="Naissance présumé ?" />
         </VStack>
       </FormFieldSet>
       ---

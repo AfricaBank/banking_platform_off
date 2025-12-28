@@ -3,6 +3,10 @@ import { InputTextField } from "../../customFormFields/InputTextField";
 import { VStack, HStack, Text } from "@chakra-ui/react";
 import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { RadioButton } from "@/components/customFormFields/RadioButton.tsx";
+import { CustomDatePicker } from "../../customFormFields/CustomDatePicker";
+import { DropDownList } from "../../customFormFields/DropDownList";
+import { categori_socio_pro as socio } from "@/dataObject/ListCollection.ts";
 
 export const ConformityBankingRelation = () => {
   const {
@@ -10,23 +14,28 @@ export const ConformityBankingRelation = () => {
     control,
     formState: { errors },
   } = useFormContext();
+
   return (
     <>
-      {/* --- Bloc Conformité --- */}
       <FormFieldSet label="Conformité">
-        <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Détection PPE (obligatoire -> Controller) */}
+        <HStack
+          width="100%"
+          justifyContent="space-between"
+          mb={4}
+          align="flex-start"
+        >
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="detectionPpe"
               control={control}
               rules={{ required: "La détection PPE est obligatoire" }}
               render={({ field }) => (
-                <InputTextField
+                <DropDownList
                   label="Détection PPE"
                   placeholder="Détection PPE"
-                  value={field.value ?? ""}
-                  onChange={field.onChange}
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
                 />
               )}
             />
@@ -41,18 +50,18 @@ export const ConformityBankingRelation = () => {
             />
           </VStack>
 
-          {/* Type PPE (obligatoire -> Controller) */}
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="typePpe"
               control={control}
               rules={{ required: "Le type PPE est obligatoire" }}
               render={({ field }) => (
-                <InputTextField
+                <DropDownList
                   label="Type de PPE"
                   placeholder="Type de PPE"
-                  value={field.value ?? ""}
-                  onChange={field.onChange}
+                  collection={socio}
+                  value={field.value}
+                  onValueChange={field.onChange}
                 />
               )}
             />
@@ -73,9 +82,47 @@ export const ConformityBankingRelation = () => {
               placeholder="Commentaire"
               {...register("commentaire")}
             />
+          </VStack>
+        </HStack>
+
+        <HStack
+          width="100%"
+          justifyContent="space-between"
+          mb={4}
+          align="flex-start"
+        >
+          <VStack align="flex-start" gap={1} flex="1">
+            <RadioButton label="PPE local" />
+          </VStack>
+
+          <VStack align="flex-start" gap={1} flex="1">
+            <RadioButton label="Sous sanction" />
+          </VStack>
+          <VStack align="flex-center" flex={1} width="32.5%"></VStack>
+        </HStack>
+
+        <HStack
+          width="100%"
+          justifyContent="space-between"
+          mb={4}
+          align="flex-start"
+        >
+          <VStack align="flex-start" gap={1} flex="1" width="32.5%">
+            <Controller
+              name="dateIdentification"
+              control={control}
+              rules={{ required: "La date d’identification est obligatoire" }}
+              render={({ field }) => (
+                <CustomDatePicker
+                  nomDuChamp="Date d’identification"
+                  value={field.value}
+                  onChange={(val) => field.onChange(val)}
+                />
+              )}
+            />
             <ErrorMessage
               errors={errors}
-              name="commentaire"
+              name="dateIdentification"
               render={({ message }) => (
                 <Text color="red.500" fontSize="sm">
                   {message}
@@ -83,52 +130,42 @@ export const ConformityBankingRelation = () => {
               )}
             />
           </VStack>
+          <VStack align="flex-center" flex={1} width="32.5%">
+            <Controller
+              name="dateInterrogation"
+              control={control}
+              rules={{
+                required: "La date d’interrogation vigilance est obligatoire",
+              }}
+              render={({ field }) => (
+                <CustomDatePicker
+                  nomDuChamp="Date d’interrogation vigilance"
+                  value={field.value}
+                  onChange={(val) => field.onChange(val)}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="dateInterrogation"
+              render={({ message }) => (
+                <Text color="red.500" fontSize="sm">
+                  {message}
+                </Text>
+              )}
+            />
+          </VStack>
+          <VStack align="flex-center" flex={1} width="32.5%"></VStack>
         </HStack>
-
-        {/* Deuxième ligne */}
-        <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* PPE local (optionnel) */}
-          <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="PPE local"
-              placeholder="PPE local"
-              {...register("ppeLocal")}
-            />
-          </VStack>
-
-          {/* Sous sanction (optionnel) */}
-          <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Sous sanction"
-              placeholder="Sous sanction"
-              {...register("sousSanction")}
-            />
-          </VStack>
-
-          {/* Date d’identification (optionnel) */}
-          <VStack align="flex-start" gap={1} flex="1">
-            <InputTextField
-              label="Date d’identification"
-              placeholder="Date d’identification"
-              {...register("dateIdentification")}
-            />
-          </VStack>
-        </HStack>
-
-        {/* Date interrogation vigilance (optionnel) */}
-        <VStack align="flex-start" gap={1}>
-          <InputTextField
-            label="Date d’interrogation vigilance"
-            placeholder="Date d’interrogation vigilance"
-            {...register("dateInterrogation")}
-          />
-        </VStack>
       </FormFieldSet>
 
-      {/* --- Bloc Relation bancaire --- */}
       <FormFieldSet label="Relation bancaire">
-        <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* ID Nationale (obligatoire -> Controller) */}
+        <HStack
+          width="100%"
+          justifyContent="space-between"
+          mb={4}
+          align="flex-start"
+        >
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="idNationale"
@@ -154,38 +191,54 @@ export const ConformityBankingRelation = () => {
             />
           </VStack>
 
-          {/* Code siège (optionnel) */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Code siège"
               placeholder="Code siège"
               {...register("codeSiege")}
+              disabled
             />
           </VStack>
 
-          {/* Code racine (optionnel) */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Code racine"
               placeholder="Code racine"
               {...register("codeRacine")}
+              disabled
             />
           </VStack>
         </HStack>
 
-        {/* Segment clientèle DG (optionnel) */}
-        <VStack align="flex-start" gap={1}>
-          <InputTextField
-            label="Segment clientèle vis-à-vis DG"
-            placeholder="Segment clientèle vis-à-vis DG"
-            {...register("segmentDg")}
+        <VStack align="flex-start" gap={1} width="32.5%">
+          <Controller
+            name="segmentDg"
+            control={control}
+            rules={{ required: "Le segment clientèle est obligatoire" }}
+            render={({ field }) => (
+              <DropDownList
+                label="Segment clientèle vis-à-vis DG"
+                placeholder="Segment clientèle vis-à-vis DG"
+                collection={socio}
+                value={field.value}
+                onValueChange={field.onChange}
+              />
+            )}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="segmentDg"
+            render={({ message }) => (
+              <Text color="red.500" fontSize="sm">
+                {message}
+              </Text>
+            )}
           />
         </VStack>
       </FormFieldSet>
 
-      {/* --- Bloc Enfants et personnes à charge --- */}
       <FormFieldSet label="Enfants et personnes à charge">
-        <VStack align="flex-start" gap={1}>
+        <VStack align="flex-start" gap={1} width="32.5%">
           <InputTextField
             label="Enfants et personnes à charge"
             placeholder="Enfants et personnes à charge"

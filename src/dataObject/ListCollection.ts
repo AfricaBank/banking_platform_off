@@ -1,17 +1,17 @@
 import { createListCollection } from "@chakra-ui/react";
 //import { countries } from 'countries-list';
-import i18n from 'i18n-iso-countries';
-import fr from 'i18n-iso-countries/langs/fr.json';
+import i18n from "i18n-iso-countries";
+import fr from "i18n-iso-countries/langs/fr.json";
 
 // Charger les traductions françaises
 i18n.registerLocale(fr);
 
 // Collection des pays en français
 export const countryCollection = createListCollection({
-  items: Object.entries(i18n.getNames('fr')).map(([code, name]) => ({
+  items: Object.entries(i18n.getNames("fr")).map(([code, name]) => ({
     label: name,
-    value: code
-  }))
+    value: code,
+  })),
 });
 
 // Création de la collection des pays
@@ -41,6 +41,25 @@ export const categori_clientel = createListCollection({
     { label: "Retail", value: "Retail" },
     { label: "Professionnel ", value: "Professionnel" },
     { label: "Corporate ", value: "Corporate" },
+  ],
+});
+export const categori_socio_pro = createListCollection({
+  items: [
+    { label: "Agriculteur exploitant", value: "Agriculteur exploitant" },
+    {
+      label: "chef d'entreprise",
+      value: "chef d'entreprise",
+    },
+    {
+      label: "Cadre et profession intellectuelle supérieure",
+      value: "Cadre et profession intellectuelle supérieure",
+    },
+    { label: "Profession intermédiaire", value: "Profession intermédiaire" },
+    { label: "Employé", value: "Employé" },
+    { label: "Ouvrier", value: "Ouvrier" },
+    { label: "Retraité", value: "Retraité" },
+    { label: "Étudiant", value: "Étudiant" },
+    { label: "Profession libérale", value: "Profession libérale" },
   ],
 });
 export const countries = createListCollection({
