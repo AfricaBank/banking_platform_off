@@ -1,17 +1,17 @@
 import { createListCollection } from "@chakra-ui/react";
 //import { countries } from 'countries-list';
-import i18n from 'i18n-iso-countries';
-import fr from 'i18n-iso-countries/langs/fr.json';
+import i18n from "i18n-iso-countries";
+import fr from "i18n-iso-countries/langs/fr.json";
 
 // Charger les traductions françaises
 i18n.registerLocale(fr);
 
 // Collection des pays en français
 export const countryCollection = createListCollection({
-  items: Object.entries(i18n.getNames('fr')).map(([code, name]) => ({
+  items: Object.entries(i18n.getNames("fr")).map(([code, name]) => ({
     label: name,
-    value: code
-  }))
+    value: code,
+  })),
 });
 
 // Création de la collection des pays
@@ -30,6 +30,12 @@ export const collectionList = createListCollection({
     { label: "Svelte", value: "svelte" },
   ],
 });
+export const document_type = createListCollection({
+  items: [
+    { label: "passeport", value: "Passeport" },
+    { label: "cin", value: "CIN" },
+  ],
+});
 export const categori_clientel = createListCollection({
   items: [
     { label: "Retail", value: "Retail" },
@@ -37,14 +43,52 @@ export const categori_clientel = createListCollection({
     { label: "Corporate ", value: "Corporate" },
   ],
 });
-
+export const categori_socio_pro = createListCollection({
+  items: [
+    { label: "Agriculteur exploitant", value: "Agriculteur exploitant" },
+    {
+      label: "chef d'entreprise",
+      value: "chef d'entreprise",
+    },
+    {
+      label: "Cadre et profession intellectuelle supérieure",
+      value: "Cadre et profession intellectuelle supérieure",
+    },
+    { label: "Profession intermédiaire", value: "Profession intermédiaire" },
+    { label: "Employé", value: "Employé" },
+    { label: "Ouvrier", value: "Ouvrier" },
+    { label: "Retraité", value: "Retraité" },
+    { label: "Étudiant", value: "Étudiant" },
+    { label: "Profession libérale", value: "Profession libérale" },
+  ],
+});
+export const countries = createListCollection({
+  items: [
+    { label: "Sénégal", value: "Sénégal" },
+    { label: "Comores ", value: "Comores" },
+    { label: "Guinée ", value: "Guinée" },
+  ],
+});
 export const col2 = createListCollection({
   items: [
     { label: "Boyka", value: "Scott adkins" },
     { label: "Denzel ", value: "Washington" },
   ],
 });
-
+export const modalite_eer = createListCollection({
+  items: [
+    { label: "Présentiel", value: "presentiel" },
+    { label: "Démarchage ", value: "demarchage" },
+    { label: "Recommandation d’un client ", value: "Recommandation" },
+  ],
+});
+export const motif_eer = createListCollection({
+  items: [
+    { label: "Ouverture de compte courant", value: "ouverture de compte" },
+    { label: "Souscription à un produit d’épargne ", value: "souscription" },
+    { label: "Demande de crédit ou financement ", value: "credit" },
+  ],
+});
 export const civilite = createListCollection({
   items: [
     { label: "M", value: "Monsieur" },
