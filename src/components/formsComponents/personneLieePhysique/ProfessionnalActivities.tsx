@@ -4,8 +4,13 @@ import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { RadioButton } from "@/components/customFormFields/RadioButton.tsx";
 import { DropDownList } from "../../customFormFields/DropDownList";
+import { SearchableDropDownList } from "../../customFormFields/SearchableDropDownList";
 import { InputTextField } from "../../customFormFields/InputTextField";
-import { categori_socio_pro as socio } from "@/dataObject/ListCollection.ts";
+import { CustomDatePicker } from "../../customFormFields/CustomDatePicker";
+import {
+  categori_socio_pro as socio,
+  countryCollection,
+} from "@/dataObject/ListCollection.ts";
 
 export const ProfessionnalActivities = () => {
   const {
@@ -169,6 +174,7 @@ export const ProfessionnalActivities = () => {
             />
           </VStack>
 
+          {/* Remplacement par CustomDatePicker */}
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="date_creation_activite"
@@ -177,12 +183,10 @@ export const ProfessionnalActivities = () => {
                 required: "La date de création de l’activité est obligatoire",
               }}
               render={({ field }) => (
-                <DropDownList
-                  label="Date de création de l’activité *"
-                  placeholder="Date de création de l’activité"
-                  collection={socio}
+                <CustomDatePicker
+                  nomDuChamp="Date de création de l’activité *"
                   value={field.value}
-                  onValueChange={field.onChange}
+                  onChange={field.onChange}
                 />
               )}
             />
@@ -207,10 +211,10 @@ export const ProfessionnalActivities = () => {
                 required: "Le principal pays d’activité est obligatoire",
               }}
               render={({ field }) => (
-                <DropDownList
+                <SearchableDropDownList
                   label="Principal pays d’activité *"
-                  placeholder="Principal pays d’activité"
-                  collection={socio}
+                  placeholder="Rechercher un pays..."
+                  collection={countryCollection}
                   value={field.value}
                   onValueChange={field.onChange}
                 />

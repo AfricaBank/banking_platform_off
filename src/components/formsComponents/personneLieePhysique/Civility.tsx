@@ -2,9 +2,10 @@ import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "../../customFormFields/InputTextField";
 import { HStack, VStack, Text } from "@chakra-ui/react";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
+import { SearchableDropDownList } from "@/components/customFormFields/SearchableDropDownList.tsx";
 import {
   civilite,
-  countries,
+  countryCollection, // Utilisation de la collection de référence
   document_type,
   sexe,
 } from "@/dataObject/ListCollection.ts";
@@ -24,7 +25,6 @@ export const Civility = () => {
       <FormFieldSet label="Identité">
         {/* Première ligne */}
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Civilité */}
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="civilite"
@@ -51,7 +51,6 @@ export const Civility = () => {
             />
           </VStack>
 
-          {/* Sexe */}
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="sexe"
@@ -78,7 +77,6 @@ export const Civility = () => {
             />
           </VStack>
 
-          {/* Prénom */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Prénom *"
@@ -99,7 +97,6 @@ export const Civility = () => {
 
         {/* Deuxième ligne */}
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Nom */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Nom de famille *"
@@ -117,17 +114,17 @@ export const Civility = () => {
             />
           </VStack>
 
-          {/* Nationalité */}
+          {/* Pays de nationalité avec countryCollection */}
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="nationality"
               control={control}
               rules={{ required: "Le pays de nationalité est obligatoire." }}
               render={({ field }) => (
-                <DropDownList
+                <SearchableDropDownList
                   label="Pays de nationalité *"
-                  placeholder="Pays de nationalité"
-                  collection={countries}
+                  placeholder="Rechercher un pays..."
+                  collection={countryCollection}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -144,7 +141,6 @@ export const Civility = () => {
             />
           </VStack>
 
-          {/* Nom abrégé */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Nom abrégé *"
@@ -156,7 +152,7 @@ export const Civility = () => {
 
         {/* Troisième ligne */}
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Double nationalité */}
+          {/* Pays de double nationalité avec countryCollection */}
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="doubleNationality"
@@ -165,10 +161,10 @@ export const Civility = () => {
                 required: "Le pays de double nationalité est obligatoire.",
               }}
               render={({ field }) => (
-                <DropDownList
+                <SearchableDropDownList
                   label="Pays de double nationalité *"
-                  placeholder="Pays de double nationalité"
-                  collection={countries}
+                  placeholder="Rechercher un pays..."
+                  collection={countryCollection}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -185,7 +181,6 @@ export const Civility = () => {
             />
           </VStack>
 
-          {/* Document d’identification */}
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="document_type"
@@ -215,7 +210,6 @@ export const Civility = () => {
             />
           </VStack>
 
-          {/* Numéro du document */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
               label="Numéro du document *"
@@ -236,20 +230,18 @@ export const Civility = () => {
           </VStack>
         </HStack>
 
-        {/* Quatrième ligne */}
         <HStack width="100%" justifyContent="space-between" mb={4}>
+          {/* Pays de délivrance avec countryCollection */}
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="deliver_country"
               control={control}
-              rules={{
-                required: "Le Pays d'émission est obligatoire",
-              }}
+              rules={{ required: "Le Pays d'émission est obligatoire" }}
               render={({ field }) => (
-                <DropDownList
+                <SearchableDropDownList
                   label="Pays de délivrance *"
-                  placeholder="Pays de délivrance"
-                  collection={countries}
+                  placeholder="Rechercher un pays..."
+                  collection={countryCollection}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -265,6 +257,7 @@ export const Civility = () => {
               )}
             />
           </VStack>
+
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="delivered_date"

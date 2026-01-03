@@ -4,7 +4,12 @@ import { HStack, VStack, Text } from "@chakra-ui/react";
 import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
-import { countries, sexe } from "@/dataObject/ListCollection.ts";
+import { SearchableDropDownList } from "@/components/customFormFields/SearchableDropDownList.tsx";
+import {
+  countries,
+  sexe,
+  countryCollection,
+} from "@/dataObject/ListCollection.ts";
 import { RadioButton } from "@/components/customFormFields/RadioButton.tsx";
 import { CustomDatePicker } from "@/components/customFormFields/CustomDatePicker.tsx";
 
@@ -18,7 +23,6 @@ export const PersonalInformations = () => {
     <>
       <FormFieldSet label="Naissance">
         <HStack width="100%" justifyContent="space-between" mb={4}>
-          {/* Date de naissance avec CustomDatePicker */}
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
               name="date_naissance"
@@ -51,10 +55,10 @@ export const PersonalInformations = () => {
                 required: "Le pays de naissance est obligatoire",
               }}
               render={({ field }) => (
-                <DropDownList
+                <SearchableDropDownList
                   label="Pays de naissance *"
-                  placeholder="Pays de naissance"
-                  collection={countries}
+                  placeholder="Rechercher un pays..."
+                  collection={countryCollection}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -316,10 +320,10 @@ export const PersonalInformations = () => {
                 required: "Le pays est obligatoire",
               }}
               render={({ field }) => (
-                <DropDownList
+                <SearchableDropDownList
                   label="Pays *"
-                  placeholder="Pays"
-                  collection={countries}
+                  placeholder="Rechercher un pays..."
+                  collection={countryCollection}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
