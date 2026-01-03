@@ -31,7 +31,7 @@ export const ConformityBankingRelation = () => {
               rules={{ required: "La détection PPE est obligatoire" }}
               render={({ field }) => (
                 <DropDownList
-                  label="Détection PPE"
+                  label="Détection PPE *"
                   placeholder="Détection PPE"
                   collection={socio}
                   value={field.value}
@@ -57,7 +57,7 @@ export const ConformityBankingRelation = () => {
               rules={{ required: "Le type PPE est obligatoire" }}
               render={({ field }) => (
                 <DropDownList
-                  label="Type de PPE"
+                  label="Type de PPE *"
                   placeholder="Type de PPE"
                   collection={socio}
                   value={field.value}
@@ -78,7 +78,7 @@ export const ConformityBankingRelation = () => {
 
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
-              label="Commentaire"
+              label="Commentaire *"
               placeholder="Commentaire"
               {...register("commentaire")}
             />
@@ -92,11 +92,11 @@ export const ConformityBankingRelation = () => {
           align="flex-start"
         >
           <VStack align="flex-start" gap={1} flex="1">
-            <RadioButton label="PPE local" />
+            <RadioButton label="PPE local *" />
           </VStack>
 
           <VStack align="flex-start" gap={1} flex="1">
-            <RadioButton label="Sous sanction" />
+            <RadioButton label="Sous sanction *" />
           </VStack>
           <VStack align="flex-center" flex={1} width="32.5%"></VStack>
         </HStack>
@@ -114,7 +114,7 @@ export const ConformityBankingRelation = () => {
               rules={{ required: "La date d’identification est obligatoire" }}
               render={({ field }) => (
                 <CustomDatePicker
-                  nomDuChamp="Date d’identification"
+                  nomDuChamp="Date d’identification *"
                   value={field.value}
                   onChange={(val) => field.onChange(val)}
                 />
@@ -139,7 +139,7 @@ export const ConformityBankingRelation = () => {
               }}
               render={({ field }) => (
                 <CustomDatePicker
-                  nomDuChamp="Date d’interrogation vigilance"
+                  nomDuChamp="Date d’interrogation vigilance *"
                   value={field.value}
                   onChange={(val) => field.onChange(val)}
                 />
@@ -170,7 +170,6 @@ export const ConformityBankingRelation = () => {
             <Controller
               name="idNationale"
               control={control}
-              rules={{ required: "L'ID nationale est obligatoire" }}
               render={({ field }) => (
                 <InputTextField
                   label="ID Nationale"
@@ -180,20 +179,11 @@ export const ConformityBankingRelation = () => {
                 />
               )}
             />
-            <ErrorMessage
-              errors={errors}
-              name="idNationale"
-              render={({ message }) => (
-                <Text color="red.500" fontSize="sm">
-                  {message}
-                </Text>
-              )}
-            />
           </VStack>
 
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
-              label="Code siège"
+              label="Code siège *"
               placeholder="Code siège"
               {...register("codeSiege")}
               disabled
@@ -217,7 +207,7 @@ export const ConformityBankingRelation = () => {
             rules={{ required: "Le segment clientèle est obligatoire" }}
             render={({ field }) => (
               <DropDownList
-                label="Segment clientèle vis-à-vis DG"
+                label="Segment clientèle vis-à-vis DG *"
                 placeholder="Segment clientèle vis-à-vis DG"
                 collection={socio}
                 value={field.value}
@@ -240,7 +230,7 @@ export const ConformityBankingRelation = () => {
       <FormFieldSet label="Enfants et personnes à charge">
         <VStack align="flex-start" gap={1} width="32.5%">
           <InputTextField
-            label="Enfants et personnes à charge"
+            label="Enfants et personnes à charge *"
             placeholder="Enfants et personnes à charge"
             {...register("nbEnfants")}
           />

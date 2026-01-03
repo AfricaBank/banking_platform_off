@@ -243,7 +243,6 @@ export const BankAccountForms = () => {
       {Array.from({ length: accountCount }, (_, index) =>
         renderAccountFields(index)
       )}
-
       {/* Boutons Ajouter/Supprimer */}
       <HStack width="100%" justifyContent="flex-start" mt={6}>
         <Button colorScheme="blue" onClick={addAccount} size="md">

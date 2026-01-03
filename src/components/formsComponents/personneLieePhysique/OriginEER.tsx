@@ -27,7 +27,7 @@ export const OriginEER = () => {
               rules={{ required: "La catégorie clientèle ets obligatoire " }}
               render={({ field }) => (
                 <DropDownList
-                  label="Catégorie clientèle "
+                  label="Catégorie clientèle *"
                   placeholder="Catégorie clientèle "
                   collection={categori_clientel}
                   value={field.value}
@@ -56,7 +56,7 @@ export const OriginEER = () => {
               }}
               render={({ field }) => (
                 <CustomDatePicker
-                  nomDuChamp="Date EER"
+                  nomDuChamp="Date EER *"
                   value={field.value}
                   onChange={field.onChange}
                 />
@@ -81,7 +81,7 @@ export const OriginEER = () => {
               rules={{ required: "La modalité EER est obligatoire" }}
               render={({ field }) => (
                 <DropDownList
-                  label="Modalité EER "
+                  label="Modalité EER *"
                   placeholder="Modalité EER "
                   collection={modalite_eer}
                   value={field.value}
@@ -108,7 +108,7 @@ export const OriginEER = () => {
             rules={{ required: "Le motif eer est obligatoire" }}
             render={({ field }) => (
               <DropDownList
-                label="Motif EER "
+                label="Motif EER *"
                 placeholder="Motif EER "
                 collection={motif_eer}
                 value={field.value}

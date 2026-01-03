@@ -4,10 +4,12 @@ import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { RadioButton } from "@/components/customFormFields/RadioButton.tsx";
 import { DropDownList } from "../../customFormFields/DropDownList";
+import { InputTextField } from "../../customFormFields/InputTextField";
 import { categori_socio_pro as socio } from "@/dataObject/ListCollection.ts";
 
 export const ProfessionnalActivities = () => {
   const {
+    register,
     control,
     formState: { errors },
   } = useFormContext();
@@ -28,7 +30,7 @@ export const ProfessionnalActivities = () => {
               rules={{ required: "La catégorie clientèle est obligatoire" }}
               render={({ field }) => (
                 <DropDownList
-                  label="Catégorie clientèle"
+                  label="Catégorie clientèle *"
                   placeholder="Catégorie clientèle"
                   collection={socio}
                   value={field.value}
@@ -56,7 +58,7 @@ export const ProfessionnalActivities = () => {
               }}
               render={({ field }) => (
                 <DropDownList
-                  label="Catégorie socio-professionnelle"
+                  label="Catégorie socio-professionnelle *"
                   placeholder="Catégorie socio-professionnelle"
                   collection={socio}
                   value={field.value}
@@ -83,13 +85,13 @@ export const ProfessionnalActivities = () => {
           align="flex-start"
         >
           <VStack align="flex-start" gap={1} flex="1">
-            <RadioButton label="Connaissance des informations internes" />
+            <RadioButton label="Connaissance des informations internes *" />
           </VStack>
           <VStack align="flex-start" gap={1} flex="1">
-            <RadioButton label="Dirigeant BE dans une société cotée" />
+            <RadioButton label="Dirigeant BE dans une société cotée *" />
           </VStack>
           <VStack align="flex-start" gap={1} flex="1">
-            <RadioButton label="BE dans une société cotée" />
+            <RadioButton label="BE dans une société cotée *" />
           </VStack>
         </HStack>
 
@@ -100,13 +102,13 @@ export const ProfessionnalActivities = () => {
           align="flex-start"
         >
           <VStack align="flex-start" gap={1} flex="1">
-            <RadioButton label="Détention compte titre" />
+            <RadioButton label="Détention compte titre *" />
           </VStack>
           <VStack align="flex-start" gap={1} flex="1">
-            <RadioButton label="Délégation KYC" />
+            <RadioButton label="Délégation KYC *" />
           </VStack>
           <VStack align="flex-start" gap={1} flex="1">
-            <RadioButton label="Présence de flux international" />
+            <RadioButton label="Présence de flux international *" />
           </VStack>
         </HStack>
       </FormFieldSet>
@@ -122,7 +124,7 @@ export const ProfessionnalActivities = () => {
               }}
               render={({ field }) => (
                 <DropDownList
-                  label="Secteur d’activité économique"
+                  label="Secteur d’activité économique *"
                   placeholder="Secteur d’activité économique"
                   collection={socio}
                   value={field.value}
@@ -148,7 +150,7 @@ export const ProfessionnalActivities = () => {
               rules={{ required: "Le libellé APE est obligatoire" }}
               render={({ field }) => (
                 <DropDownList
-                  label="Libellé APE"
+                  label="Libellé APE *"
                   placeholder="Libellé APE"
                   collection={socio}
                   value={field.value}
@@ -176,7 +178,7 @@ export const ProfessionnalActivities = () => {
               }}
               render={({ field }) => (
                 <DropDownList
-                  label="Date de création de l’activité"
+                  label="Date de création de l’activité *"
                   placeholder="Date de création de l’activité"
                   collection={socio}
                   value={field.value}
@@ -206,7 +208,7 @@ export const ProfessionnalActivities = () => {
               }}
               render={({ field }) => (
                 <DropDownList
-                  label="Principal pays d’activité"
+                  label="Principal pays d’activité *"
                   placeholder="Principal pays d’activité"
                   collection={socio}
                   value={field.value}
@@ -235,7 +237,7 @@ export const ProfessionnalActivities = () => {
               }}
               render={({ field }) => (
                 <DropDownList
-                  label="Activité à risque"
+                  label="Activité à risque *"
                   placeholder="Activité à risque"
                   collection={socio}
                   value={field.value}
@@ -258,9 +260,6 @@ export const ProfessionnalActivities = () => {
             <Controller
               name="indicateur_prive_pro"
               control={control}
-              rules={{
-                required: "L'indicateur privé professionnel est obligatoire",
-              }}
               render={({ field }) => (
                 <DropDownList
                   label="Indicateur privé professionnel"
@@ -271,41 +270,14 @@ export const ProfessionnalActivities = () => {
                 />
               )}
             />
-            <ErrorMessage
-              errors={errors}
-              name="indicateur_prive_pro"
-              render={({ message }) => (
-                <Text color="red.500" fontSize="sm">
-                  {message}
-                </Text>
-              )}
-            />
           </VStack>
         </HStack>
 
         <VStack align="flex-start" gap={1} flex="1">
-          <Controller
-            name="avoirs_controles"
-            control={control}
-            rules={{ required: "Les avoirs contrôlés sont obligatoires" }}
-            render={({ field }) => (
-              <DropDownList
-                label="Avoirs contrôlés"
-                placeholder="Avoirs contrôlés"
-                collection={socio}
-                value={field.value}
-                onValueChange={field.onChange}
-              />
-            )}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="avoirs_controles"
-            render={({ message }) => (
-              <Text color="red.500" fontSize="sm">
-                {message}
-              </Text>
-            )}
+          <InputTextField
+            label="Avoirs contrôlés"
+            placeholder="Avoirs contrôlés"
+            {...register("avoirs_controles")}
           />
         </VStack>
       </FormFieldSet>
@@ -319,7 +291,7 @@ export const ProfessionnalActivities = () => {
               rules={{ required: "Le libellé est obligatoire" }}
               render={({ field }) => (
                 <DropDownList
-                  label="Libellé"
+                  label="Libellé *"
                   placeholder="Libellé"
                   collection={socio}
                   value={field.value}
@@ -345,7 +317,7 @@ export const ProfessionnalActivities = () => {
               rules={{ required: "Le pourcentage est obligatoire" }}
               render={({ field }) => (
                 <DropDownList
-                  label="Pourcentage"
+                  label="Pourcentage *"
                   placeholder="Pourcentage"
                   collection={socio}
                   value={field.value}

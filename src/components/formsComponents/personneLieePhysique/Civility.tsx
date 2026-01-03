@@ -18,6 +18,7 @@ export const Civility = () => {
     control,
     formState: { errors },
   } = useFormContext();
+
   return (
     <>
       <FormFieldSet label="Identité">
@@ -31,7 +32,7 @@ export const Civility = () => {
               rules={{ required: "La civilité est obligatoire" }}
               render={({ field }) => (
                 <DropDownList
-                  label="Civilité"
+                  label="Civilité *"
                   placeholder="Civilité"
                   collection={civilite}
                   value={field.value}
@@ -58,7 +59,7 @@ export const Civility = () => {
               rules={{ required: "Le sexe est obligatoire" }}
               render={({ field }) => (
                 <DropDownList
-                  label="Sexe"
+                  label="Sexe *"
                   placeholder="Genre"
                   collection={sexe}
                   value={field.value}
@@ -80,7 +81,7 @@ export const Civility = () => {
           {/* Prénom */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
-              label="Prénom"
+              label="Prénom *"
               placeholder="Prénom"
               {...register("prenom", { required: "Le prénom est obligatoire" })}
             />
@@ -101,7 +102,7 @@ export const Civility = () => {
           {/* Nom */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
-              label="Nom de famille"
+              label="Nom de famille *"
               placeholder="Nom de famille"
               {...register("nom", { required: "Le nom est obligatoire" })}
             />
@@ -124,7 +125,7 @@ export const Civility = () => {
               rules={{ required: "Le pays de nationalité est obligatoire." }}
               render={({ field }) => (
                 <DropDownList
-                  label="Pays de nationalité"
+                  label="Pays de nationalité *"
                   placeholder="Pays de nationalité"
                   collection={countries}
                   value={field.value}
@@ -146,7 +147,7 @@ export const Civility = () => {
           {/* Nom abrégé */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
-              label="Nom abrégé"
+              label="Nom abrégé *"
               placeholder="Nom abrégé"
               {...register("nomAbrege")}
             />
@@ -165,7 +166,7 @@ export const Civility = () => {
               }}
               render={({ field }) => (
                 <DropDownList
-                  label="Pays de double nationalité"
+                  label="Pays de double nationalité *"
                   placeholder="Pays de double nationalité"
                   collection={countries}
                   value={field.value}
@@ -195,7 +196,7 @@ export const Civility = () => {
               }}
               render={({ field }) => (
                 <DropDownList
-                  label="Document d'identification"
+                  label="Document d'identification *"
                   placeholder="Document d'identification"
                   collection={document_type}
                   value={field.value}
@@ -214,11 +215,11 @@ export const Civility = () => {
             />
           </VStack>
 
-          {/* Pays d’émission */}
+          {/* Numéro du document */}
           <VStack align="flex-start" gap={1} flex="1">
             <InputTextField
-              label="Numéro du document"
-              placeholder="NUméro du document"
+              label="Numéro du document *"
+              placeholder="Numéro du document"
               {...register("document_id", {
                 required: "Le numéro du document est obligatoire",
               })}
@@ -235,6 +236,7 @@ export const Civility = () => {
           </VStack>
         </HStack>
 
+        {/* Quatrième ligne */}
         <HStack width="100%" justifyContent="space-between" mb={4}>
           <VStack align="flex-start" gap={1} flex="1">
             <Controller
@@ -245,7 +247,7 @@ export const Civility = () => {
               }}
               render={({ field }) => (
                 <DropDownList
-                  label="Pays de délivrance"
+                  label="Pays de délivrance *"
                   placeholder="Pays de délivrance"
                   collection={countries}
                   value={field.value}
@@ -270,7 +272,7 @@ export const Civility = () => {
               rules={{ required: "La date d'émission est obligatoire" }}
               render={({ field }) => (
                 <CustomDatePicker
-                  nomDuChamp="Date d'émission"
+                  nomDuChamp="Date d'émission *"
                   value={field.value}
                   onChange={field.onChange}
                 />
