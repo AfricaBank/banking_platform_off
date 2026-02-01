@@ -24,7 +24,7 @@ export const OriginEER = () => {
             <Controller
               name="categori_clientel"
               control={control}
-              rules={{ required: "La catégorie clientèle ets obligatoire " }}
+              rules={{ required: "La catégorie clientèle est obligatoire " }}
               render={({ field }) => (
                 <DropDownList
                   label="Catégorie clientèle *"

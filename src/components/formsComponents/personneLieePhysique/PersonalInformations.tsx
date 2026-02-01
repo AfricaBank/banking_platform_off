@@ -5,13 +5,16 @@ import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
 import { SearchableDropDownList } from "@/components/customFormFields/SearchableDropDownList.tsx";
-import {
-  countries,
-  sexe,
-  countryCollection,
-} from "@/dataObject/ListCollection.ts";
+import { countryCollection } from "@/dataObject/ListCollection.ts";
 import { RadioButton } from "@/components/customFormFields/RadioButton.tsx";
 import { CustomDatePicker } from "@/components/customFormFields/CustomDatePicker.tsx";
+import {
+  situationFamiliale,
+  regimeMatrimonial,
+  statutResidence,
+  wilaya,
+  commune,
+} from "@/dataObject/ListCollection.ts";
 
 export const PersonalInformations = () => {
   const {
@@ -136,18 +139,6 @@ export const PersonalInformations = () => {
             <InputTextField
               label="Nom de jeune fille de la mère *"
               placeholder="Nom de jeune fille de la mère"
-              {...register("nom_jeune_fille_mere", {
-                required: "Le nom de jeune fille de la mère est obligatoire",
-              })}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="nom_jeune_fille_mere"
-              render={({ message }) => (
-                <Text color="red.500" fontSize="sm">
-                  {message}
-                </Text>
-              )}
             />
           </VStack>
         </HStack>
@@ -169,7 +160,7 @@ export const PersonalInformations = () => {
                 <DropDownList
                   label="Situation familiale *"
                   placeholder="Situation familiale"
-                  collection={sexe}
+                  collection={situationFamiliale}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -246,7 +237,7 @@ export const PersonalInformations = () => {
                 <DropDownList
                   label="Régime matrimonial *"
                   placeholder="Régime matrimonial"
-                  collection={countries}
+                  collection={regimeMatrimonial}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -285,21 +276,12 @@ export const PersonalInformations = () => {
 
         <HStack width="100%" justifyContent="space-between" mb={4}>
           <VStack align="flex-start" gap={1} flex="1">
-            <Controller
-              name="localite"
-              control={control}
-              rules={{
+            <InputTextField
+              label="localite *"
+              placeholder="localite"
+              {...register("localite", {
                 required: "La localité est obligatoire",
-              }}
-              render={({ field }) => (
-                <DropDownList
-                  label="Localité *"
-                  placeholder="Localité"
-                  collection={countries}
-                  value={field.value}
-                  onValueChange={field.onChange}
-                />
-              )}
+              })}
             />
             <ErrorMessage
               errors={errors}
@@ -348,7 +330,7 @@ export const PersonalInformations = () => {
                 <DropDownList
                   label="Statut de résidence"
                   placeholder="Statut de résidence"
-                  collection={sexe}
+                  collection={statutResidence}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -369,7 +351,7 @@ export const PersonalInformations = () => {
                 <DropDownList
                   label="Wilaya *"
                   placeholder="Wilaya"
-                  collection={sexe}
+                  collection={wilaya}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -397,7 +379,7 @@ export const PersonalInformations = () => {
                 <DropDownList
                   label="Commune *"
                   placeholder="Commune"
-                  collection={sexe}
+                  collection={commune}
                   value={field.value}
                   onValueChange={field.onChange}
                 />

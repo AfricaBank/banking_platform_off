@@ -6,7 +6,11 @@ import { ErrorMessage } from "@hookform/error-message";
 import { RadioButton } from "@/components/customFormFields/RadioButton.tsx";
 import { CustomDatePicker } from "../../customFormFields/CustomDatePicker";
 import { DropDownList } from "../../customFormFields/DropDownList";
-import { categori_socio_pro as socio } from "@/dataObject/ListCollection.ts";
+import {
+  detectionPpe,
+  typePpe,
+  segmentDg,
+} from "@/dataObject/ListCollection.ts";
 
 export const ConformityBankingRelation = () => {
   const {
@@ -33,7 +37,7 @@ export const ConformityBankingRelation = () => {
                 <DropDownList
                   label="Détection PPE *"
                   placeholder="Détection PPE"
-                  collection={socio}
+                  collection={detectionPpe}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -59,7 +63,7 @@ export const ConformityBankingRelation = () => {
                 <DropDownList
                   label="Type de PPE *"
                   placeholder="Type de PPE"
-                  collection={socio}
+                  collection={typePpe}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -209,7 +213,7 @@ export const ConformityBankingRelation = () => {
               <DropDownList
                 label="Segment clientèle vis-à-vis DG *"
                 placeholder="Segment clientèle vis-à-vis DG"
-                collection={socio}
+                collection={segmentDg}
                 value={field.value}
                 onValueChange={field.onChange}
               />

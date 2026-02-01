@@ -10,8 +10,13 @@ import { CustomDatePicker } from "../../customFormFields/CustomDatePicker";
 import {
   categori_socio_pro as socio,
   countryCollection,
+  categori_clientel,
+  activiteEconomique,
+  libelleApe,
+  activiteARisque,
+  indicateurPrivPro,
 } from "@/dataObject/ListCollection.ts";
-
+import { codeSectoriel } from "@/dataObject/ListCollection.ts";
 export const ProfessionnalActivities = () => {
   const {
     register,
@@ -37,7 +42,7 @@ export const ProfessionnalActivities = () => {
                 <DropDownList
                   label="Catégorie clientèle *"
                   placeholder="Catégorie clientèle"
-                  collection={socio}
+                  collection={categori_clientel}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -131,7 +136,7 @@ export const ProfessionnalActivities = () => {
                 <DropDownList
                   label="Secteur d’activité économique *"
                   placeholder="Secteur d’activité économique"
-                  collection={socio}
+                  collection={activiteEconomique}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -157,7 +162,7 @@ export const ProfessionnalActivities = () => {
                 <DropDownList
                   label="Libellé APE *"
                   placeholder="Libellé APE"
-                  collection={socio}
+                  collection={libelleApe}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -243,7 +248,7 @@ export const ProfessionnalActivities = () => {
                 <DropDownList
                   label="Activité à risque *"
                   placeholder="Activité à risque"
-                  collection={socio}
+                  collection={activiteARisque}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -268,7 +273,7 @@ export const ProfessionnalActivities = () => {
                 <DropDownList
                   label="Indicateur privé professionnel"
                   placeholder="Indicateur privé professionnel"
-                  collection={socio}
+                  collection={indicateurPrivPro}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -297,7 +302,7 @@ export const ProfessionnalActivities = () => {
                 <DropDownList
                   label="Libellé *"
                   placeholder="Libellé"
-                  collection={socio}
+                  collection={codeSectoriel}
                   value={field.value}
                   onValueChange={field.onChange}
                 />
@@ -315,28 +320,10 @@ export const ProfessionnalActivities = () => {
           </VStack>
 
           <VStack align="flex-start" gap={1} flex="1">
-            <Controller
-              name="code_sectoriel_pourcentage"
-              control={control}
-              rules={{ required: "Le pourcentage est obligatoire" }}
-              render={({ field }) => (
-                <DropDownList
-                  label="Pourcentage *"
-                  placeholder="Pourcentage"
-                  collection={socio}
-                  value={field.value}
-                  onValueChange={field.onChange}
-                />
-              )}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="code_sectoriel_pourcentage"
-              render={({ message }) => (
-                <Text color="red.500" fontSize="sm">
-                  {message}
-                </Text>
-              )}
+            <InputTextField
+              label="Pourcentage"
+              placeholder="Pourcentage /100%"
+              {...register("pourcentage")}
             />
           </VStack>
           <VStack align="flex-start" gap={1} flex="1" />

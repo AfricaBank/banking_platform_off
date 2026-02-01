@@ -30,6 +30,22 @@ export const collectionList = createListCollection({
     { label: "Svelte", value: "svelte" },
   ],
 });
+export const detectionPpe = createListCollection({
+  items: [
+    { label: "Non PPE", value: "non_ppe" },
+    { label: "PPE National", value: "ppe_national" },
+    { label: "PPE Étranger", value: "ppe_etranger" },
+    { label: "Membre famille PPE", value: "famille_ppe" },
+  ],
+});
+export const typePpe = createListCollection({
+  items: [
+    { label: "Chef d'État / Gouvernement", value: "chef_etat" },
+    { label: "Parlementaire", value: "parlementaire" },
+    { label: "Haut Magistrat", value: "magistrat" },
+    { label: "Dirigeant Entreprise Publique", value: "dirigeant_ent_publique" },
+  ],
+});
 export const document_type = createListCollection({
   items: [
     { label: "passeport", value: "Passeport" },
@@ -217,6 +233,23 @@ export const activiteARisque = createListCollection({
     { label: "VTE GROS PIERRE META PREC", value: "VTE GROS PIERRE META PREC" },
   ],
 });
+export const indicateurPrivPro = createListCollection({
+  items: [
+    { label: "Usage Privé exclusif", value: "prive" },
+    { label: "Usage Mixte", value: "mixte" },
+    { label: "Usage Professionnel", value: "pro" },
+    { label: "Usage Association", value: "association" },
+  ],
+});
+
+export const codeSectoriel = createListCollection({
+  items: [
+    { label: "Primaire (0-25%)", value: "primaire" },
+    { label: "Secondaire (26-50%)", value: "secondaire" },
+    { label: "Tertiaire (51-75%)", value: "tertiaire" },
+    { label: "Services (76-100%)", value: "services" },
+  ],
+});
 
 export const natureJuridique = createListCollection({
   items: [
@@ -248,6 +281,55 @@ export const natureJuridique = createListCollection({
   ],
 });
 
+export const segmentDg = createListCollection({
+  items: [
+    { label: "Grand Public", value: "grand_public" },
+    { label: "Premium / Mass Affluent", value: "premium" },
+    { label: "Private Banking", value: "private_banking" },
+    { label: "Corporate / VIP", value: "corporate" },
+  ],
+});
+export const situationFamiliale = createListCollection({
+  items: [
+    { label: "Célibataire", value: "celibataire" },
+    { label: "Marié(e)", value: "marie" },
+    { label: "Divorcé(e)", value: "divorce" },
+    { label: "Veuf/Veuve", value: "veuf" },
+  ],
+});
+export const regimeMatrimonial = createListCollection({
+  items: [
+    { label: "Communauté de biens", value: "communaute_biens" },
+    { label: "Séparation de biens", value: "separation_biens" },
+    { label: "Participation aux acquêts", value: "participation_acquets" },
+    { label: "Sans contrat (Légal)", value: "sans_contrat" },
+  ],
+});
+export const statutResidence = createListCollection({
+  items: [
+    { label: "Propriétaire", value: "proprietaire" },
+    { label: "Locataire", value: "locataire" },
+    { label: "Logé par l'employeur", value: "loge_employeur" },
+    { label: "Hébergé à titre gratuit", value: "heberge_gratuit" },
+  ],
+});
+export const wilaya = createListCollection({
+  items: [
+    { label: "01 - Adrar", value: "01" },
+    { label: "16 - Alger", value: "16" },
+    { label: "31 - Oran", value: "31" },
+    { label: "25 - Constantine", value: "25" },
+  ],
+});
+export const commune = createListCollection({
+  items: [
+    { label: "Cocody", value: "cocody" },
+    { label: "Plateau", value: "plateau" },
+    { label: "Yopougon", value: "yopougon" },
+    { label: "Marcory", value: "marcory" },
+    { label: "Yamoussoukro", value: "yamoussoukro" },
+  ],
+});
 export const segmentSecuriteFinanciere = createListCollection({
   items: [
     { label: "MARCHES DE DETAIL", value: "MARCHES DE DETAIL" },
@@ -449,5 +531,22 @@ export const secteurActivite = createListCollection({
     { label: "Sans activité", value: "SANS_ACTIVITE" },
     { label: "Non enrichie", value: "NON_ENRICHIE" },
     { label: "Tiers chiffre", value: "TIERS_CHIFFRE" },
+  ],
+});
+export const activiteEconomique = createListCollection({
+  items: [
+    { label: "Extraction et Mines", value: "extraction_mines" },
+    { label: "Industrie Agroalimentaire", value: "agroalimentaire" },
+    { label: "Bâtiment et Travaux Publics (BTP)", value: "btp" },
+    { label: "Commerce de Gros et Détail", value: "commerce" },
+    { label: "Services Financiers et Assurances", value: "finance_assurance" },
+  ],
+});
+export const libelleApe = createListCollection({
+  items: [
+    { label: "Commerce de détail", value: "commerce_detail" },
+    { label: "Bâtiment et Travaux", value: "btp" },
+    { label: "Transport / Logistique", value: "transport_logistique" },
+    { label: "Conseil et Ingénierie", value: "conseil_ingenierie" },
   ],
 });
