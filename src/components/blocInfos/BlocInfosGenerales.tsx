@@ -6,7 +6,7 @@ const GeneralInfoBlock = () => {
     <Flex
       direction={{ base: "column", md: "row" }}
       gap={6}
-      p={6}
+      p={10}
       bg="#F4F6FA"
       borderRadius="xl"
     >
@@ -19,7 +19,12 @@ const GeneralInfoBlock = () => {
         p={6}
         boxShadow="lg"
       >
-        <Text fontWeight="semibold" mb={4} whiteSpace="nowrap">
+        <Text
+          fontWeight="semibold"
+          mb={4}
+          whiteSpace="nowrap"
+          textAlign="center"
+        >
           Informations général du dossier
         </Text>
 
@@ -47,9 +52,10 @@ const GeneralInfoBlock = () => {
         <Text fontWeight="semibold" mb={4}>
           Infos
         </Text>
+        <br />
 
         <Box>
-          <Grid templateColumns={{ base: "1fr", md: "repeat(5, 1fr)" }} gap={6}>
+          <Grid templateColumns={{ base: "1fr", md: "repeat(5, 1fr)" }} gap={8}>
             <GridItem>
               <Text fontWeight="semibold">Référence du dossier</Text>
               <Text color="gray.500">AB-EER-2023</Text>

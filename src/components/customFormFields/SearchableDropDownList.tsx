@@ -1,5 +1,11 @@
 "use client";
-import { Portal, Select, ListCollection } from "@chakra-ui/react";
+import {
+  Portal,
+  Select,
+  ListCollection,
+  createListCollection,
+  Input,
+} from "@chakra-ui/react";
 import React, { useState, useMemo } from "react";
 
 interface SearchableDropDownListProps {
@@ -27,51 +33,45 @@ export const SearchableDropDownList: React.FC<SearchableDropDownListProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filtrer la collection basée sur la recherche
+  // 1. Filtrer la collection proprement
   const filteredCollection = useMemo(() => {
     if (!searchTerm) return collection;
 
     const filteredItems = collection.items.filter((item) =>
-      item.label.toLowerCase().includes(searchTerm.toLowerCase())
+      item.label.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
-    return {
-      ...collection,
-      items: filteredItems,
-    };
+    // On recrée une vraie instance de ListCollection
+    return createListCollection({ items: filteredItems });
   }, [collection, searchTerm]);
 
-  // Trouver l'item correspondant à la valeur
-  const selectedItem = collection.items.find((item) => item.value === value);
+  // 2. Préparer la valeur au format string[]
+  const selectValue = useMemo(() => (value ? [value] : []), [value]);
 
   return (
     <Select.Root
       collection={filteredCollection}
       size={size}
       width={width}
-      value={selectedItem ? [selectedItem] : []}
+      value={selectValue} // Correction : string[]
       onValueChange={(details) => {
-        if (onValueChange && details.items && details.items.length > 0) {
-          onValueChange(details.items[0].value);
-          setSearchTerm(""); // Réinitialiser la recherche après sélection
-        } else if (onValueChange) {
-          onValueChange("");
+        if (onValueChange && details.value.length > 0) {
+          onValueChange(details.value[0]);
+          setSearchTerm("");
         }
       }}
-      onOpenChange={(open) => {
-        if (!open) {
-          setSearchTerm(""); // Réinitialiser la recherche quand fermé
+      onOpenChange={(details) => {
+        if (!details.open) {
+          setSearchTerm("");
         }
       }}
     >
       <Select.HiddenSelect />
       <Select.Label>{label}</Select.Label>
+
       <Select.Control>
         <Select.Trigger>
-          <Select.ValueText
-            placeholder={placeholder}
-            children={selectedItem ? selectedItem.label : undefined}
-          />
+          <Select.ValueText placeholder={placeholder} />
         </Select.Trigger>
         <Select.IndicatorGroup>
           {withIndicator && <Select.Indicator />}
@@ -81,27 +81,17 @@ export const SearchableDropDownList: React.FC<SearchableDropDownListProps> = ({
       <Portal>
         <Select.Positioner>
           <Select.Content>
-            {/* Champ de recherche intégré */}
-            <Select.ItemGroup>
-              <div style={{ padding: "8px 12px" }}>
-                <input
-                  type="text"
-                  placeholder="Rechercher..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  style={{
-                    width: "100%",
-                    padding: "8px",
-                    border: "1px solid #E2E8F0",
-                    borderRadius: "4px",
-                    outline: "none",
-                  }}
-                  onClick={(e) => e.stopPropagation()} // Empêcher la fermeture
-                />
-              </div>
-            </Select.ItemGroup>
+            {/* 3. Champ de recherche stylisé avec Chakra */}
+            <div style={{ padding: "8px" }}>
+              <Input
+                size="sm"
+                placeholder="Filtrer..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => e.stopPropagation()} // Important pour éviter les conflits de touches
+              />
+            </div>
 
-            {/* Liste des résultats filtrés */}
             {filteredCollection.items.map((item) => (
               <Select.Item
                 key={item.value}
@@ -113,19 +103,17 @@ export const SearchableDropDownList: React.FC<SearchableDropDownListProps> = ({
               </Select.Item>
             ))}
 
-            {/* Message si aucun résultat */}
             {filteredCollection.items.length === 0 && (
-              <Select.ItemGroup>
-                <div
-                  style={{
-                    padding: "8px 12px",
-                    color: "#718096",
-                    textAlign: "center",
-                  }}
-                >
-                  Aucun résultat trouvé
-                </div>
-              </Select.ItemGroup>
+              <div
+                style={{
+                  padding: "12px",
+                  textAlign: "center",
+                  fontSize: "14px",
+                  color: "gray",
+                }}
+              >
+                Aucun résultat
+              </div>
             )}
           </Select.Content>
         </Select.Positioner>
