@@ -28,7 +28,7 @@ export const ProfessionnalActivities = () => {
     <>
       <FormFieldSet label="Catégories spécifiques">
         <HStack
-          width="100%"
+          width="66%"
           justifyContent="space-between"
           mb={4}
           align="flex-start"
@@ -281,14 +281,15 @@ export const ProfessionnalActivities = () => {
             />
           </VStack>
         </HStack>
-
-        <VStack align="flex-start" gap={1} flex="1">
-          <InputTextField
-            label="Avoirs contrôlés"
-            placeholder="Avoirs contrôlés"
-            {...register("avoirs_controles")}
-          />
-        </VStack>
+        <HStack width="33%" justifyContent="space-between" mb={4}>
+          <VStack align="flex-start" gap={1} flex="1">
+            <InputTextField
+              label="Avoirs contrôlés"
+              placeholder="Avoirs contrôlés"
+              {...register("avoirs_controles")}
+            />
+          </VStack>
+        </HStack>
       </FormFieldSet>
 
       <FormFieldSet label="Code sectoriel">

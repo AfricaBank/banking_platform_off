@@ -101,31 +101,33 @@ export const OriginEER = () => {
           </VStack>
         </HStack>
         {/* Motif EER */}
-        <VStack align="flex-start" gap={1} flex="1">
-          <Controller
-            name="motif_eer"
-            control={control}
-            rules={{ required: "Le motif eer est obligatoire" }}
-            render={({ field }) => (
-              <DropDownList
-                label="Motif EER *"
-                placeholder="Motif EER "
-                collection={motif_eer}
-                value={field.value}
-                onValueChange={field.onChange}
-              />
-            )}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="motif_eer"
-            render={({ message }) => (
-              <Text color="red.500" fontSize="sm">
-                {message}
-              </Text>
-            )}
-          />
-        </VStack>
+        <HStack width="33%" justifyContent="space-between" mb={4}>
+          <VStack align="flex-start" gap={1} flex="1">
+            <Controller
+              name="motif_eer"
+              control={control}
+              rules={{ required: "Le motif eer est obligatoire" }}
+              render={({ field }) => (
+                <DropDownList
+                  label="Motif EER *"
+                  placeholder="Motif EER "
+                  collection={motif_eer}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                />
+              )}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="motif_eer"
+              render={({ message }) => (
+                <Text color="red.500" fontSize="sm">
+                  {message}
+                </Text>
+              )}
+            />
+          </VStack>
+        </HStack>
       </FormFieldSet>
     </>
   );
