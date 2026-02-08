@@ -241,7 +241,7 @@ export const BankAccountForms = () => {
     <>
       {/* Rendu des comptes bancaires */}
       {Array.from({ length: accountCount }, (_, index) =>
-        renderAccountFields(index)
+        renderAccountFields(index),
       )}
       {/* Boutons Ajouter/Supprimer */}
       <HStack width="100%" justifyContent="flex-start" mt={6}>
@@ -300,7 +300,7 @@ export const BankAccountForms = () => {
               Personnes en charge ({personCount})
             </Text>
             {Array.from({ length: personCount }, (_, index) =>
-              renderPersonFields(index)
+              renderPersonFields(index),
             )}
           </Box>
         )}

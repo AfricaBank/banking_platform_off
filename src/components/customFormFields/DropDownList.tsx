@@ -10,7 +10,7 @@ interface DropDownListProps {
   placeholder?: string;
   width?: string;
   size?: "sm" | "md" | "lg";
-  value?: string;
+  value?: string; // C'est une string simple venant du parent
   onValueChange?: (value: string) => void;
 }
 
@@ -25,18 +25,18 @@ export const DropDownList: React.FC<DropDownListProps> = ({
   value,
   onValueChange,
 }) => {
-  // Trouver l'item correspondant à la valeur
-  const selectedItem = collection.items.find((item) => item.value === value);
+  const selectValue = value ? [value] : [];
 
   return (
     <Select.Root
       collection={collection}
       size={size}
       width={width}
-      value={selectedItem ? [selectedItem] : []}
+      value={selectValue} // Utilisation du tableau de strings
       onValueChange={(details) => {
-        if (onValueChange && details.items && details.items.length > 0) {
-          onValueChange(details.items[0].value);
+        // details.value contient déjà un tableau de strings
+        if (onValueChange && details.value.length > 0) {
+          onValueChange(details.value[0]);
         } else if (onValueChange) {
           onValueChange("");
         }
@@ -46,10 +46,7 @@ export const DropDownList: React.FC<DropDownListProps> = ({
       <Select.Label>{label}</Select.Label>
       <Select.Control>
         <Select.Trigger>
-          <Select.ValueText
-            placeholder={placeholder}
-            children={selectedItem ? selectedItem.label : undefined}
-          />
+          <Select.ValueText placeholder={placeholder} />
         </Select.Trigger>
         <Select.IndicatorGroup>
           {withIndicator && <Select.Indicator />}

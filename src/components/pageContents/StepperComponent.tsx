@@ -11,7 +11,7 @@ import { ReactNode } from "react";
 interface Step {
   index: number;
   title: string;
-  content: ReactNode;
+  content?: ReactNode;
 }
 
 interface StepperComponentProps {
