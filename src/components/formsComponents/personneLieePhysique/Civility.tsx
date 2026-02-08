@@ -230,7 +230,7 @@ export const Civility = () => {
           </VStack>
         </HStack>
 
-        <HStack width="100%" justifyContent="space-between" mb={4}>
+        <HStack width="66%" justifyContent="space-between" mb={4}>
           {/* Pays de délivrance avec countryCollection */}
           <VStack align="flex-start" gap={1} flex="1">
             <Controller

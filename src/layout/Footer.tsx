@@ -1,4 +1,4 @@
-import { Flex, Text, Image, Box } from "@chakra-ui/react";
+import { Text, Image, Box } from "@chakra-ui/react";
 import logo1 from "../assets/logo/AfricaBank-013.png";
 export const Footer = () => {
   return (
