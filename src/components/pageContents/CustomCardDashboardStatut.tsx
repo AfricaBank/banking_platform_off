@@ -10,7 +10,7 @@ export const CustomCardDashboardStat = () => {
         borderRadius="md"
         minHeight="170px"
         p="10px"
-        boxShadow="5px 5px 10px rgba(0, 0, 0, 0.1)"
+        boxShadow="3px 3px 3px 3px rgba(0, 0, 0, 0.1)"
         height="169px"
       >
         <Flex>
