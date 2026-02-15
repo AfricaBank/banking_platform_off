@@ -125,7 +125,7 @@ const Tableau = () => {
     const navigate = useNavigate();
 
     const handleInitiateDossier = () => {
-        navigate('/initiation');
+        navigate('/recherche');
       };
 
     return (

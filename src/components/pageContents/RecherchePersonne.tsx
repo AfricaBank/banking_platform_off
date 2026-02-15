@@ -1,108 +1,107 @@
-import {
-    Box,
-    Button,
-    Text,
-    Flex,
-    HStack,
-    VStack,
-    Checkbox,
-    Input,
-    IconButton,
-} from "@chakra-ui/react";
+import { Box, Text, Button, Input, HStack, VStack, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HiPlus, HiSearch } from "react-icons/hi";
-import { LuEye, LuPencil, LuTrash2 } from "react-icons/lu";
 
 const RecherchePersonne = () => {
     const navigate = useNavigate();
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchFilters, setSearchFilters] = useState({
+        nom: "",
+        prenom: "",
+        dateNaissance: "",
+    });
     const [selectedPerson, setSelectedPerson] = useState<string | null>(null);
 
-    // Données simulées de recherche
-    const searchData = [
+    const personnesData = [
         {
-            id: "12345",
+            id: "1",
             matricule: "12345",
-            nom: "Ixoff",
-            prenom: "Kouadio",
-            profession: "Architecte",
+            nom: "Koffi",
+            prenom: "Kousaïo",
+            profession: "Architecture",
             dateNaissance: "13/05/1990",
-            statut: "Notiforme",
-            type: "CXI d'huile"
+            nationalite: "Notiforme",
+            paysResidence: "Côt d'invite"
         },
         {
-            id: "97564",
-            matricule: "97564",
-            nom: "Oistila",
-            prenom: "Alissala",
+            id: "2",
+            matricule: "87954",
+            nom: "Gattia",
+            prenom: "Alastata",
             profession: "Enseignant",
             dateNaissance: "12/06/1996",
-            statut: "Notiforme",
-            type: "CXI d'huile"
+            nationalite: "Notiforme",
+            paysResidence: "Côt d'invite"
         },
         {
-            id: "98768",
+            id: "3",
             matricule: "98768",
             nom: "K'Ouessan",
-            prenom: "Monasa",
-            profession: "Ingénieur",
+            prenom: "Noussa",
+            profession: "Ingelateur",
             dateNaissance: "1/09/1975",
-            statut: "Notiforme",
-            type: "CXI d'huile"
+            nationalite: "Notiforme",
+            paysResidence: "Côt d'invite"
         },
         {
-            id: "01990",
+            id: "4",
             matricule: "01990",
-            nom: "Taseré",
-            prenom: "Kouadio",
+            nom: "Tracré",
+            prenom: "Kousaïo",
             profession: "Médecin",
             dateNaissance: "2/10/1979",
-            statut: "Notiforme plateau",
-            type: "CXI d'huile"
+            nationalite: "Notiforme plateau",
+            paysResidence: "Côt d'invite"
         }
     ];
 
-    // Filtrer les données basées sur la recherche
-    const filteredData = searchData.filter(person =>
-        person.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        person.prenom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        person.matricule.includes(searchTerm) ||
-        person.profession.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredData = personnesData.filter(personne =>
+        (!searchFilters.nom || personne.nom.toLowerCase().includes(searchFilters.nom.toLowerCase())) &&
+        (!searchFilters.prenom || personne.prenom.toLowerCase().includes(searchFilters.prenom.toLowerCase())) &&
+        (!searchFilters.dateNaissance || personne.dateNaissance.includes(searchFilters.dateNaissance))
     );
 
-    const handleSelection = (personId: string) => {
-        setSelectedPerson(personId === selectedPerson ? null : personId);
+    const handleFilterChange = (field: string, value: string) => {
+        setSearchFilters(prev => ({ ...prev, [field]: value }));
+    };
+
+    const handleResetFilters = () => {
+        setSearchFilters({
+            nom: "",
+            prenom: "",
+            dateNaissance: "",
+        });
+        setSelectedPerson(null);
+    };
+
+    const handlePersonSelection = (personneId: string) => {
+        // Sélectionne la nouvelle personne, désélectionne la précédente
+        setSelectedPerson(prev => prev === personneId ? null : personneId);
+    };
+
+    const handleAnnuler = () => {
+        navigate(-1);
     };
 
     const handleSuivant = () => {
         if (selectedPerson) {
-            const person = searchData.find(p => p.id === selectedPerson);
-            console.log("Personne sélectionnée:", person);
-            navigate("/ajout-titulaire", { state: { person } });
+            const selectedPersonne = personnesData.find(personne => personne.id === selectedPerson);
+            console.log("Personne sélectionnée:", selectedPersonne);
+            navigate("/ajout-titulaire", { state: { personne: selectedPersonne } });
         }
-    };
-
-    const handleAjouter = () => {
-        navigate("/ajout-manuel");
-    };
-
-    const handleAnnuler = () => {
-        navigate("/dossiers-gestion");
     };
 
     return (
         <Box>
             <Box h="50px" bg="#C9E1F8" mt="10px" display="flex" alignItems="center" pl="20px" borderRadius="md">
-                <Text fontWeight="bold">RECHERCHE DE PERSONNE</Text>
+                <Text fontWeight="bold">RECHERCHE DE PERSONNES</Text>
             </Box>
 
-            <Flex justify="center" align="center" minH="100vh" bg="gray.100" px={4}>
+            <Box display="flex" justifyContent="center" alignItems="center" minH="100vh" bg="gray.100" px={4}>
                 <Box p={8} borderWidth={1} borderRadius="lg" bg="white" boxShadow="lg" w="full" maxW="1400px">
-                    {/* Formulaire de recherche */}
-                    <VStack gap={6} align="stretch" mb={6}>
-                        <Text fontSize="lg" fontWeight="bold" color="primary.dogerBlue.300">
-                            Identifiant
+                    {/* Section Identifiant */}
+                    <VStack gap={6} align="stretch" mb={8}>
+                        <Text fontSize="lg" fontWeight="bold" color="blue.500">
+                            Recherchez la personne !
                         </Text>
 
                         <HStack gap={4}>
@@ -110,16 +109,16 @@ const RecherchePersonne = () => {
                                 <Text fontSize="sm" fontWeight="bold" mb={2}>Nom</Text>
                                 <Input
                                     placeholder="Nom"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    value={searchFilters.nom}
+                                    onChange={(e) => handleFilterChange("nom", e.target.value)}
                                 />
                             </Box>
                             <Box flex={1}>
                                 <Text fontSize="sm" fontWeight="bold" mb={2}>Prénom</Text>
                                 <Input
                                     placeholder="Prénom"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    value={searchFilters.prenom}
+                                    onChange={(e) => handleFilterChange("prenom", e.target.value)}
                                 />
                             </Box>
                             <Box flex={1}>
@@ -127,181 +126,134 @@ const RecherchePersonne = () => {
                                 <Input
                                     type="date"
                                     placeholder="Date de naissance"
-                                />
-                            </Box>
-                            <Box flex={1}>
-                                <Text fontSize="sm" fontWeight="bold" mb={2}>Identifiant</Text>
-                                <Input
-                                    placeholder="Identifiant"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    value={searchFilters.dateNaissance}
+                                    onChange={(e) => handleFilterChange("dateNaissance", e.target.value)}
                                 />
                             </Box>
                         </HStack>
 
-                        <HStack gap={4}>
-                            <Box flex={1}>
-                                <Text fontSize="sm" fontWeight="bold" mb={2}>Nom</Text>
-                                <Input
-                                    placeholder="Nom"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                            </Box>
-                            <Box flex={1}>
-                                <Text fontSize="sm" fontWeight="bold" mb={2}>Prénom</Text>
-                                <Input
-                                    placeholder="Prénom"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                            </Box>
-                            <Box flex={1}>
-                                <Text fontSize="sm" fontWeight="bold" mb={2}>Date de naissance</Text>
-                                <Input
-                                    type="date"
-                                    placeholder="Date de naissance"
-                                />
-                            </Box>
-                            <Box>
-                                <Button
-                                    mt={6}
-                                    color="white"
-                                    bg="primary.dogerBlue.300"
-                                    _hover={{ bg: "primary.dogerBlue.400" }}
-                                    leftIcon={<HiSearch />}
-                                >
-                                    Rechercher
-                                </Button>
-                            </Box>
+                        {/* Boutons */}
+                        <HStack justify="flex-end" gap={4}>
+                            <Button
+                                color="red.500"
+                                variant="outline"
+                                borderColor="red.500"
+                                _hover={{ bg: "red.500", color: "white" }}
+                                onClick={handleResetFilters}
+                            >
+                                Réinitialiser
+                            </Button>
+                            <Button
+                                color="white"
+                                bg="blue.500"
+                                _hover={{ bg: "blue.600" }}
+                                onClick={() => console.log("Recherche appliquée")}
+                            >
+                                Appliquer
+                            </Button>
                         </HStack>
                     </VStack>
 
-                    {/* Tableau simplifié sans composant Table */}
+                    {/* Tableau avec checkbox simplifié */}
                     <Box border="1px" borderColor="gray.200" borderRadius="md" overflow="hidden" mb={6}>
-                        {/* En-tête du tableau */}
+                        {/* En-tête */}
                         <Flex
-                            bg="primary.dogerBlue.300"
+                            bg="blue.500"
                             height="40px"
                             align="center"
                             px={4}
-                            borderTopLeftRadius="md"
-                            borderTopRightRadius="md"
+                            color="white"
+                            fontWeight="bold"
                         >
-                            <Text width="50px" color="white" fontWeight="bold">Sélection</Text>
-                            <Text flex={1} color="white" fontWeight="bold">Matricule</Text>
-                            <Text flex={1} color="white" fontWeight="bold">Nom</Text>
-                            <Text flex={1} color="white" fontWeight="bold">Prénom</Text>
-                            <Text flex={1} color="white" fontWeight="bold">Profession</Text>
-                            <Text flex={1} color="white" fontWeight="bold">Date de naissance</Text>
-                            <Text flex={1} color="white" fontWeight="bold">Statut</Text>
-                            <Text flex={1} color="white" fontWeight="bold">Type</Text>
-                            <Text width="120px" color="white" fontWeight="bold">Actions</Text>
+                            <Box width="50px">-</Box>
+                            <Box flex={1}>Matricule</Box>
+                            <Box flex={1}>Nom</Box>
+                            <Box flex={1}>Prénom</Box>
+                            <Box flex={1}>Profession</Box>
+                            <Box flex={1}>Date de naissance</Box>
+                            <Box flex={1}>Nationalité</Box>
+                            <Box flex={1}>Pays de résidence</Box>
                         </Flex>
 
-                        {/* Corps du tableau */}
+                        {/* Corps */}
                         <Box maxH="400px" overflowY="auto">
-                            {filteredData.map((person) => (
+                            {filteredData.map((personne) => (
                                 <Flex
-                                    key={person.id}
+                                    key={personne.id}
                                     align="center"
                                     px={4}
                                     py={3}
                                     borderBottom="1px"
                                     borderColor="gray.100"
-                                    bg={selectedPerson === person.id ? "blue.50" : "white"}
+                                    bg={selectedPerson === personne.id ? "blue.50" : "white"}
                                     _hover={{ bg: "gray.50" }}
+                                    onClick={() => handlePersonSelection(personne.id)}
+                                    cursor="pointer"
                                 >
-                                    <Box width="50px">
-                                        <Checkbox
-                                            isChecked={selectedPerson === person.id}
-                                            onChange={() => handleSelection(person.id)}
-                                        />
+                                    {/* Checkbox visuel simple */}
+                                    <Box
+                                        width="50px"
+                                        display="flex"
+                                        alignItems="center"
+                                        justifyContent="center"
+                                    >
+                                        <Box
+                                            width="20px"
+                                            height="20px"
+                                            border="2px solid"
+                                            borderColor={selectedPerson === personne.id ? "blue.500" : "gray.400"}
+                                            borderRadius="4px"
+                                            display="flex"
+                                            alignItems="center"
+                                            justifyContent="center"
+                                            bg={selectedPerson === personne.id ? "blue.500" : "white"}
+                                        >
+                                            {selectedPerson === personne.id && (
+                                                <Box
+                                                    width="12px"
+                                                    height="12px"
+                                                    bg="white"
+                                                    borderRadius="2px"
+                                                />
+                                            )}
+                                        </Box>
                                     </Box>
-                                    <Text flex={1}>{person.matricule}</Text>
-                                    <Text flex={1}>{person.nom}</Text>
-                                    <Text flex={1}>{person.prenom}</Text>
-                                    <Text flex={1}>{person.profession}</Text>
-                                    <Text flex={1}>{person.dateNaissance}</Text>
-                                    <Text flex={1}>{person.statut}</Text>
-                                    <Text flex={1}>{person.type}</Text>
-                                    <Box width="120px">
-                                        <HStack gap={1}>
-                                            <IconButton
-                                                aria-label="Voir détails"
-                                                bg="primary.dogerBlue.300"
-                                                size='sm'
-                                                onClick={() => console.log("Voir:", person.id)}
-                                                borderRadius="md"
-                                            >
-                                                <LuEye color="white"/>
-                                            </IconButton>
-                                            <IconButton
-                                                aria-label="Modifier"
-                                                size='sm'
-                                                bg="orange.400"
-                                                onClick={() => console.log("Modifier:", person.id)}
-                                                borderRadius="md"
-                                            >
-                                                <LuPencil color="white" />
-                                            </IconButton>
-                                            <IconButton
-                                                aria-label="Supprimer"
-                                                bg="red.500"
-                                                size='sm'
-                                                borderRadius="md"
-                                                onClick={() => console.log("Supprimer:", person.id)}
-                                            >
-                                                <LuTrash2 color="white"/>
-                                            </IconButton>
-                                        </HStack>
-                                    </Box>
+                                    <Box flex={1}>{personne.matricule}</Box>
+                                    <Box flex={1}>{personne.nom}</Box>
+                                    <Box flex={1}>{personne.prenom}</Box>
+                                    <Box flex={1}>{personne.profession}</Box>
+                                    <Box flex={1}>{personne.dateNaissance}</Box>
+                                    <Box flex={1}>{personne.nationalite}</Box>
+                                    <Box flex={1}>{personne.paysResidence}</Box>
                                 </Flex>
                             ))}
                         </Box>
                     </Box>
 
-                    {/* Boutons d'action */}
-                    <HStack justify="space-between" mt={6}>
+                    {/* Boutons Annuler et Suivant */}
+                    <Flex justifyContent="space-between" mt={8}>
                         <Button
-                            color="state.red.300"
+                            color="red.500"
                             variant="outline"
-                            borderColor="state.red.300"
-                            _hover={{ bg: "state.red.300", color: "white" }}
+                            borderColor="red.500"
+                            _hover={{ bg: "red.500", color: "white" }}
                             onClick={handleAnnuler}
                         >
                             Annuler
                         </Button>
 
-                        <HStack gap={4}>
-                            <Button
-                                color="white"
-                                bg="primary.dogerBlue.300"
-                                _hover={{ bg: "primary.dogerBlue.400" }}
-                                leftIcon={<HiPlus />}
-                                onClick={handleAjouter}
-                            >
-                                Ajouter
-                            </Button>
-
-                            <Button
-                                color="white"
-                                bg="green.500"
-                                _hover={{ bg: "green.600" }}
-                                isDisabled={!selectedPerson}
-                                onClick={handleSuivant}
-                            >
-                                Suivant
-                            </Button>
-                        </HStack>
-                    </HStack>
-
-                    {/* Footer */}
-                    <Box mt={8} textAlign="center" color="gray.500">
-                        <Text fontSize="sm">CSA 2025 © - By Rawlerie</Text>
-                    </Box>
+                        <Button
+                            color="white"
+                            bg="blue.500"
+                            _hover={{ bg: "blue.200" }}
+                            isDisabled={!selectedPerson}
+                            onClick={handleSuivant}
+                        >
+                            Suivant
+                        </Button>
+                    </Flex>
                 </Box>
-            </Flex>
+            </Box>
         </Box>
     );
 };

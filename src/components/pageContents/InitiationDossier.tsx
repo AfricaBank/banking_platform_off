@@ -28,7 +28,12 @@ const InitiationDossier = () => {
 
     const navigate = useNavigate();
     const handleAbandoner = () => {
-        navigate("/dossiers-gestion");
+        navigate("/dossiers");
+    };
+
+
+    const handleRecherchePersonne = () => {
+        navigate('/recherchePersonne');
     };
 
     const { control, handleSubmit, formState: { errors } } = useForm({
@@ -43,8 +48,10 @@ const InitiationDossier = () => {
             civiliteCollectivite: ""
         }
     });
-    const onSubmit = () => {
-        navigate("/recherche");
+    const onSubmit = (data: any) => {
+        console.log("Données du formulaire:", data);
+        // Redirection vers la recherche de personne
+        navigate("/recherchePersonne", { state: { dossierData: data } });
     };
     // const onSubmit = (data: any) => {
     //     console.log("Données du formulaire:", data);
@@ -270,16 +277,19 @@ const InitiationDossier = () => {
                                     type="submit"
                                     color="white"
                                     bg="primary.dogerBlue.300"
-                                    _hover={{ bg: "white", color: "primary.dogerBlue.300", borderColor: "primary.dogerBlue.300" }}>
+                                    _hover={{ bg: "white", color: "primary.dogerBlue.300", borderColor: "primary.dogerBlue.300" }}
+                                >
                                     <FaCheck /> Instruire le dossier
                                 </Button>
+
                                 <Button
                                     type="button"
                                     color="state.red.300"
                                     variant="outline"
                                     borderColor="state.red.300"
                                     _hover={{ bg: "state.red.300", color: "white" }}
-                                    onClick={handleAbandoner}>
+                                    onClick={handleAbandoner}
+                                >
                                     <CgCloseR /> Abandonner
                                 </Button>
                             </HStack>

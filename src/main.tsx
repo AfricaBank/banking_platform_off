@@ -47,7 +47,7 @@ const router = createBrowserRouter([
         element: <InitiationDossier />,
       },
       {
-        path: "recherche",
+        path: "recherchePersonne",
         element: <RecherchePersonne />,
       },
     ],
