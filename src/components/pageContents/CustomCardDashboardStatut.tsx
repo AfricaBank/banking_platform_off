@@ -1,55 +1,88 @@
 import { Flex, Text, Box, Icon, Spacer } from "@chakra-ui/react";
-import { FaFolderClosed } from "react-icons/fa6";
+import { IconType } from "react-icons";
 
-export const CustomCardDashboardStat = () => {
+interface CustomCardDashboardStatProps {
+  title: string;
+  value: string | number;
+  percentage?: string;
+  total?: string | number;
+  icon: IconType;
+  iconBg?: string; // Utilise tes variantes (ex: "dogerBlue.400")
+  progressColor?: string; // Utilise tes variantes (ex: "brandGreen.400")
+}
+
+export const CustomCardDashboardStat: React.FC<
+  CustomCardDashboardStatProps
+> = ({
+  title,
+  value,
+  percentage,
+  total,
+  icon: IconComponent,
+  iconBg = "dogerBlue.400",
+  progressColor = "brandGreen.400",
+}) => {
   return (
-    <>
-      <Box
-        maxWidth="331px"
-        m="10"
-        borderRadius="md"
-        minHeight="170px"
-        p="10px"
-        boxShadow="3px 3px 3px 3px rgba(0, 0, 0, 0.1)"
-        height="169px"
-      >
-        <Flex>
-          <Box
-            borderRadius="10px"
-            bg="primary.dogerBlue.300"
-            p="4"
-            height="62px"
-            marginTop="10px"
-          >
-            <Icon color="white" fontSize="30px">
-              <FaFolderClosed />
-            </Icon>
-          </Box>
-          <Box ml="3">
-            <Text mt="2">Total Dossier </Text>
-            <Text fontSize="xl">
-              1200
-              <sup
-                style={{
-                  verticalAlign: "super",
-                  color: "#00A887",
-                  fontSize: "13px",
-                }}
+    <Box
+      maxWidth="331px"
+      borderRadius="md"
+      minHeight="170px"
+      p="15px"
+      boxShadow="0px 4px 12px rgba(0, 0, 0, 0.05)"
+      height="169px"
+      backgroundColor="white"
+      width="100%"
+    >
+      <Flex>
+        <Box
+          borderRadius="10px"
+          bg={iconBg}
+          p="4"
+          height="62px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Icon color="white" fontSize="30px">
+            <IconComponent />
+          </Icon>
+        </Box>
+        <Box ml="3">
+          <Text mt="1" fontWeight="medium" color="text.muted">
+            {title}
+          </Text>
+          <Text fontSize="2xl" fontWeight="bold">
+            {value}
+            {percentage && (
+              <Box
+                as="span"
+                ml="1"
+                color={progressColor}
+                fontSize="13px"
+                verticalAlign="super"
               >
-                +12%
-              </sup>
-            </Text>
-          </Box>
+                {percentage}
+              </Box>
+            )}
+          </Text>
+        </Box>
+      </Flex>
+
+      <Box mt="24px">
+        <Flex mb="1">
+          <Text fontSize="xs" fontWeight="bold" color={progressColor}>
+            0
+          </Text>
+          <Spacer />
+          <Text fontSize="xs" fontWeight="bold" color={progressColor}>
+            {total || value}
+          </Text>
         </Flex>
-        <Box position="relative" mt="28px">
-          <Flex>
-            <Text color="secondary.green.300">0</Text>
-            <Spacer />
-            <Text color="secondary.green.300">1200</Text>
-          </Flex>
-          <Box bg="secondary.green.300" h="8px" w="100%" rounded="md" />
+        {/* Barre de progression utilisant la prop dynamique */}
+        <Box bg="lightGrey.100" h="8px" w="100%" rounded="md" overflow="hidden">
+          <Box bg={progressColor} h="100%" w="100%" />
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };

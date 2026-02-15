@@ -109,11 +109,12 @@ export const NombreDossierParStatut: React.FC<BarChartProps> = () => {
     <>
       <Box
         padding="10px"
-        width="30%"
-        m="10"
+        maxWidth="90%"
+        m="10px"
         borderRadius="md"
-        p="10px"
+        h="auto"
         boxShadow="3px 3px 3px rgba(0, 0, 0, 0.1)"
+        backgroundColor="white"
       >
         <Flex alignItems="center" justifyContent="space-between" mb="20px">
           <Text>Dossier</Text>

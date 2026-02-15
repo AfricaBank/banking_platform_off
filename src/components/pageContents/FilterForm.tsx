@@ -1,17 +1,16 @@
 "use client";
-import { Box, Input, Button, Flex, IconButton } from "@chakra-ui/react";
+import { Box, Input, Flex, IconButton, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { LuArrowDown, LuCircleChevronLeft, LuSearch } from "react-icons/lu";
-import { HiArrowCircleRight } from "react-icons/hi";
+import { FaArrowRight } from "react-icons/fa6";
+import { SimpleButton } from "../customButtons/SimpleButton.tsx";
 
-// Définition des types possibles pour les formulaires
 type FormType = "nom" | "siege" | "idNational" | "idBeneficiaire";
 
 const Filtre = () => {
   const [activeForm, setActiveForm] = useState<FormType>("nom");
   const [isFormVisible, setIsFormVisible] = useState(true);
 
-  // Typage du nom du formulaire
   const handleButtonClick = (formName: FormType) => {
     setActiveForm(formName);
     setIsFormVisible(true);
@@ -21,96 +20,114 @@ const Filtre = () => {
     setIsFormVisible((prev) => !prev);
   };
 
-  // Typage de l'événement de soumission
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const filterData = Object.fromEntries(formData);
-    console.log(filterData);
+    console.log(Object.fromEntries(formData));
   };
 
-  // Typage de l'événement de réinitialisation
   const handleReset = (event: React.FormEvent<HTMLFormElement>) => {
-    // La méthode reset() est disponible sur l'élément form directement
     event.currentTarget.reset();
   };
 
-  // Définition du style du placeholder (réutilisable via un objet de props)
   const inputStyles = {
-    _placeholder: { color: "gray.400" },
+    _placeholder: { color: "darkGrey.200" },
+    focusBorderColor: "dogerBlue.400",
+    borderColor: "lightGrey.300",
   };
 
   return (
-    <Box p={4} bg="gray.100" maxW="1200px" boxShadow="md" mb={5} mx="auto">
-      <Flex justify="space-between" align="flex-start">
-        {/* Boutons à gauche */}
-        <Box display="flex" flexDirection="column" alignItems="flex-start">
+    <Box
+      p={6}
+      bg="lightGrey.50"
+      width="100%" // S'adapte au parent
+      borderRadius="lg"
+      boxShadow="sm"
+      mb={5}
+    >
+      <Flex justify="space-between" align="stretch">
+        {/* Panneau de sélection des filtres (Largeur fixe de 200px) */}
+        <Box display="flex" flexDirection="column" gap={3} m="40px">
           {(["nom", "siege", "idNational", "idBeneficiaire"] as FormType[]).map(
-            (item) => (
-              <Box key={item} position="relative" width="160px" m="10px">
-                <Button
-                  variant="outline"
-                  borderColor="primary.dogerBlue.300"
-                  color={
-                    activeForm === item ? "white" : "primary.dogerBlue.300"
-                  }
-                  bg={
-                    activeForm === item
-                      ? "primary.dogerBlue.300"
-                      : "transparent"
-                  }
-                  _hover={{ bg: "primary.dogerBlue.300", color: "white" }}
-                  transition="all 0.3s ease-in-out"
-                  w="100%"
-                  onClick={() => handleButtonClick(item)}
-                  display="flex"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                >
-                  <Box
-                    position="absolute"
-                    right="-11px"
-                    top="50%"
-                    transform="translateY(-50%)"
+            (item) => {
+              const isActive = activeForm === item;
+              return (
+                <Box key={item} position="relative" width="200px">
+                  <SimpleButton
+                    variant="outline"
+                    borderColor="dogerBlue.300"
+                    color={isActive ? "white" : "dogerBlue.400"}
+                    bg={isActive ? "dogerBlue.400" : "transparent"}
+                    _hover={{ bg: "dogerBlue.500", color: "white" }}
+                    transition="all 0.2s ease"
+                    w="100%"
+                    height="45px"
+                    onClick={() => handleButtonClick(item)}
+                    justifyContent="flex-start"
                   >
-                    <HiArrowCircleRight size={30} />
-                  </Box>
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
-                </Button>
-              </Box>
-            ),
+                    <Text fontSize="sm" fontWeight="bold">
+                      {item === "idNational"
+                        ? "ID National"
+                        : item === "idBeneficiaire"
+                          ? "ID Bénéficiaire"
+                          : item.charAt(0).toUpperCase() + item.slice(1)}
+                    </Text>
+
+                    <IconButton
+                      position="absolute"
+                      right="-15px"
+                      top="50%"
+                      transform="translateY(-50%)"
+                      bg={isActive ? "white" : "dogerBlue.400"}
+                      color={isActive ? "dogerBlue.400" : "white"}
+                      transition="color 0.2s"
+                      borderRadius="100%"
+                      w="42px"
+                      h="42px"
+                      zIndex={2}
+                    >
+                      <FaArrowRight size={20} />
+                    </IconButton>
+                  </SimpleButton>
+                </Box>
+              );
+            },
           )}
         </Box>
 
-        {/* Composant contenant le formulaire à droite */}
+        {/* Zone du Formulaire (Prend tout l'espace restant) */}
         <Box
           bg="white"
-          width="45%"
+          borderRadius="md"
           boxShadow="md"
-          p={4}
-          ml="auto"
+          p={6}
           position="relative"
+          border="1px solid"
+          borderColor="lightGrey.100"
+          m="40px"
+          w="60%"
         >
           <IconButton
-            bg="primary.dogerBlue.300"
-            aria-label="Toggle form visibility"
+            bg="sidebar.itemActive"
+            aria-label="Toggle form"
             onClick={toggleFormVisibility}
-            variant="outline"
-            _hover={{ bg: "gray.200" }}
+            _hover={{ bg: "dogerBlue.600" }}
             position="absolute"
-            top="-28px" // Remplacement du top={-7} par une valeur string pour la précision
-            right="8px"
+            top="-20px"
+            right="20px"
             borderRadius="full"
+            boxShadow="lg"
+            zIndex={3}
           >
-            <LuArrowDown size={24} color="white" />
+            <LuArrowDown size={20} color="white" />
           </IconButton>
 
           {isFormVisible && (
             <form onSubmit={handleSubmit} onReset={handleReset}>
-              <Box mb={4}>
+              <Box>
                 {activeForm === "nom" && (
                   <>
-                    <Flex mb={4} gap={2}>
+                    <Flex mb={4} gap={4}>
                       <Input
                         name="civilite"
                         placeholder="Civilité"
@@ -122,7 +139,7 @@ const Filtre = () => {
                         {...inputStyles}
                       />
                     </Flex>
-                    <Flex mb={4} gap={2}>
+                    <Flex mb={4} gap={4}>
                       <Input name="nom" placeholder="Nom" {...inputStyles} />
                       <Input
                         type="date"
@@ -134,7 +151,7 @@ const Filtre = () => {
                 )}
 
                 {activeForm === "siege" && (
-                  <Flex mb={4} gap={2}>
+                  <Flex mb={4} gap={4}>
                     <Input name="siege" placeholder="Siège" {...inputStyles} />
                     <Input
                       name="racine"
@@ -147,7 +164,7 @@ const Filtre = () => {
                 {activeForm === "idNational" && (
                   <Input
                     name="idNational"
-                    placeholder="Id National"
+                    placeholder="Identifiant National"
                     {...inputStyles}
                     mb={4}
                   />
@@ -156,23 +173,37 @@ const Filtre = () => {
                 {activeForm === "idBeneficiaire" && (
                   <Input
                     name="idBeneficiaire"
-                    placeholder="Id Bénéficiaire"
+                    placeholder="Identifiant Bénéficiaire"
                     {...inputStyles}
                     mb={4}
                   />
                 )}
 
-                <Flex justify="flex-end" mt={4} gap={4}>
-                  <Button
+                <Flex justify="flex-end" mt={6} gap={4}>
+                  <SimpleButton
                     type="submit"
-                    bg="primary.dogerBlue.300"
+                    bg="sidebar.itemActive"
                     color="white"
+                    px={8}
+                    _hover={{ bg: "dogerBlue.600" }}
                   >
-                    <LuSearch /> Chercher
-                  </Button>
-                  <Button type="reset" variant="outline" colorPalette="red">
-                    <LuCircleChevronLeft /> Réinitialiser
-                  </Button>
+                    <LuSearch />
+                    <Text as="span" ml="2">
+                      Chercher
+                    </Text>
+                  </SimpleButton>
+                  <SimpleButton
+                    type="reset"
+                    variant="outline"
+                    color="errorRed.400"
+                    _hover={{ bg: "errorRed.50" }}
+                    borderColor="errorRed.400"
+                  >
+                    <LuCircleChevronLeft />
+                    <Text as="span" ml="2">
+                      Réinitialiser
+                    </Text>
+                  </SimpleButton>
                 </Flex>
               </Box>
             </form>

@@ -18,5 +18,5 @@ export const BoxIcon = React.forwardRef<HTMLDivElement, BoxIconInterface>(
         {children}
       </Box>
     );
-  }
+  },
 );
