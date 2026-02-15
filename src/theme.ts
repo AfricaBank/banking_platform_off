@@ -12,83 +12,72 @@ const config = defineConfig({
     },
     tokens: {
       colors: {
-        primary: {
-          // Colors
-          dogerBlue: {
-            0: { value: "#D5EBFF" },
-            50: { value: "#87CEFA" },
-            100: { value: "#87CEEB" },
-            101: { value: "#99CCFF" }, // Sidebar background color
-            102: { value: "#1E90FF" }, // Active menu color
-            200: { value: "#00BFFF" },
-            300: { value: "#1E90FF" },
-            400: { value: "#fcfcff" },
-          },
-          darkGrey: {
-            0: { value: "#E2E5E5" },
-            50: { value: "#C5CBCB" },
-            100: { value: "#A8B0B0" },
-            200: { value: "#8B9696" },
-            300: { value: "#6E7C7C" },
-          },
+        dogerBlue: {
+          50: { value: "#D5EBFF" },
+          100: { value: "#99CCFF" },
+          200: { value: "#87CEFA" },
+          300: { value: "#87CEEB" },
+          400: { value: "#1E90FF" },
+          500: { value: "#1E90FF" },
+          600: { value: "#00BFFF" },
+          700: { value: "#1C7ED6" },
+          800: { value: "#fcfcff" },
         },
-        secondary: {
-          royalBlue: {
-            0: { value: "#DAE4FF" },
-            50: { value: "#C5D4FF" },
-            100: { value: "#97B2FF" },
-            200: { value: "#6C91FF" },
-            300: { value: "#4169E1" },
-          },
-          green: {
-            0: { value: "#CCEEE7" },
-            50: { value: "#99DCCF" },
-            100: { value: "#66CBB7" },
-            200: { value: "#33B99F" },
-            300: { value: "#00A887" },
-          },
-          lightGreen: {
-            0: { value: "#E6F4F2" },
-            50: { value: "#CDE9E4" },
-            100: { value: "#B3DDD7" },
-            200: { value: "#9AD2C9" },
-            300: { value: "#81C7BC" },
-          },
-          lightGrey: {
-            0: { value: "#F3F4F4" },
-            50: { value: "#E7E9E9" },
-            100: { value: "#DADDDF" },
-            200: { value: "#CED2D4" },
-            300: { value: "#C2C7CA" },
-          },
+        darkGrey: {
+          50: { value: "#f7f7f7" },
+          100: { value: "#C5CBCB" },
+          200: { value: "#A8B0B0" },
+          300: { value: "#8B9696" },
+          400: { value: "#6E7C7C" },
         },
-        //-------------------------------
-        // State colors
-        state: {
-          // Red color for errors
-          red: {
-            0: { value: "#FCD6D5" },
-            50: { value: "#F8ADAB" },
-            100: { value: "#F58381" },
-            200: { value: "#F15A58" },
-            300: { value: "#EE312E" },
-          },
-          // Orange for warning
-          orange: {
-            0: { value: "#F7B086" },
-            50: { value: "#FBC9AB" },
-            100: { value: "#F8AD80" },
-            200: { value: "#F69256" },
-            300: { value: "#FF8C00" },
-          },
-          // Green for success
-          green: {
-            0: { value: "#B1F09D" },
-            50: { value: "#C0E3B5" },
-            100: { value: "#A1D690" },
-            200: { value: "#81C86B" },
-            300: { value: "#62BB46" },
-          },
+        royalBlue: {
+          50: { value: "#DAE4FF" },
+          100: { value: "#C5D4FF" },
+          200: { value: "#97B2FF" },
+          300: { value: "#6C91FF" },
+          400: { value: "#4169E1" },
+        },
+        brandGreen: {
+          50: { value: "#CCEEE7" },
+          100: { value: "#99DCCF" },
+          200: { value: "#66CBB7" },
+          300: { value: "#33B99F" },
+          400: { value: "#00A887" },
+        },
+        lightGreen: {
+          50: { value: "#E6F4F2" },
+          100: { value: "#CDE9E4" },
+          200: { value: "#B3DDD7" },
+          300: { value: "#9AD2C9" },
+          400: { value: "#81C7BC" },
+        },
+        lightGrey: {
+          50: { value: "#F3F4F4" },
+          100: { value: "#E7E9E9" },
+          200: { value: "#DADDDF" },
+          300: { value: "#CED2D4" },
+          400: { value: "#C2C7CA" },
+        },
+        errorRed: {
+          50: { value: "#FCD6D5" },
+          100: { value: "#F8ADAB" },
+          200: { value: "#F58381" },
+          300: { value: "#F15A58" },
+          400: { value: "#EE312E" },
+        },
+        warnOrange: {
+          50: { value: "#F7B086" },
+          100: { value: "#FBC9AB" },
+          200: { value: "#F8AD80" },
+          300: { value: "#F69256" },
+          400: { value: "#FF8C00" },
+        },
+        successGreen: {
+          50: { value: "#B1F09D" },
+          100: { value: "#C0E3B5" },
+          200: { value: "#A1D690" },
+          300: { value: "#81C86B" },
+          400: { value: "#62BB46" },
         },
       },
       fonts: {
@@ -136,7 +125,28 @@ const config = defineConfig({
       },
     },
     semanticTokens: {
-      colors: {},
+      colors: {
+        sidebar: {
+          bg: { value: "{colors.dogerBlue.100}" },
+          itemActive: { value: "{colors.dogerBlue.500}" },
+        },
+        danger: {
+          solid: { value: "{colors.errorRed.400}" },
+          muted: { value: "{colors.errorRed.100}" },
+        },
+        warning: {
+          solid: { value: "{colors.warnOrange.400}" },
+          muted: { value: "{colors.warnOrange.200}" },
+        },
+        success: {
+          solid: { value: "{colors.successGreen.400}" },
+          muted: { value: "{colors.successGreen.50}" },
+        },
+        text: {
+          main: { value: "{colors.darkGrey.400}" },
+          muted: { value: "{colors.darkGrey.200}" },
+        },
+      },
     },
     keyframes: {}, // to configure if needed
   },
