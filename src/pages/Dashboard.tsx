@@ -1,43 +1,21 @@
-import { CustomDatePicker } from "@/components/customFormFields/CustomDatePicker";
-import BlocInfosGenerales from "@/components/blocInfos/BlocInfosGenerales";
-import { DropDownList } from "@/components/customFormFields/DropDownList";
-import { SimpleButton } from "@/components/customButtons/SimpleButton";
-import { Box, Text } from "@chakra-ui/react";
-import { CustomCardDashboardStat } from "@/components/pageContents/CustomCardDashboardStatut";
-import { collectionList, col2 } from "@/dataObject/ListCollection.ts";
+import { CustomCardDashboardStat } from "@/components/pageContents/CustomCardDashboardStatut.tsx";
+import { NombreDossierParStatut } from "@/components/pageContents/NombreDossierParStatut.tsx";
+import { enCours, rejected } from "@/dataObject/graphicData.ts";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 export const Dashboard = () => {
   return (
-    <>
-      <BlocInfosGenerales />
-      <CustomCardDashboardStat />
-      <Box>
-        <Text>je suis dashboard</Text>
-        <CustomDatePicker nomDuChamp="Date de naissance" />
-        <DropDownList
-          label="Pays"
-          collection={collectionList}
-          highlightColor="cyan.100"
-          withIndicator={true}
-          placeholder="Choisir un pays "
-        />
-        <DropDownList
-          label="Pays"
-          collection={col2}
-          highlightColor="cyan.100"
-          withIndicator={true}
-          placeholder="Choisir un pays "
-        />
-        <Box
-          display="flex"
-          width="25%"
-          marginTop="20px"
-          justifyContent="space-around"
-        >
-          <SimpleButton colorPalette="">Enregistrer le brouillon</SimpleButton>
-          <SimpleButton variant="outline">Annuler</SimpleButton>
-          <SimpleButton colorPalette="">Suivant</SimpleButton>
-        </Box>
-      </Box>
-    </>
+    <Box width="100%" m="0" h="full">
+      <Grid templateColumns="repeat(8, 1fr)" gap="6">
+        <GridItem colSpan={3}>
+          <CustomCardDashboardStat />
+        </GridItem>
+        <GridItem colSpan={3}>
+          <CustomCardDashboardStat />
+        </GridItem>
+        <GridItem colSpan={2}>
+          <NombreDossierParStatut inProgress={enCours} rejected={rejected} />
+        </GridItem>
+      </Grid>
+    </Box>
   );
 };

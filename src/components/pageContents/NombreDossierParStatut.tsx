@@ -27,7 +27,7 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 // 📌 Définition des types pour les props du composant
@@ -109,11 +109,11 @@ export const NombreDossierParStatut: React.FC<BarChartProps> = () => {
     <>
       <Box
         padding="10px"
-        width="577px"
+        width="30%"
         m="10"
         borderRadius="md"
         p="10px"
-        boxShadow="-5px 5px 5px rgba(0, 0, 0, 0.1)"
+        boxShadow="3px 3px 3px rgba(0, 0, 0, 0.1)"
       >
         <Flex alignItems="center" justifyContent="space-between" mb="20px">
           <Text>Dossier</Text>
