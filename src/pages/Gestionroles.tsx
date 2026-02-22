@@ -1,3 +1,10 @@
+import Kpi from "@/components/kpi/Kpi";
+import { Box } from "@chakra-ui/react";
+
 export const Gestionroles = () => {
-  return <>je suis ecran gestion des roles </>;
+  return (
+    <Box p={4}>
+      <Kpi/>
+    </Box>
+  );
 };
