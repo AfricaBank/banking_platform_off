@@ -1,7 +1,7 @@
 import { Box, Flex, Text, Center } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { buildDonut } from "./kpi.data";
-import SafeDoughnut from "@/pages/charts/SafeDoughnut";
+import SafeDoughnut from "@/components/kpi/charts/SafeDoughnut";
 
 type Props = {
   title: string;

@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { Switch } from "@/components/ui/switch";
 import { globalDonut } from "./kpi.data";
-import SafeDoughnut from "@/pages/charts/SafeDoughnut";
+import SafeDoughnut from "@/components/kpi/charts/SafeDoughnut";
 
 export default function KpiGlobal() {
   return (
