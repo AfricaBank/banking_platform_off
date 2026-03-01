@@ -5,8 +5,8 @@ import KpiGlobal from "./KpiGlobal";
 export default function Kpi() {
   return (
     <Box
-      bg="white"
-      borderRadius="12px"
+      bg="darkGrey.50"
+      rounded="12px"
       p={5}
       boxShadow="0 1px 4px rgba(0,0,0,0.1)"
     >

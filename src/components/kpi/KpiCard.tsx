@@ -24,7 +24,7 @@ export default function KpiCard({
 }: Props) {
   const chartData = useMemo(
     () => buildDonut(value, 3000, color),
-    [value, color]
+    [value, color],
   );
 
   return (
