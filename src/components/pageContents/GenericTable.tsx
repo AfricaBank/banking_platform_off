@@ -1,7 +1,6 @@
 import { Table, Container, Flex, IconButton, Box } from "@chakra-ui/react";
 import { LuEye, LuPencil, LuTrash2 } from "react-icons/lu";
 
-// On remplace any par unknown pour la flexibilité typée
 export interface ColumnConfig<T> {
   header: string;
   key: keyof T | "actions";
@@ -16,7 +15,6 @@ interface GenericTableProps<T> {
   onDelete?: (item: T) => void;
 }
 
-// Remplacement de any par unknown dans la contrainte générique
 export const GenericTable = <T extends object>({
   data,
   columns,
@@ -25,8 +23,19 @@ export const GenericTable = <T extends object>({
   onDelete,
 }: GenericTableProps<T>) => {
   return (
-    <Box p={6} bg="darkGrey.50" rounded={10}>
-      <Container maxW="full" mt={6} overflowX="auto" p={0}>
+    <Box
+      p={6}
+      bg="darkGrey.50"
+      rounded={10}
+      boxShadow="0 1px 4px rgba(0,0,0,0.1)"
+    >
+      <Container
+        maxW="full"
+        mt={2}
+        overflowX="auto"
+        p={0}
+        boxShadow="0 1px 4px rgba(0,0,0,0.1)"
+      >
         <Table.Root size="sm" variant="line" interactive>
           <Table.Header>
             <Table.Row bg="dogerBlue.500">
@@ -34,7 +43,7 @@ export const GenericTable = <T extends object>({
                 <Table.ColumnHeader
                   key={i}
                   color="white"
-                  py={4}
+                  py={3}
                   whiteSpace="nowrap"
                   textAlign="center"
                 >
@@ -48,12 +57,14 @@ export const GenericTable = <T extends object>({
             {data.map((item, rowIndex) => (
               <Table.Row key={rowIndex} _hover={{ bg: "lightGrey.50" }}>
                 {columns.map((col, colIndex) => (
-                  <Table.Cell key={colIndex} textAlign="center">
-                    {/* Logique pour la colonne d'actions */}
-                    {col.key === "actions" ? (
+                  <Table.Cell key={colIndex} textAlign="center" py={2}>
+                    {col.render ? (
+                      col.render(item)
+                    ) : col.key === "actions" ? (
                       <Flex gap={2} justify="center">
                         {onView && (
                           <IconButton
+                            rounded="10px"
                             aria-label="Voir"
                             size="xs"
                             bg="dogerBlue.500"
@@ -65,6 +76,7 @@ export const GenericTable = <T extends object>({
                         )}
                         {onEdit && (
                           <IconButton
+                            rounded="10px"
                             aria-label="Modifier"
                             size="xs"
                             bg="warnOrange.400"
@@ -76,6 +88,7 @@ export const GenericTable = <T extends object>({
                         )}
                         {onDelete && (
                           <IconButton
+                            rounded="10px"
                             aria-label="Supprimer"
                             size="xs"
                             bg="errorRed.400"
@@ -86,12 +99,8 @@ export const GenericTable = <T extends object>({
                           </IconButton>
                         )}
                       </Flex>
-                    ) : col.render ? (
-                      col.render(item)
                     ) : (
-                      /* Utilisation d'un cast sécurisé (String) ou accès direct 
-                       puisque col.key est restreint à keyof T 
-                    */
+                      /* PRIORITÉ 3 : Affichage simple du texte */
                       <>{String(item[col.key as keyof T] ?? "")}</>
                     )}
                   </Table.Cell>
