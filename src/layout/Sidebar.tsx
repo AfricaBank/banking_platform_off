@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem, Box, Text, Image, chakra } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 import logo1 from "../assets/logo/logo1.png";
 import icondashboard from "../assets/icons/vector1.png";
@@ -7,151 +7,97 @@ import agent from "../assets/icons/vector4.png";
 import role from "../assets/icons/vector3.png";
 import groupe from "../assets/icons/vector2.png";
 import dossier from "../assets/icons/vector6.png";
-import "../styles/sidebar.css";
 
-interface SidebarProps{
-    isCollapsed: boolean;
-    path:string;
+const ChakraLink = chakra(Link);
+
+interface SidebarProps {
+  isCollapsed: boolean;
 }
+
 const Sidebar: React.FC<SidebarProps> = ({ isCollapsed }) => {
-    const location = useLocation();
+  const location = useLocation();
 
-    const isActive = (path:string) => location.pathname === path;
+  const menuItems = [
+    { path: "/dashboard", label: "Dashboard", icon: icondashboard },
+    { path: "/groupes", label: "Gestion des groupes", icon: groupe },
+    { path: "/roles", label: "Gestion des rôles", icon: role },
+    { path: "/agents", label: "Gestion des agents", icon: agent },
+    { path: "/taches", label: "Taches actives", icon: tachesactives },
+    { path: "/dossiers", label: "Gestion des dossiers", icon: dossier },
+  ];
 
-    return (
-        <Grid
-            templateAreas={`"logo"
-                      "dashboard"
-                      "groupes"
-                      "roles"
-                      "agents"
-                      "taches"
-                      "dossiers"`}
-            gridTemplateRows="auto repeat(6, 30px)"
-            gap={6}
-            color="black"
-            alignItems="center"
-            fontWeight="bold"
-            padding={isCollapsed ? 2 : 10}
-            width={isCollapsed ? "80px" : "299px"}
-            transition="width 0.3s ease-in-out"
-            position="fixed"
-        >
-            <GridItem>
-                <Link to="/dashboard">
-                    <img src={logo1} alt="Logo" width={isCollapsed ? 40 : 170} height={40} />
-                </Link>
-            </GridItem>
+  return (
+    <Grid
+      as="nav"
+      bg="sidebar.bg"
+      color="text.main"
+      height="100vh"
+      padding={isCollapsed ? 4 : 8}
+      width={isCollapsed ? "80px" : "299px"}
+      transition="all 0.3s ease"
+      position="fixed"
+      left={0}
+      top={0}
+      templateRows="auto 1fr"
+      gap={10}
+      boxShadow="sm"
+    >
+      <GridItem>
+        <Link to="/dashboard">
+          <Image
+            src={logo1}
+            alt="Logo"
+            maxW={isCollapsed ? "40px" : "170px"}
+            transition="max-width 0.3s"
+          />
+        </Link>
+      </GridItem>
 
-            <GridItem>
-                <Link
-                    to="/dashboard"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/dashboard") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={icondashboard} alt="Dashboard" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Dashboard"}
-                </Link>
-            </GridItem>
+      <GridItem>
+        <Box display="flex" flexDirection="column" gap={4}>
+          {menuItems.map((item) => {
+            const active = location.pathname === item.path;
 
-            <GridItem>
-                <Link
-                    to="/groupes"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/groupes") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={groupe} alt="Gestion des groupes" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Gestion des groupes"}
-                </Link>
-            </GridItem>
+            return (
+              <ChakraLink
+                key={item.path}
+                to={item.path}
+                display="flex"
+                alignItems="center"
+                padding="10px"
+                borderRadius="md"
+                height="45px"
+                transition="all 0.2s"
+                textDecoration="none"
+                bg={active ? "sidebar.itemActive" : "transparent"}
+                color={active ? "white" : "text.main"}
+                _hover={{
+                  bg: active ? "sidebar.itemActive" : "dogerBlue.50",
+                  color: active ? "white" : "text.main",
+                  textDecoration: "none",
+                }}
+              >
+                <Image
+                  src={item.icon}
+                  alt={item.label}
+                  width="20px"
+                  height="20px"
+                  mr={isCollapsed ? 0 : 4}
+                  filter={active ? "brightness(0) invert(1)" : "none"}
+                />
 
-            <GridItem>
-                <Link
-                    to="/roles"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/roles") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={role} alt="Gestion des rôles" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Gestion des rôles"}
-                </Link>
-            </GridItem>
-
-            <GridItem>
-                <Link
-                    to="/agents"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/agents") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={agent} alt="Gestion des agents" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Gestion des agents"}
-                </Link>
-            </GridItem>
-
-            <GridItem>
-                <Link
-                    to="/taches"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/taches") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={tachesactives} alt="Taches actives" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Taches actives"}
-                </Link>
-            </GridItem>
-
-            <GridItem>
-                <Link
-                    to="/dossiers"
-                    className="navLinkHover"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: isActive("/dossiers") ? "dodgerblue" : "transparent",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        height: 40
-                    }}
-                >
-                    <img src={dossier} alt="Gestion des dossiers" style={{ marginRight: isCollapsed ? "0" : "10px" }} />
-                    {!isCollapsed && "Gestion des dossiers"}
-                </Link>
-            </GridItem>
-        </Grid>
-    );
+                {!isCollapsed && (
+                  <Text fontSize="md" fontWeight="bold" whiteSpace="nowrap">
+                    {item.label}
+                  </Text>
+                )}
+              </ChakraLink>
+            );
+          })}
+        </Box>
+      </GridItem>
+    </Grid>
+  );
 };
 
 export default Sidebar;

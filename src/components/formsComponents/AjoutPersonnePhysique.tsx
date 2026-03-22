@@ -14,10 +14,10 @@ import { SimpleButton } from "../customButtons/SimpleButton.tsx";
 
 const formComponentsPp = [
   <Civility />,
-  <ConformityBankingRelation />,
   <OriginEER />,
   <PersonalInformations />,
   <ProfessionnalActivities />,
+  <ConformityBankingRelation />,
   null,
 ];
 
@@ -49,7 +49,7 @@ export const AjoutPersonnePhysique = () => {
         <Box>
           <GeneralInfoBlock />
         </Box>
-        <Grid templateColumns="300px 1fr" gap={8} p={8}>
+        <Grid templateColumns="200px 1fr" gap={8} p={8}>
           <GridItem>
             <StepperBox>
               <StepperComponent

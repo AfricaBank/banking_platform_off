@@ -1,57 +1,78 @@
-// src/components/customFormFields/FormSelectField.tsx
 "use client";
+import { Select, Field, createListCollection } from "@chakra-ui/react";
 import {
-    Select,
-} from "@chakra-ui/react";
-import {
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-} from "@chakra-ui/form-control";
-import { useController, Control, FieldValues } from "react-hook-form";
+  useController,
+  Control,
+  FieldValues,
+  Path,
+  RegisterOptions,
+} from "react-hook-form";
+import React from "react";
 
-
-interface FormSelectFieldProps {
-    name: string;
-    label: string;
-    placeholder?: string;
-    control: Control<FieldValues>;
-    options: { label: string; value: string }[];
-    rules?: Record<string, any>;
+interface FormSelectFieldProps<TFieldValues extends FieldValues> {
+  name: Path<TFieldValues>;
+  label: string;
+  placeholder?: string;
+  control: Control<TFieldValues>;
+  options: { label: string; value: string }[];
+  rules?: RegisterOptions<TFieldValues, Path<TFieldValues>>;
 }
 
-export const FormSelectField = ({
-                                    name,
-                                    label,
-                                    placeholder,
-                                    control,
-                                    options,
-                                    rules,
-                                }: FormSelectFieldProps) => {
-    const {
-        field,
-        fieldState: { error },
-    } = useController({
-        name,
-        control,
-        rules,
-    });
+export const FormSelectField = <TFieldValues extends FieldValues>({
+  name,
+  label,
+  placeholder,
+  control,
+  options,
+  rules,
+}: FormSelectFieldProps<TFieldValues>) => {
+  // 2. Création de la collection pour Chakra v3
+  const collection = React.useMemo(
+    () => createListCollection({ items: options }),
+    [options],
+  );
 
-    return (
-        <FormControl isInvalid={!!error}>
-            <FormLabel htmlFor={name}>{label}</FormLabel>
-            <Select
-                {...field}
-                id={name}
-                placeholder={placeholder || label}
-            >
-                {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                        {option.label}
-                    </option>
-                ))}
-            </Select>
-            <FormErrorMessage>{error?.message}</FormErrorMessage>
-        </FormControl>
-    );
+  const {
+    field,
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+    rules,
+  });
+
+  return (
+    <Field.Root invalid={!!error}>
+      <Field.Label>{label}</Field.Label>
+
+      <Select.Root
+        name={field.name}
+        collection={collection}
+        // Conversion de la valeur simple en tableau pour Chakra v3
+        value={field.value ? [field.value] : []}
+        onValueChange={(details) => {
+          field.onChange(details.value[0] || "");
+        }}
+        onInteractOutside={() => field.onBlur()}
+      >
+        <Select.Control>
+          <Select.Trigger>
+            <Select.ValueText
+              placeholder={placeholder || "Sélectionnez une option"}
+            />
+          </Select.Trigger>
+        </Select.Control>
+
+        <Select.Content>
+          {collection.items.map((item) => (
+            <Select.Item item={item} key={item.value}>
+              {item.label}
+            </Select.Item>
+          ))}
+        </Select.Content>
+      </Select.Root>
+
+      <Field.ErrorText>{error?.message}</Field.ErrorText>
+    </Field.Root>
+  );
 };
