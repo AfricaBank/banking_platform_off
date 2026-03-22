@@ -4,7 +4,7 @@ import { DropDownList } from "@/components/customFormFields/DropDownList";
 import { SimpleButton } from "@/components/customButtons/SimpleButton";
 import { Box, Text } from "@chakra-ui/react";
 import { CustomCardDashboardStat } from "@/components/pageContents/CustomCardDashboardStatut";
-import { collectionList, col2 } from "@/dataObject/ListCollection.ts";
+import {codeSiege} from "@/dataObject/ListCollection.ts";
 export const Dashboard = () => {
   return (
     <>
@@ -15,14 +15,14 @@ export const Dashboard = () => {
         <CustomDatePicker nomDuChamp="Date de naissance" />
         <DropDownList
           label="Pays"
-          collection={collectionList}
+          collection={codeSiege}
           highlightColor="cyan.100"
           withIndicator={true}
           placeholder="Choisir un pays "
         />
         <DropDownList
           label="Pays"
-          collection={col2}
+          collection={codeSiege}
           highlightColor="cyan.100"
           withIndicator={true}
           placeholder="Choisir un pays "

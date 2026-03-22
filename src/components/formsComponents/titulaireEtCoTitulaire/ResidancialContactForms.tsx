@@ -4,7 +4,7 @@ import {VStack, HStack, Text} from "@chakra-ui/react";
 import {useFormContext, Controller} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
 import {DropDownList} from "@/components/customFormFields/DropDownList.tsx";
-import {col2} from "@/dataObject/ListCollection.ts";
+import {codeSiege} from "@/dataObject/ListCollection.ts";
 
 export const ResidancialContactForms = () => {
     const {
@@ -100,7 +100,7 @@ export const ResidancialContactForms = () => {
                             render={({ field }) => (
                                 <DropDownList
                                     label={"Pays d’adresse fiscale"}
-                                    collection={col2}
+                                    collection={codeSiege}
                                     value={field.value}
                                     onValueChange={field.onChange}
                                     {...register("pays_adresse_fiscal", { required: "La pays d'adresse fiscale est obligatoire" })}

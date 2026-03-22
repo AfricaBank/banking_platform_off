@@ -9,8 +9,7 @@ import {useFormContext, Controller} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
 import {DropDownList} from "@/components/customFormFields/DropDownList.tsx";
 import {
-    activiteARisque,
-    col2,
+    activiteARisque, codeSiege,
     natureJuridique,
     secteurActivite,
     segmentSecuriteFinanciere
@@ -100,7 +99,7 @@ export const LegalFinancialForms = () => {
                   render={({ field }) => (
                       <DropDownList
                           label={"Catégorie socio-professionnelle"}
-                          collection={col2}
+                          collection={codeSiege}
                           value={field.value}
                           onValueChange={field.onChange}
                           {...register("categori_socio_professionnelle", { required: "La catégorie professionelle est obligatoire" })}
@@ -204,7 +203,7 @@ export const LegalFinancialForms = () => {
                   render={({ field }) => (
                       <DropDownList
                           label={"Pays d’activité"}
-                          collection={col2}
+                          collection={codeSiege}
                           value={field.value}
                           onValueChange={field.onChange}
                           {...register("pays_activite", { required: "Le pays d'activité est obligatoire" })}

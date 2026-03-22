@@ -3,7 +3,7 @@ import { InputTextField } from "../../customFormFields/InputTextField";
 import { VStack, HStack, Text, Button, Box } from "@chakra-ui/react";
 import { Controller, useFormContext } from "react-hook-form";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
-import { col2, sexe } from "@/dataObject/ListCollection.ts";
+import {codeSiege, sexe} from "@/dataObject/ListCollection.ts";
 import { ErrorMessage } from "@hookform/error-message";
 import { useState, useEffect } from "react";
 
@@ -67,7 +67,7 @@ export const BankAccountForms = () => {
                   render={({ field }) => (
                       <DropDownList
                           label={"Type de compte"}
-                          collection={col2}
+                          collection={codeSiege}
                           value={field.value}
                           onValueChange={field.onChange}
                       />
