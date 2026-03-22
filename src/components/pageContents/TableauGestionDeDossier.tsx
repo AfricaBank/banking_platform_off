@@ -83,6 +83,10 @@ const columns: ColumnConfig<DossierData>[] = [
   { header: "Actions", key: "actions" },
 ];
 
+
+    const handleInitiateDossier = () => {
+        navigate('/recherche');
+      };
 const actions = [
   {
     label: "Démarrer EER",

@@ -3,7 +3,7 @@ import { InputTextField } from "../../customFormFields/InputTextField";
 import { VStack, HStack, Text, Button, Box } from "@chakra-ui/react";
 import { Controller, useFormContext } from "react-hook-form";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
-import { col2, sexe } from "@/dataObject/ListCollection.ts";
+import {codeSiege, sexe} from "@/dataObject/ListCollection.ts";
 import { ErrorMessage } from "@hookform/error-message";
 import { useState, useEffect } from "react";
 
@@ -49,6 +49,106 @@ export const BankAccountForms = () => {
   };
 
   const renderAccountFields = (accountIndex: number) => (
+      <Box key={accountIndex} width="100%" mb={6}>
+        {accountIndex > 0 && (
+            <Text fontSize="lg" fontWeight="bold" mb={4}>
+              Compte bancaire {accountIndex + 1}
+            </Text>
+        )}
+
+        <FormFieldSet label={accountIndex === 0 ? "Compte bancaire" : ""}>
+          {/* Première ligne */}
+          <HStack width="100%" justifyContent="space-between" mb={4}>
+            <VStack align="flex-start" gap={1} flex="1">
+              <Controller
+                  name={`accounts[${accountIndex}].type_compte`}
+                  control={control}
+                  rules={{ required: "Le type de compte est obligatoire" }}
+                  render={({ field }) => (
+                      <DropDownList
+                          label={"Type de compte"}
+                          collection={codeSiege}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                      />
+                  )}
+              />
+              <ErrorMessage
+                  errors={errors}
+                  name={`accounts[${accountIndex}].type_compte`}
+                  render={({ message }) => (
+                      <Text color="red.500" fontSize="sm">
+                        {message}
+                      </Text>
+                  )}
+              />
+            </VStack>
+            <VStack align="flex-start" gap={1} flex="1" mx={2}>
+              <InputTextField
+                  label="Devise"
+                  placeholder="Devise"
+                  {...register(`accounts[${accountIndex}].devise`)}
+              />
+            </VStack>
+            <VStack align="flex-start" gap={1} flex="1">
+              <InputTextField
+                  label="Motif ouverture"
+                  placeholder="Motif ouverture"
+                  {...register(`accounts[${accountIndex}].motif_ouverture`)}
+              />
+            </VStack>
+          </HStack>
+
+          {/* Deuxième ligne */}
+          <HStack width="100%" justifyContent="space-between" mb={4}>
+            <VStack align="flex-start" gap={1} flex="1" mx={2}>
+              <InputTextField
+                  label="Racine"
+                  placeholder="Racine"
+                  {...register(`accounts[${accountIndex}].racine`)}
+              />
+            </VStack>
+            <VStack align="flex-start" gap={1} flex="1">
+              <InputTextField
+                  label="Clé"
+                  placeholder="Clé"
+                  {...register(`accounts[${accountIndex}].cle`)}
+              />
+            </VStack>
+          </HStack>
+
+          {/* Troisième ligne */}
+          <HStack width="100%" justifyContent="space-between" mb={4}>
+            <VStack align="flex-start" gap={1} flex="1">
+              <InputTextField
+                  label="Clé RIB"
+                  placeholder="Clé RIB"
+                  {...register(`accounts[${accountIndex}].cle_rib`)}
+              />
+            </VStack>
+            <VStack align="flex-start" gap={1} flex="1" mx={2}>
+              <InputTextField
+                  label="Convention de compte"
+                  placeholder="Convention de compte"
+                  {...register(`accounts[${accountIndex}].convention_compte`)}
+              />
+            </VStack>
+            <VStack align="flex-start" gap={1} flex="1">
+              <InputTextField
+                  label="Carton signature"
+                  placeholder="Carton signature"
+                  {...register(`accounts[${accountIndex}].carton_signature`)}
+              />
+            </VStack>
+          </HStack>
+        </FormFieldSet>
+      </Box>
+  );
+
+  const renderPersonFields = (personIndex: number) => (
+      <Box key={personIndex} width="100%" mb={6}>
+        <Text fontSize="md" fontWeight="semibold" mb={3}>
+          Personne en charge {personIndex + 1}
     <Box key={accountIndex} width="100%" mb={6}>
       {accountIndex > 0 && (
         <Text fontSize="lg" fontWeight="bold" mb={4}>

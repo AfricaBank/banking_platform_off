@@ -13,6 +13,9 @@ import { system } from "./theme";
 import InitiationDossier from "@/components/pageContents/InitiationDossier.tsx";
 import RecherchePersonne from "@/components/pageContents/RecherchePersonne.tsx";
 
+// AJOUT : DossierProvider pour partager l'état du dossier entre les étapes
+import { DossierProvider } from "@/context/DossierContext";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -47,7 +50,7 @@ const router = createBrowserRouter([
         element: <InitiationDossier />,
       },
       {
-        path: "recherche",
+        path: "recherchePersonne",
         element: <RecherchePersonne />,
       },
     ],
@@ -55,6 +58,15 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
+    <StrictMode>
+      <ChakraProvider value={system}>
+        {/* DossierProvider enrobe RouterProvider pour être accessible
+                sur toutes les routes du workflow EER */}
+        <DossierProvider>
+          <RouterProvider router={router} />
+        </DossierProvider>
+      </ChakraProvider>
+    </StrictMode>
   <StrictMode>
     <ChakraProvider value={system}>
       <RouterProvider router={router} />

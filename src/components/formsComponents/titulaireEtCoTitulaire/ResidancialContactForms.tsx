@@ -1,5 +1,11 @@
 import { FormFieldSet } from "../FormFieldSet";
 import { InputTextField } from "@/components/customFormFields/InputTextField";
+
+import {VStack, HStack, Text} from "@chakra-ui/react";
+import {useFormContext, Controller} from "react-hook-form";
+import {ErrorMessage} from "@hookform/error-message";
+import {DropDownList} from "@/components/customFormFields/DropDownList.tsx";
+import {codeSiege} from "@/dataObject/ListCollection.ts";
 import { VStack, HStack, Text } from "@chakra-ui/react";
 import { useFormContext, Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -102,6 +108,48 @@ export const ResidancialContactForms = () => {
         </HStack>
       </FormFieldSet>
 
+            <FormFieldSet label="Statut de résidence ">
+                <HStack width="100%" justifyContent="space-between" mb={4}>
+                    <VStack align="flex-start" gap={1} flex="1">
+                        <Controller
+                            name="pays_adresse_fiscal"
+                            control={control}
+                            render={({ field }) => (
+                                <DropDownList
+                                    label={"Pays d’adresse fiscale"}
+                                    collection={codeSiege}
+                                    value={field.value}
+                                    onValueChange={field.onChange}
+                                    {...register("pays_adresse_fiscal", { required: "La pays d'adresse fiscale est obligatoire" })}
+                                />
+                            )}
+                        />
+                        <ErrorMessage
+                            errors={errors}
+                            name="pays_adresse_fiscal"
+                            render={({ message }) => (
+                                <Text color="red.500" fontSize="sm">
+                                    {message}
+                                </Text>
+                            )}
+                        />
+                    </VStack>
+                    <VStack align="flex-start" gap={1} flex="1" mx={2}>
+                        <InputTextField
+                            label="Statut résidence "
+                            placeholder="Statut résidence"
+                        />
+                    </VStack>
+                    <VStack align="flex-start" gap={1} flex="1">
+                        <InputTextField
+                            label="Date d’entrée territoire "
+                            placeholder="Date d’entrée territoire "
+                        />
+                    </VStack>
+                </HStack>
+            </FormFieldSet>
+        </>
+    );
       <FormFieldSet label="Statut de résidence ">
         <HStack width="100%" justifyContent="space-between" mb={4}>
           <VStack align="flex-start" gap={1} flex="1">
@@ -146,4 +194,5 @@ export const ResidancialContactForms = () => {
       </FormFieldSet>
     </>
   );
+
 };
