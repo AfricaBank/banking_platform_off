@@ -15,8 +15,8 @@ import {
   libelleApe,
   activiteARisque,
   indicateurPrivPro,
+  codeSectoriel,
 } from "@/dataObject/ListCollection.ts";
-import { codeSectoriel } from "@/dataObject/ListCollection.ts";
 export const ProfessionnalActivities = () => {
   const {
     register,
