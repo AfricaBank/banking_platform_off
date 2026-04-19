@@ -1,3 +1,5 @@
+// src/main.tsx
+
 import ReactDOM from "react-dom/client";
 import { StrictMode } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -12,8 +14,6 @@ import { Gestionagents } from "./pages/Gestionagents.tsx";
 import { system } from "./theme";
 import InitiationDossier from "@/components/pageContents/InitiationDossier.tsx";
 import RecherchePersonne from "@/components/pageContents/RecherchePersonne.tsx";
-
-// AJOUT : DossierProvider pour partager l'état du dossier entre les étapes
 import { DossierProvider } from "@/context/DossierContext";
 
 const router = createBrowserRouter([
@@ -21,38 +21,14 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      {
-        path: "dashboard",
-        element: <Dashboard />,
-      },
-      {
-        path: "groupes",
-        element: <Gestionsgroupes />,
-      },
-      {
-        path: "roles",
-        element: <Gestionroles />,
-      },
-      {
-        path: "agents",
-        element: <Gestionagents />,
-      },
-      {
-        path: "taches",
-        element: <Tachesactives />,
-      },
-      {
-        path: "dossiers",
-        element: <Gestiondossiers />,
-      },
-      {
-        path: "initiation",
-        element: <InitiationDossier />,
-      },
-      {
-        path: "recherchePersonne",
-        element: <RecherchePersonne />,
-      },
+      { path: "dashboard",        element: <Dashboard /> },
+      { path: "groupes",          element: <Gestionsgroupes /> },
+      { path: "roles",            element: <Gestionroles /> },
+      { path: "agents",           element: <Gestionagents /> },
+      { path: "taches",           element: <Tachesactives /> },
+      { path: "dossiers",         element: <Gestiondossiers /> },
+      { path: "initiation",       element: <InitiationDossier /> },
+      { path: "recherchePersonne", element: <RecherchePersonne /> },
     ],
   },
 ]);
@@ -60,16 +36,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <StrictMode>
       <ChakraProvider value={system}>
-        {/* DossierProvider enrobe RouterProvider pour être accessible
-                sur toutes les routes du workflow EER */}
         <DossierProvider>
           <RouterProvider router={router} />
         </DossierProvider>
       </ChakraProvider>
     </StrictMode>
-  <StrictMode>
-    <ChakraProvider value={system}>
-      <RouterProvider router={router} />
-    </ChakraProvider>
-  </StrictMode>,
 );
