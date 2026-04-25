@@ -19,8 +19,8 @@ export const ModuleActionHeader = ({
   onAddClick,
   onFilterToggle,
   isFilterActive = false,
-  showAddButton = true, // Par défaut affiché
-  showFilterButton = true, // Par défaut affiché
+  showAddButton = true,
+  showFilterButton = true,
 }: ModuleActionHeaderProps) => {
   return (
     <Box bg="white" py={2} px={6} rounded="xl" shadow="sm" width="100%">
