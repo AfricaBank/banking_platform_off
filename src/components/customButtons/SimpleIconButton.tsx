@@ -7,7 +7,5 @@ export const SimpleIconButton = React.forwardRef<
   HTMLButtonElement,
   SimpleIconButtonInterface
 >(({ ...props }, ref) => {
-  return (
-    <IconButton ref={ref} {...props} size="xs" borderRadius="7px"></IconButton>
-  );
+  return <IconButton ref={ref} {...props} borderRadius="7px"></IconButton>;
 });
