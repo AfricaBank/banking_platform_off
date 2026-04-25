@@ -2,8 +2,8 @@ import { Flex, Text, Box, Icon, Spacer } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 
 interface CustomCardDashboardStatProps {
-  title: string;
-  value: string | number;
+  title?: string;
+  value?: string | number;
   percentage?: string;
   total?: string | number;
   icon: IconType;
