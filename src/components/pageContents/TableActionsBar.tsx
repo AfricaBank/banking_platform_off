@@ -1,7 +1,8 @@
-import { Box, Flex, Button, IconButton } from "@chakra-ui/react";
+import { Box, Flex, IconButton } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { IconType } from "react-icons";
 import { HiFilter } from "react-icons/hi";
+import { SimpleButton } from "../customButtons/SimpleButton.tsx";
 
 // Définition d'un bouton individuel
 interface ActionButtonConfig {
@@ -26,7 +27,7 @@ export const TableActionsBar: React.FC<TableActionsBarProps> = ({
   return (
     <Flex justifyContent="flex-end" mr={10} gap={4} wrap="wrap">
       {buttons.map((btn, index) => (
-        <Button
+        <SimpleButton
           key={index}
           as={btn.to ? Link : "button"}
           to={btn.to}
@@ -54,7 +55,7 @@ export const TableActionsBar: React.FC<TableActionsBarProps> = ({
             <btn.icon />
           </Box>
           {btn.label}
-        </Button>
+        </SimpleButton>
       ))}
 
       {/* Bouton de filtre (souvent constant) */}
