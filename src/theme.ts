@@ -8,7 +8,7 @@ const config = defineConfig({
       sm: "480px",
       md: "768px",
       lg: "992px",
-      xl: "1200px", // Corrigé : évite le mélange em / px
+      xl: "1200px",
       "2xl": "1536px",
     },
     tokens: {
@@ -23,7 +23,7 @@ const config = defineConfig({
           600: { value: "#00BFFF" },
           700: { value: "#1C7ED6" },
           800: { value: "#FCFCFF" },
-          900: { value: "#10497A" }, // Ajouté pour compléter la fin de l'échelle
+          900: { value: "#10497A" },
           950: { value: "#08253D" },
         },
         darkGrey: {
@@ -32,7 +32,7 @@ const config = defineConfig({
           200: { value: "#A8B0B0" },
           300: { value: "#8B9696" },
           400: { value: "#6E7C7C" },
-          500: { value: "#535E5E" }, // Complété jusqu'à 950
+          500: { value: "#535E5E" },
           600: { value: "#3C4444" },
           700: { value: "#282E2E" },
           800: { value: "#171A1A" },
@@ -45,7 +45,7 @@ const config = defineConfig({
           200: { value: "#97B2FF" },
           300: { value: "#6C91FF" },
           400: { value: "#4169E1" },
-          500: { value: "#274CB3" }, // Complété
+          500: { value: "#274CB3" },
           600: { value: "#1D3885" },
           700: { value: "#132557" },
           800: { value: "#0A122B" },
@@ -58,7 +58,7 @@ const config = defineConfig({
           200: { value: "#66CBB7" },
           300: { value: "#33B99F" },
           400: { value: "#00A887" },
-          500: { value: "#00876C" }, // Complété
+          500: { value: "#00876C" },
           650: { value: "#006652" },
           700: { value: "#004537" },
           800: { value: "#00261E" },
@@ -71,7 +71,7 @@ const config = defineConfig({
           200: { value: "#B3DDD7" },
           300: { value: "#9AD2C9" },
           400: { value: "#81C7BC" },
-          500: { value: "#62ABA0" }, // Complété
+          500: { value: "#62ABA0" },
           600: { value: "#498F84" },
           700: { value: "#34665E" },
           800: { value: "#1F3D38" },
@@ -84,7 +84,7 @@ const config = defineConfig({
           200: { value: "#DADDDF" },
           300: { value: "#CED2D4" },
           400: { value: "#C2C7CA" },
-          500: { value: "#A4ABB0" }, // Complété
+          500: { value: "#A4ABB0" },
           600: { value: "#858D93" },
           700: { value: "#666D72" },
           800: { value: "#484D51" },
@@ -97,7 +97,7 @@ const config = defineConfig({
           200: { value: "#F58381" },
           300: { value: "#F15A58" },
           400: { value: "#EE312E" },
-          500: { value: "#C61B18" }, // Complété
+          500: { value: "#C61B18" },
           600: { value: "#9B1513" },
           700: { value: "#700F0E" },
           800: { value: "#460909" },
@@ -105,12 +105,12 @@ const config = defineConfig({
           950: { value: "#0D0101" },
         },
         warnOrange: {
-          50: { value: "#FBC9AB" }, // Réordonné du plus clair au plus sombre
+          50: { value: "#FBC9AB" },
           100: { value: "#F8AD80" },
           200: { value: "#F69256" },
           300: { value: "#F7B086" },
           400: { value: "#FF8C00" },
-          500: { value: "#CC7000" }, // Complété
+          500: { value: "#CC7000" },
           600: { value: "#995400" },
           700: { value: "#663800" },
           800: { value: "#331C00" },
@@ -118,13 +118,13 @@ const config = defineConfig({
           950: { value: "#0A0500" },
         },
         successGreen: {
-          50: { value: "#EAF9E6" }, // Ajusté pour avoir un vrai 50 très clair
+          50: { value: "#EAF9E6" },
           100: { value: "#C0E3B5" },
           200: { value: "#A1D690" },
           300: { value: "#81C86B" },
           400: { value: "#62BB46" },
-          500: { value: "#499631" }, // Complété
-          600: { value: "#346B23" },
+          500: { value: "#499631" },
+          600: { value: "#34665E" },
           700: { value: "#214416" },
           800: { value: "#11220B" },
           900: { value: "#050B03" },
@@ -137,7 +137,7 @@ const config = defineConfig({
         mono: { value: "Lato, monospace" },
       },
       lineHeights: {
-        normal: { value: "1.5" }, // Préfère les valeurs relatives sans unité (ex: 1.5) pour les textes génériques
+        normal: { value: "1.5" },
         heading: { value: "38px" },
       },
       radii: {
@@ -177,7 +177,39 @@ const config = defineConfig({
       },
     },
   },
+  // 🌟 AJOUT V3 : Configuration des styles globaux appliqués à l'application
+  globalCss: {
+    html: {
+      fontSize: "12px",
+    },
+    body: {
+      backgroundColor: "gray.50",
+      overflowX: "hidden",
+      overflowY: "hidden",
+    },
+    // 🌟 STYLE CUSTOM POUR LES BARRES DE DÉFILEMENT (Scrollbars)
+    "::-webkit-scrollbar": {
+      width: "8px", // Épaisseur pour le défilement vertical
+      height: "8px", // Épaisseur pour le défilement horizontal (ton cas précis)
+    },
+    "::-webkit-scrollbar-track": {
+      background: "#F3F4F4", // Fond de la barre (équivalent à ton lightGrey.50)
+      borderRadius: "full",
+    },
+    "::-webkit-scrollbar-thumb": {
+      background: "#C2C7CA", // Couleur de la jauge au repos (lightGrey.400)
+      borderRadius: "full",
+      border: "2px solid #F3F4F4", // Crée un léger effet d'espacement interne élégant
+    },
+    "::-webkit-scrollbar-thumb:hover": {
+      background: "#1E90FF", // La jauge s'illumine en bleu au survol (dogerBlue.400)
+    },
+    // Compatibilité Firefox standard
+    "html, body": {
+      scrollbarWidth: "thin",
+      scrollbarColor: "#C2C7CA #F3F4F4",
+    },
+  },
 });
 
-// defaultConfig est fusionné avec config automatiquement
 export const system = createSystem(defaultConfig, config);

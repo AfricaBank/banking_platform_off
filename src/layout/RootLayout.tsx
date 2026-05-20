@@ -21,7 +21,7 @@ export const RootLayout = () => {
         gridTemplateColumns={isSidebarCollapsed ? "80px 1fr" : "299px 1fr"}
         height="100%"
         width="100%"
-        transition="grid-template-columns 0.2s ease-in-out" // Transition douce lors du repli
+        transition="grid-template-columns 0.2s ease-in-out"
       >
         {/* 1. HEADER (Fixé en haut) */}
         <GridItem

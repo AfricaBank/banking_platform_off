@@ -7,10 +7,10 @@ import { FiFolder, FiRefreshCw } from "react-icons/fi";
 export const Dashboard = () => {
   return (
     <Box
-      p={{ base: "4", md: "8" }}
+      p={{ base: "4", md: "6", lg: "8" }}
       bg="gray.50"
-      height="auto" // Permet au conteneur de s'ajuster fidèlement à la somme de tous les composants
-      minHeight="100vh" // S'assure que le fond gris couvre tout l'écran s'il y a peu de lignes
+      height="auto"
+      minHeight="100vh"
       width="100%"
       maxWidth="100vw"
       overflowX="hidden"
@@ -23,16 +23,20 @@ export const Dashboard = () => {
         <Box w="45px" h="3px" bg="text.main" borderRadius="full" />
       </Box>
 
-      {/* Conteneur Flex pour les KPI et le Graphique */}
+      {/* Conteneur principal des statistiques */}
       <Flex
-        direction={{ base: "column", xl: "row" }}
+        direction={{ base: "column", xl: "row" }} // Utilisation de 'xl' pour basculer sur les écrans plus larges et éviter l'écrasement sur 15"
         gap="6"
         align="stretch"
         width="100%"
-        mb="20" // Augmentation de la marge basse pour aérer l'espace avant le tableau
+        mb="10"
       >
         {/* KPI 1 : Total Dossiers */}
-        <Box flexShrink={0} width={{ base: "100%", sm: "331px" }}>
+        <Box
+          flex={{ base: "1", xl: "1" }} // Proportion équilibrée
+          minW={{ base: "100%", sm: "300px" }} // Augmentation de la largeur minimale pour empêcher la coupure du texte
+          width="100%"
+        >
           <CustomCardDashboardStat
             title="Total Dossiers"
             value={1200}
@@ -45,7 +49,11 @@ export const Dashboard = () => {
         </Box>
 
         {/* KPI 2 : Total Tâches en cours */}
-        <Box flexShrink={0} width={{ base: "100%", sm: "331px" }}>
+        <Box
+          flex={{ base: "1", xl: "1" }}
+          minW={{ base: "100%", sm: "300px" }} // Ajustement identique pour garder une symétrie parfaite
+          width="100%"
+        >
           <CustomCardDashboardStat
             title="Total Tâches en cours"
             value={600}
@@ -57,18 +65,19 @@ export const Dashboard = () => {
           />
         </Box>
 
-        {/* Conteneur du Graphique stabilisé */}
+        {/* Conteneur du Graphique ajusté */}
         <Box
-          flex={1}
+          flex={{ base: "1", xl: "2" }} // Donne plus de flexibilité (proportion de 2) pour s'étendre sans étouffer les KPI
           width="100%"
           minWidth={0}
-          height="350px" // Forcer une hauteur fixe ici aide Chart.js à se dessiner proprement
+          height="450px"
+          overflow="hidden"
         >
           <NombreDossierParStatut />
         </Box>
       </Flex>
 
-      {/* Le tableau est maintenant à l'intérieur du conteneur global */}
+      {/* Le tableau principal positionné à l'intérieur du flux responsive global */}
       <Box width="100%">
         <TaskManagement />
       </Box>
