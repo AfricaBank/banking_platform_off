@@ -4,11 +4,12 @@ import { ModuleActionHeader } from "@/components/moduleComponents/ModuleActionHe
 import { FilterContainer } from "@/components/moduleComponents/FilterContainer.tsx";
 import { InputTextField } from "@/components/customFormFields/InputTextField.tsx";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
-
+import { useNavigate } from "react-router-dom";
 // On importe les collections de données (à adapter selon vos fichiers de données)
 import { codeSiege } from "@/dataObject/ListCollection.ts";
 
 export const Gestionagents = () => {
+  const navigate = useNavigate();
   const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   // État local pour gérer les valeurs des filtres
@@ -20,7 +21,7 @@ export const Gestionagents = () => {
   });
 
   const handleCreateAgent = () => {
-    console.log("Ouverture du formulaire de création d'agent");
+    navigate("/agents/nouveau");
   };
 
   const toggleFilters = () => {

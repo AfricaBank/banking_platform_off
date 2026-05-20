@@ -5,8 +5,10 @@ import { FilterContainer } from "@/components/moduleComponents/FilterContainer.t
 import { InputTextField } from "@/components/customFormFields/InputTextField.tsx";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
 import { codeSiege } from "@/dataObject/ListCollection.ts";
+import { useNavigate } from "react-router-dom";
 
 export const Gestionroles = () => {
+  const navigate = useNavigate();
   const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   const [filterValues, setFilterValues] = useState({
@@ -15,7 +17,7 @@ export const Gestionroles = () => {
   });
 
   const handleCreateRole = () => {
-    console.log("Ouverture du formulaire de création de rôle");
+    navigate("/roles/nouveau");
   };
 
   const toggleFilters = () => {

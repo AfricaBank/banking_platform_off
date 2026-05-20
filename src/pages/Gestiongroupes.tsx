@@ -5,7 +5,10 @@ import { FilterContainer } from "@/components/moduleComponents/FilterContainer.t
 import { InputTextField } from "@/components/customFormFields/InputTextField.tsx";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
 import { codeSiege } from "@/dataObject/ListCollection.ts";
+import { useNavigate } from "react-router-dom";
+
 export const Gestionsgroupes = () => {
+  const navigate = useNavigate();
   const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   const [filterValues, setFilterValues] = useState({
@@ -14,7 +17,7 @@ export const Gestionsgroupes = () => {
   });
 
   const handleCreateGroup = () => {
-    console.log("Logique pour ouvrir le formulaire de création de groupe");
+    navigate("/groupes/nouveau");
   };
 
   const toggleFilters = () => {

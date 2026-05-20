@@ -14,6 +14,7 @@ interface DropDownListProps {
   size?: "sm" | "md" | "lg";
   value?: string;
   onValueChange?: (value: string) => void;
+  isDisabled?: boolean;
 }
 
 export const DropDownList: React.FC<DropDownListProps> = ({
@@ -26,6 +27,7 @@ export const DropDownList: React.FC<DropDownListProps> = ({
   size = "md",
   value,
   onValueChange,
+  isDisabled,
 }) => {
   const selectValue = value ? [value] : [];
 

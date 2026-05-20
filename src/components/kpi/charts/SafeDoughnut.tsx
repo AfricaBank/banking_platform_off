@@ -1,17 +1,25 @@
 import { useEffect, useRef } from "react";
-import { Chart as ChartJS, ChartConfiguration, ArcElement, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  ChartConfiguration,
+  ArcElement,
+  Tooltip,
+  Legend,
+  ChartData,
+  ChartOptions,
+} from "chart.js";
 
 // Enregistrer les éléments nécessaires
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 type Props = {
-  data: any;
-  options?: any;
+  data: ChartData<"doughnut">;
+  options?: ChartOptions<"doughnut">;
 };
 
 export default function SafeDoughnut({ data, options }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const chartInstanceRef = useRef<ChartJS | null>(null);
+  const chartInstanceRef = useRef<ChartJS<"doughnut"> | null>(null);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -22,7 +30,8 @@ export default function SafeDoughnut({ data, options }: Props) {
         chartInstanceRef.current.destroy();
         chartInstanceRef.current = null;
       } catch (e) {
-        console.warn("Erreur destruction chart:", e);
+        const errorMessage = e instanceof Error ? e.message : String(e);
+        console.warn("Erreur destruction chart:", errorMessage);
       }
     }
 
@@ -31,7 +40,7 @@ export default function SafeDoughnut({ data, options }: Props) {
       const ctx = canvasRef.current.getContext("2d");
       if (!ctx) return;
 
-      const config: ChartConfiguration = {
+      const config: ChartConfiguration<"doughnut"> = {
         type: "doughnut",
         data: data,
         options: {
@@ -43,7 +52,8 @@ export default function SafeDoughnut({ data, options }: Props) {
 
       chartInstanceRef.current = new ChartJS(ctx, config);
     } catch (e) {
-      console.error("Erreur création chart:", e);
+      const errorMessage = e instanceof Error ? e.message : String(e);
+      console.error("Erreur création chart:", errorMessage);
     }
 
     // Cleanup function
@@ -53,7 +63,8 @@ export default function SafeDoughnut({ data, options }: Props) {
           chartInstanceRef.current.destroy();
           chartInstanceRef.current = null;
         } catch (e) {
-          console.warn("Erreur cleanup chart:", e);
+          const errorMessage = e instanceof Error ? e.message : String(e);
+          console.warn("Erreur cleanup chart:", errorMessage);
         }
       }
     };

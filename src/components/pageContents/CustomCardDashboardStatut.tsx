@@ -1,15 +1,5 @@
 import { Flex, Text, Box, Icon, Spacer } from "@chakra-ui/react";
-import { IconType } from "react-icons";
-
-interface CustomCardDashboardStatProps {
-  title?: string;
-  value?: string | number;
-  percentage?: string;
-  total?: string | number;
-  icon: IconType;
-  iconBg?: string; // Utilise tes variantes (ex: "dogerBlue.400")
-  progressColor?: string; // Utilise tes variantes (ex: "brandGreen.400")
-}
+import { CustomCardDashboardStatProps } from "./pageContents.type.ts";
 
 export const CustomCardDashboardStat: React.FC<
   CustomCardDashboardStatProps
@@ -25,41 +15,46 @@ export const CustomCardDashboardStat: React.FC<
   return (
     <Box
       maxWidth="331px"
-      borderRadius="md"
-      minHeight="170px"
-      p="15px"
-      boxShadow="0px 4px 12px rgba(0, 0, 0, 0.05)"
-      height="169px"
+      borderRadius="24px"
+      p="30px"
+      boxShadow="0px 10px 30px rgba(0, 0, 0, 0.04)"
       backgroundColor="white"
       width="100%"
     >
-      <Flex>
+      <Flex align="center">
         <Box
-          borderRadius="10px"
+          borderRadius="15px"
           bg={iconBg}
           p="4"
-          height="62px"
+          height="75px"
+          width="75px"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <Icon color="white" fontSize="30px">
-            <IconComponent />
-          </Icon>
+          {IconComponent && (
+            <Icon as={IconComponent} color="white" fontSize="40px" />
+          )}
         </Box>
-        <Box ml="3">
-          <Text mt="1" fontWeight="medium" color="text.muted">
+        <Box ml="6">
+          <Text fontWeight="medium" color="text.muted" fontSize="md">
             {title}
           </Text>
-          <Text fontSize="2xl" fontWeight="bold">
+          <Text
+            fontSize="4xl"
+            fontWeight="bold"
+            color="text.main"
+            letterSpacing="-1px"
+          >
             {value}
             {percentage && (
               <Box
                 as="span"
-                ml="1"
+                ml="2"
                 color={progressColor}
-                fontSize="13px"
-                verticalAlign="super"
+                fontSize="16px"
+                fontWeight="semibold"
+                verticalAlign="middle"
               >
                 {percentage}
               </Box>
@@ -68,18 +63,23 @@ export const CustomCardDashboardStat: React.FC<
         </Box>
       </Flex>
 
-      <Box mt="24px">
-        <Flex mb="1">
-          <Text fontSize="xs" fontWeight="bold" color={progressColor}>
+      <Box mt="45px">
+        <Flex mb="3">
+          <Text fontSize="md" fontWeight="bold" color={progressColor}>
             0
           </Text>
           <Spacer />
-          <Text fontSize="xs" fontWeight="bold" color={progressColor}>
+          <Text fontSize="md" fontWeight="bold" color={progressColor}>
             {total || value}
           </Text>
         </Flex>
-        {/* Barre de progression utilisant la prop dynamique */}
-        <Box bg="lightGrey.100" h="8px" w="100%" rounded="md" overflow="hidden">
+        <Box
+          bg="darkGrey.50"
+          h="10px"
+          w="100%"
+          rounded="full"
+          overflow="hidden"
+        >
           <Box bg={progressColor} h="100%" w="100%" />
         </Box>
       </Box>

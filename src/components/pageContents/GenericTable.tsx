@@ -1,5 +1,4 @@
-import { Table, Container, Flex, IconButton, Box } from "@chakra-ui/react";
-import { LuEye, LuPencil, LuTrash2 } from "react-icons/lu";
+import { Table, Container, Box } from "@chakra-ui/react";
 
 export interface ColumnConfig<T> {
   header: string;
@@ -10,42 +9,42 @@ export interface ColumnConfig<T> {
 interface GenericTableProps<T> {
   data: T[];
   columns: ColumnConfig<T>[];
-  onView?: (item: T) => void;
-  onEdit?: (item: T) => void;
-  onDelete?: (item: T) => void;
 }
 
 export const GenericTable = <T extends object>({
   data,
   columns,
-  onView,
-  onEdit,
-  onDelete,
 }: GenericTableProps<T>) => {
   return (
-    <Box
-      p={6}
-      bg="darkGrey.50"
-      rounded={10}
-      boxShadow="0 1px 4px rgba(0,0,0,0.1)"
-    >
-      <Container
-        maxW="full"
-        mt={2}
-        overflowX="auto"
-        p={0}
-        boxShadow="0 1px 4px rgba(0,0,0,0.1)"
-      >
-        <Table.Root size="sm" variant="line" interactive>
+    <Box p={4} bg="gray.50" rounded="xl">
+      <Container maxW="full" overflowX="auto" p={0}>
+        <Table.Root
+          size="sm"
+          variant="line" // On réutilise une variante valide exigée par ton TypeScript
+          style={{
+            borderCollapse: "separate",
+            borderSpacing: "0 12px", // Conserve l'écartement des lignes
+          }}
+        >
+          {/* 1. EN-TÊTE DU TABLEAU */}
           <Table.Header>
-            <Table.Row bg="dogerBlue.500">
+            <Table.Row
+              bg="dogerBlue.500"
+              border="none" // Supprime la bordure native de la variante "line"
+              boxShadow="0 4px 10px rgba(0, 0, 0, 0.08)"
+            >
               {columns.map((col, i) => (
                 <Table.ColumnHeader
                   key={i}
                   color="white"
-                  py={3}
+                  py={4}
+                  fontWeight="medium"
+                  fontSize="sm"
                   whiteSpace="nowrap"
                   textAlign="center"
+                  border="none" // Supprime la bordure de chaque cellule d'en-tête
+                  _first={{ borderLeftRadius: "xl" }}
+                  _last={{ borderRightRadius: "xl" }}
                 >
                   {col.header}
                 </Table.ColumnHeader>
@@ -53,54 +52,46 @@ export const GenericTable = <T extends object>({
             </Table.Row>
           </Table.Header>
 
+          {/* 2. CORPS DU TABLEAU (Lignes flottantes) */}
           <Table.Body>
             {data.map((item, rowIndex) => (
-              <Table.Row key={rowIndex} _hover={{ bg: "lightGrey.50" }}>
+              <Table.Row
+                key={rowIndex}
+                bg="white"
+                border="none" // Supprime la bordure de ligne native
+                boxShadow="0 2px 5px rgba(0, 0, 0, 0.03)"
+                transition="all 0.2s ease"
+                _hover={{
+                  transform: "translateY(-1px)",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.06)",
+                  bg: "gray.50/50",
+                }}
+              >
                 {columns.map((col, colIndex) => (
-                  <Table.Cell key={colIndex} textAlign="center" py={2}>
+                  <Table.Cell
+                    key={colIndex}
+                    textAlign="center"
+                    py={4}
+                    fontSize="sm"
+                    color="gray.600"
+                    // On force des bordures légères personnalisées pour envelopper chaque carte
+                    borderTop="1px solid"
+                    borderBottom="1px solid"
+                    borderColor="gray.100"
+                    _first={{
+                      borderLeft: "1px solid",
+                      borderColor: "gray.100",
+                      borderLeftRadius: "xl",
+                    }}
+                    _last={{
+                      borderRight: "1px solid",
+                      borderColor: "gray.100",
+                      borderRightRadius: "xl",
+                    }}
+                  >
                     {col.render ? (
                       col.render(item)
-                    ) : col.key === "actions" ? (
-                      <Flex gap={2} justify="center">
-                        {onView && (
-                          <IconButton
-                            rounded="10px"
-                            aria-label="Voir"
-                            size="xs"
-                            bg="dogerBlue.500"
-                            color="white"
-                            onClick={() => onView(item)}
-                          >
-                            <LuEye />
-                          </IconButton>
-                        )}
-                        {onEdit && (
-                          <IconButton
-                            rounded="10px"
-                            aria-label="Modifier"
-                            size="xs"
-                            bg="warnOrange.400"
-                            color="white"
-                            onClick={() => onEdit(item)}
-                          >
-                            <LuPencil />
-                          </IconButton>
-                        )}
-                        {onDelete && (
-                          <IconButton
-                            rounded="10px"
-                            aria-label="Supprimer"
-                            size="xs"
-                            bg="errorRed.400"
-                            color="white"
-                            onClick={() => onDelete(item)}
-                          >
-                            <LuTrash2 />
-                          </IconButton>
-                        )}
-                      </Flex>
                     ) : (
-                      /* PRIORITÉ 3 : Affichage simple du texte */
                       <>{String(item[col.key as keyof T] ?? "")}</>
                     )}
                   </Table.Cell>

@@ -9,40 +9,62 @@ export const RootLayout = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   return (
-    <Box width="full" margin="0px" padding="0px">
+    // On s'assure que le conteneur prend tout l'écran sans causer de barres de défilement externes
+    <Box width="100vw" height="100vh" overflow="hidden" bg="gray.50">
       <Grid
-        templateAreas={`"nav header"
-                        "nav main"
-                        "nav footer"`}
-        gridTemplateRows={"70px 1fr 50px"}
+        templateAreas={`
+          "nav header"
+          "nav main"
+          "nav footer"
+        `}
+        gridTemplateRows={"70px 1fr auto"} // auto pour le footer s'adapte s'il est vide
         gridTemplateColumns={isSidebarCollapsed ? "80px 1fr" : "299px 1fr"}
-        height="100vh"
-        gap="0.5"
-        color="blackAlpha.700"
-        fontWeight="bold"
+        height="100%"
         width="100%"
+        transition="grid-template-columns 0.2s ease-in-out" // Transition douce lors du repli
       >
+        {/* 1. HEADER (Fixé en haut) */}
         <GridItem
           area={"header"}
           background="white"
-          position="relative"
-          top="0"
-          zIndex="1"
-          height="70px"
-          width="auto"
-          border="1px solid green"
+          boxShadow="0 1px 2px rgba(0,0,0,0.05)"
+          zIndex="10"
+          display="flex"
+          alignItems="center"
+          px={4}
         >
           <Header
             toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
           />
         </GridItem>
-        <GridItem area={"nav"} background="primary.dogerBlue.101">
+
+        {/* 2. SIDEBAR (Fixée à gauche, s'étire sur toute la hauteur) */}
+        <GridItem area={"nav"} background="primary.dogerBlue.101" zIndex="20">
           <Sidebar isCollapsed={isSidebarCollapsed} />
         </GridItem>
-        <GridItem area={"main"} border="1px solid red" p="2">
-          <Outlet />
+
+        {/* 3. ZONE PRINCIPALE (La seule zone qui défile) */}
+        <GridItem
+          area={"main"}
+          overflowY="auto" // Rend le défilement indépendant
+          p={2} // Augmentation du padding pour respirer (conforme à vos maquettes)
+          display="flex"
+          flexDirection="column"
+        >
+          <Box flex="1">
+            <Outlet />
+          </Box>
         </GridItem>
-        <GridItem paddingLeft="2" area={"footer"} border="1px solid black">
+
+        {/* 4. FOOTER (Optionnel ou discret tout en bas) */}
+        <GridItem
+          area={"footer"}
+          background="white"
+          borderTop="1px solid"
+          borderColor="gray.100"
+          py={2}
+          px={6}
+        >
           <Footer />
         </GridItem>
       </Grid>

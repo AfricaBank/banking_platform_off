@@ -1,7 +1,6 @@
-import { Grid, GridItem, Text, Flex, Icon } from "@chakra-ui/react";
-import { LuUser } from "react-icons/lu"; // Import de l'icône profil
-import { RiArrowRightLine } from "react-icons/ri";
-import { TfiAlignRight } from "react-icons/tfi";
+import { Flex, Text, Box, Icon } from "@chakra-ui/react";
+import { LuUser, LuLogOut } from "react-icons/lu"; // Remplacement par les icônes exactes
+import { FiMenu } from "react-icons/fi"; // Icône hamburger conforme au visuel
 import {
   SelectContent,
   SelectItem,
@@ -12,7 +11,6 @@ import {
 import { applicationLanguages } from "@/dataObject/languages";
 import { SimpleIconButton } from "@/components/customButtons/SimpleIconButton";
 import { SimpleButton } from "@/components/customButtons/SimpleButton";
-import { BoxIcon } from "@/components/customButtons/BoxIcon";
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -20,93 +18,103 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
   return (
-    <>
-      <Grid templateColumns="repeat(4, 1fr)" bg="transparent">
-        <GridItem colSpan={1} height="4rem">
-          <Flex
-            marginTop="25px"
-            marginLeft="10px"
-            onClick={toggleSidebar}
-            cursor="pointer"
-            color="text.main"
-            _hover={{ color: "sidebar.itemActive" }}
-            transition="color 0.2s"
+    <Flex w="full" h="full" align="center" justify="space-between" bg="white">
+      {/* 1. BLOC GAUCHE : Bouton de réduction de la Sidebar */}
+      <Flex
+        align="center"
+        justify="center"
+        cursor="pointer"
+        color="gray.600"
+        _hover={{ color: "dogerBlue.500" }}
+        transition="color 0.2s"
+        onClick={toggleSidebar}
+        p={2}
+      >
+        <Icon fontSize="22px">
+          <FiMenu />
+        </Icon>
+      </Flex>
+
+      {/* 2. BLOC DROITE : Sélections et actions utilisateurs */}
+      <Flex align="center" gap={6}>
+        {/* Sélecteur de langue épuré */}
+        <SelectRoot collection={applicationLanguages} size="sm" width="110px">
+          <SelectTrigger
+            border="none"
+            bg="transparent"
+            p={0}
+            _focus={{ boxShadow: "none" }}
           >
-            <Icon fontSize="xl">
-              <TfiAlignRight />
+            <SelectValueText placeholder="Français" />
+          </SelectTrigger>
+          <SelectContent>
+            {applicationLanguages.items.map((languageName) => (
+              <SelectItem item={languageName} key={languageName.value}>
+                {languageName.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </SelectRoot>
+
+        {/* Ligne de séparation fine (visible discrètement sur la maquette) */}
+        <Box h="24px" w="1px" bg="gray.200" />
+
+        {/* Informations de l'utilisateur connecté */}
+        <Flex align="center" gap={3}>
+          <SimpleIconButton
+            aria-label="User Profile"
+            color="white"
+            borderRadius="md"
+            bg="dogerBlue.500"
+            _hover={{ bg: "dogerBlue.600" }}
+            h="36px"
+            w="36px"
+          >
+            <Icon fontSize="md">
+              <LuUser />
             </Icon>
-          </Flex>
-        </GridItem>
+          </SimpleIconButton>
 
-        <GridItem colStart={3} colSpan={3} height="4em">
-          <Flex
-            align="center"
-            gap="4"
-            justify="flex-end"
-            marginTop="12px"
-            marginRight="40px"
+          <Text fontSize="sm" fontWeight="semibold" color="gray.700">
+            John Doe
+          </Text>
+        </Flex>
+
+        {/* Deuxième ligne de séparation fine */}
+        <Box h="24px" w="1px" bg="gray.200" />
+
+        {/* Bouton Déconnexion conforme au visuel */}
+        <SimpleButton
+          size="md"
+          borderRadius="md"
+          bg="dogerBlue.500"
+          color="white"
+          px={5}
+          h="38px"
+          fontSize="xs"
+          fontWeight="medium"
+          _hover={{ bg: "dogerBlue.600" }}
+          display="flex"
+          alignItems="center"
+          gap={3}
+        >
+          Deconnexion
+          {/* Carré blanc interne enveloppant l'icône de sortie */}
+          <Box
+            width="22px"
+            height="22px"
+            bg="white"
+            borderRadius="md"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
           >
-            <SelectRoot
-              collection={applicationLanguages}
-              size="xs"
-              width="200px"
-            >
-              <SelectTrigger>
-                <SelectValueText placeholder="Langue" />
-              </SelectTrigger>
-              <SelectContent>
-                {applicationLanguages.items.map((languageName) => (
-                  <SelectItem item={languageName} key={languageName.value}>
-                    {languageName.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </SelectRoot>
-
-            {/* Bouton Profil mis à jour */}
-            <SimpleIconButton
-              aria-label="User Profile"
-              color="white"
-              borderRadius="full" // Optionnel : souvent les boutons profils sont ronds
-              _hover={{ bg: "dogerBlue.600" }}
-              bg="sidebar.itemActive"
-            >
-              <Icon fontSize="lg">
-                <LuUser />
-              </Icon>
-            </SimpleIconButton>
-
-            <Text fontWeight="bold" color="text.main">
-              Username
-            </Text>
-
-            <SimpleButton
-              size="sm"
-              borderRadius="lg"
-              bg="sidebar.itemActive"
-              color="white"
-              px="4"
-              _hover={{ bg: "dogerBlue.600" }}
-            >
-              Deconnexion
-              <BoxIcon
-                width="20px"
-                height="20px"
-                bg="white"
-                borderRadius="full"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                ml="2"
-              >
-                <Icon color="sidebar.itemActive" fontSize="xs">
-                  <RiArrowRightLine />
-                </Icon>
-              </BoxIcon>
-            </SimpleButton>
-          </Flex>
-        </GridItem>
-      </Grid>
-    </>
+            <Icon color="dogerBlue.500" fontSize="xs">
+              <LuLogOut />
+            </Icon>
+          </Box>
+        </SimpleButton>
+      </Flex>
+    </Flex>
   );
 };
