@@ -5,8 +5,8 @@ import { FilterContainer } from "@/components/moduleComponents/FilterContainer.t
 import { InputTextField } from "@/components/customFormFields/InputTextField.tsx";
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
 import { useNavigate } from "react-router-dom";
-// On importe les collections de données (à adapter selon vos fichiers de données)
 import { codeSiege } from "@/dataObject/ListCollection.ts";
+import AgentManagement from "@/module-management/gestion-des-agents/AgentManagement.tsx";
 
 export const Gestionagents = () => {
   const navigate = useNavigate();
@@ -93,7 +93,9 @@ export const Gestionagents = () => {
         </FilterContainer>
       )}
 
-      <Box mt={6}>{/* Composant Tableau des agents ici */}</Box>
+      <Box mt={6}>
+        <AgentManagement />
+      </Box>
     </Box>
   );
 };

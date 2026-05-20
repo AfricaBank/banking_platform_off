@@ -6,6 +6,7 @@ import { InputTextField } from "@/components/customFormFields/InputTextField.tsx
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
 import { CustomDatePicker } from "@/components/customFormFields/CustomDatePicker.tsx";
 import { codeSiege } from "@/dataObject/ListCollection.ts";
+import ActiveTaskManager from "@/module-management/taches-actives/ActiveTaskManager.tsx";
 
 export const Tachesactives = () => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
@@ -111,7 +112,9 @@ export const Tachesactives = () => {
         </FilterContainer>
       )}
 
-      <Box mt={6}>Tâches actives</Box>
+      <Box mt={6}>
+        <ActiveTaskManager />
+      </Box>
     </Box>
   );
 };

@@ -37,7 +37,6 @@ const columns: ColumnConfig<DossierData>[] = [
   { header: "Initiateur", key: "initiateur" },
   { header: "Exploitant", key: "codeExploitant" },
 
-  // LA CORRECTION EST ICI : Injection directe des boutons d'actions spécifiques à ce module
   {
     header: "Actions",
     key: "actions",
