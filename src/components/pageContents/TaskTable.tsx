@@ -3,38 +3,8 @@ import { Box, Flex, IconButton, Badge, Text } from "@chakra-ui/react";
 import { LuEye, LuDownload } from "react-icons/lu";
 
 import { GenericTable, ColumnConfig } from "./GenericTable.tsx";
-
-interface AgentDossier {
-  reference: string;
-  nomTitulaire: string;
-  statut: "TERMINE" | "ENCOURS" | "SUSPENDUE";
-  agence: string;
-  codeExploitant: string;
-}
-
-const data: AgentDossier[] = [
-  {
-    reference: "REF-2026-001",
-    nomTitulaire: "Jean Dupont",
-    statut: "TERMINE",
-    agence: "Agence Dakar Plateau",
-    codeExploitant: "EXP-778",
-  },
-  {
-    reference: "REF-2026-002",
-    nomTitulaire: "Marie Fall",
-    statut: "ENCOURS",
-    agence: "Agence Saint-Louis",
-    codeExploitant: "EXP-421",
-  },
-  {
-    reference: "REF-2026-002",
-    nomTitulaire: "Marie Fall",
-    statut: "SUSPENDUE",
-    agence: "Agence Saint-Louis",
-    codeExploitant: "EXP-421",
-  },
-];
+import { AgentDossier } from "./pageContents.type";
+import { agentData } from "./pageContents.mock.ts";
 
 const TaskManagement = () => {
   const columns: ColumnConfig<AgentDossier>[] = [
@@ -118,7 +88,7 @@ const TaskManagement = () => {
       </Flex>
 
       {/* Rendu du composant de table générique */}
-      <GenericTable data={data} columns={columns} />
+      <GenericTable data={agentData} columns={columns} />
     </Box>
   );
 };

@@ -6,6 +6,7 @@ import { InputTextField } from "@/components/customFormFields/InputTextField.tsx
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
 import { codeSiege } from "@/dataObject/ListCollection.ts";
 import { useNavigate } from "react-router-dom";
+import GroupManagement from "@/module-management/gestion-des-group/GroupManagement.tsx";
 
 export const Gestionsgroupes = () => {
   const navigate = useNavigate();
@@ -65,7 +66,9 @@ export const Gestionsgroupes = () => {
           </FilterContainer>
         )}
 
-        <Box mt={6}>{/* Ton composant de tableau ici */}</Box>
+        <Box mt={6}>
+          <GroupManagement />
+        </Box>
       </Box>
     </>
   );

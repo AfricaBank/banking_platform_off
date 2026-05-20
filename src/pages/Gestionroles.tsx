@@ -6,6 +6,7 @@ import { InputTextField } from "@/components/customFormFields/InputTextField.tsx
 import { DropDownList } from "@/components/customFormFields/DropDownList.tsx";
 import { codeSiege } from "@/dataObject/ListCollection.ts";
 import { useNavigate } from "react-router-dom";
+import RoleManagement from "@/module-management/gestion-des-roles/RoleManagement.tsx";
 
 export const Gestionroles = () => {
   const navigate = useNavigate();
@@ -64,7 +65,9 @@ export const Gestionroles = () => {
         </FilterContainer>
       )}
 
-      <Box mt={6}>{/* Votre composant de tableau ici */}</Box>
+      <Box mt={6}>
+        <RoleManagement />
+      </Box>
     </Box>
   );
 };
