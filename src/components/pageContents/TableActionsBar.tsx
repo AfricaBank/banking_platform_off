@@ -36,8 +36,10 @@ export const TableActionsBar: React.FC<TableActionsBarProps> = ({
           color="white"
           width={btn.width || "auto"}
           _hover={{ bg: btn.hoverBg || "dogerBlue.600" }}
-          px={4}
+          px={2}
+          py={4}
           rounded={10}
+          w="120"
         >
           {/* Le carré blanc avec l'icône */}
           <Box
