@@ -1,58 +1,14 @@
 "use client";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, Flex, IconButton } from "@chakra-ui/react";
 import { useState } from "react";
 import FilterForm from "@/components/pageContents/FilterForm";
-import { HiPlus } from "react-icons/hi";
-import { HiPencil } from "react-icons/hi2";
-import { FaShareFromSquare } from "react-icons/fa6";
+import { LuEye, LuPencil, LuTrash2 } from "react-icons/lu"; // Import des icônes d'action de ligne
 import { TableActionsBar } from "./TableActionsBar.tsx";
 import { GenericTable, ColumnConfig } from "./GenericTable.tsx";
-
-// 1. Définition de l'interface pour les données du tableau
-interface DossierData {
-  prenomNom: string;
-  numeroDossier: string;
-  typeProcessus: string;
-  dernierStatut: string;
-  typeModification: string;
-  typeClient: string;
-  categorieClientele: string;
-  dateCreation: string;
-  dateFin: string;
-  initiateur: string;
-  codeExploitant: string;
-}
-
-const data: DossierData[] = [
-  {
-    prenomNom: "Issaga Gaye",
-    numeroDossier: "123456",
-    typeProcessus: "EER",
-    dernierStatut: "Términer",
-    typeModification: "Modification 1",
-    typeClient: "Client A",
-    categorieClientele: "Catégorie 1",
-    dateCreation: "2024-03-21",
-    dateFin: "2024-04-21",
-    initiateur: "Alice",
-    codeExploitant: "ABC123",
-  },
-  {
-    prenomNom: "Mor Mbathie",
-    numeroDossier: "20000",
-    typeProcessus: "EER",
-    dernierStatut: "À valider DG",
-    typeModification: "Modification 1",
-    typeClient: "Client A",
-    categorieClientele: "Catégorie 1",
-    dateCreation: "2024-03-21",
-    dateFin: "2024-04-21",
-    initiateur: "Alice",
-    codeExploitant: "ABC123",
-  },
-];
-
-// 2. Typage strict des colonnes en utilisant l'interface DossierData
+import { DossierData } from "./pageContents.type.ts";
+import { actions } from "./pageContents.constants.ts";
+import { data } from "./pageContents.mock.ts";
+// Configuration des colonnes
 const columns: ColumnConfig<DossierData>[] = [
   { header: "Prenom Nom / Raison sociale", key: "prenomNom" },
   { header: "Numéro dossier", key: "numeroDossier" },
@@ -64,7 +20,7 @@ const columns: ColumnConfig<DossierData>[] = [
       <Text
         fontWeight="bold"
         color={
-          item.dernierStatut === "En cours"
+          item.dernierStatut === "À valider DG"
             ? "warnOrange.400"
             : "successGreen.400"
         }
@@ -80,29 +36,51 @@ const columns: ColumnConfig<DossierData>[] = [
   { header: "Fin", key: "dateFin" },
   { header: "Initiateur", key: "initiateur" },
   { header: "Exploitant", key: "codeExploitant" },
-  { header: "Actions", key: "actions" },
-];
-const actions = [
+
+  // LA CORRECTION EST ICI : Injection directe des boutons d'actions spécifiques à ce module
   {
-    label: "Démarrer EER",
-    icon: HiPlus,
-    to: "/initiation",
-    bg: "dogerBlue.500",
-    width: "180px",
-  },
-  {
-    label: "Réviser un compte",
-    icon: HiPencil,
-    to: "/revision",
-    bg: "sidebar.itemActive",
-    width: "200px",
-  },
-  {
-    label: "Exporter des comptes",
-    icon: FaShareFromSquare,
-    onClick: () => console.log("Export en cours..."),
-    bg: "brandGreen.400",
-    width: "220px",
+    header: "Actions",
+    key: "actions",
+    render: (item) => (
+      <Flex gap={2} justify="center">
+        <IconButton
+          rounded="md"
+          aria-label="Voir"
+          size="xs"
+          bg="dogerBlue.500"
+          color="white"
+          onClick={() => console.log("Voir dossier :", item.numeroDossier)}
+        >
+          <LuEye />
+        </IconButton>
+
+        <IconButton
+          rounded="md"
+          aria-label="Modifier"
+          size="xs"
+          bg="warnOrange.400"
+          color="white"
+          onClick={() => console.log("Modifier dossier :", item.numeroDossier)}
+        >
+          <LuPencil />
+        </IconButton>
+
+        <IconButton
+          rounded="md"
+          aria-label="Supprimer"
+          size="xs"
+          bg="errorRed.400"
+          color="white"
+          onClick={() => {
+            if (confirm("Voulez-vous supprimer ce dossier ?")) {
+              console.log("Supprimé :", item.numeroDossier);
+            }
+          }}
+        >
+          <LuTrash2 />
+        </IconButton>
+      </Flex>
+    ),
   },
 ];
 
@@ -129,23 +107,7 @@ const Tableau = () => {
           <FilterForm />
         </Box>
       )}
-
-      {/* 3. Utilisation unique du composant générique (le code du tableau brut a été supprimé) */}
-      <GenericTable
-        data={filteredData}
-        columns={columns}
-        onView={(item) =>
-          console.log("Affichage du dossier:", item.numeroDossier)
-        }
-        onEdit={(item) =>
-          console.log("Edition du dossier:", item.numeroDossier)
-        }
-        onDelete={(item) => {
-          if (confirm("Voulez-vous supprimer ce dossier ?")) {
-            console.log("Supprimé:", item.numeroDossier);
-          }
-        }}
-      />
+      <GenericTable data={filteredData} columns={columns} />
     </Box>
   );
 };

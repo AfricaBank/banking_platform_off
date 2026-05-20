@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Center } from "@chakra-ui/react";
+import { Box, Flex, Text, Center, Stack } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { buildDonut } from "./kpi.data";
 import SafeDoughnut from "@/components/kpi/charts/SafeDoughnut";
@@ -7,85 +7,100 @@ type Props = {
   title: string;
   value: number;
   percent: string;
-  color: string;
+  percentColor: string;
+  valSegment1: number;
+  valSegment2: number;
+  colorSegment1: string;
+  colorSegment2: string;
   line1: string;
   line2: string;
-  line2Color: string;
 };
 
 export default function KpiCard({
   title,
   value,
   percent,
-  color,
+  percentColor,
+  valSegment1,
+  valSegment2,
+  colorSegment1,
+  colorSegment2,
   line1,
   line2,
-  line2Color,
 }: Props) {
+  // Génération de l'anneau bicolore basé sur les deux segments fournis
   const chartData = useMemo(
-    () => buildDonut(value, 3000, color),
-    [value, color],
+    () => buildDonut(valSegment1, valSegment2, colorSegment1, colorSegment2),
+    [valSegment1, valSegment2, colorSegment1, colorSegment2],
   );
 
   return (
     <Box
-      w="23%"
+      flex="1"
       bg="white"
-      borderRadius="12px"
-      p={4}
-      boxShadow="0 1px 3px rgba(0,0,0,0.08)"
+      borderRadius="xl"
+      p={5}
+      boxShadow="0 10px 25px rgba(0, 0, 0, 0.02)"
+      border="1px solid"
+      borderColor="lightGrey.100"
     >
-      {/* Donut + valeur */}
-      <Flex align="center" gap={4}>
-        <Box w="68px" h="68px" position="relative" flexShrink={0}>
+      <Flex align="center" justify="space-between" mb={4}>
+        {/* Conteneur du Donut de la carte */}
+        <Box w="95px" h="95px" position="relative" flexShrink={0}>
           <SafeDoughnut
             key={title}
             data={chartData}
             options={{
-              cutout: "72%",
+              cutout: "75%",
               responsive: true,
-              maintainAspectRatio: true,
+              maintainAspectRatio: false, // Permet de forcer le redimensionnement au conteneur Box
               plugins: { legend: { display: false } },
             }}
           />
-          <Center position="absolute" inset={0}>
-            <Text fontSize="xs" fontWeight="bold">
+          <Center position="absolute" inset={0} flexDirection="column">
+            <Text fontSize="9px" fontWeight="medium" color="text.muted">
+              Total
+            </Text>
+            <Text fontSize="xs" fontWeight="bold" color="text.main">
               {value}
             </Text>
           </Center>
         </Box>
 
-        <Text fontSize="2xl" fontWeight="bold">
+        <Text
+          fontSize="4xl"
+          fontWeight="medium"
+          color="text.main"
+          letterSpacing="-1px"
+        >
           {value}
         </Text>
       </Flex>
 
-      {/* Texte */}
-      <Flex mt={3} justify="space-between" align="flex-start">
-        <Flex align="center" gap={2}>
-          <Text fontSize="sm" fontWeight="medium">
+      <Flex justify="space-between" align="flex-end">
+        <Flex align="center" gap={1.5}>
+          <Text fontSize="xs" fontWeight="bold" color="text.main">
             {title}
           </Text>
-          <Text fontSize="sm" fontWeight="bold" color={color}>
+          <Text fontSize="10px" fontWeight="extrabold" color={percentColor}>
             {percent}
           </Text>
         </Flex>
 
-        <Box>
+        <Stack gap={1} align="flex-start">
           <Flex align="center" gap={2}>
-            <Box w="12px" h="4px" bg={color} borderRadius="full" />
-            <Text fontSize="xs" color="gray.500">
+            <Box w="16px" h="5px" bg={colorSegment1} borderRadius="full" />
+            <Text fontSize="10px" fontWeight="medium" color="text.muted">
               {line1}
             </Text>
           </Flex>
-
-          <Flex align="center" gap={2} mt={1}>
-            <Box w="12px" h="4px" bg={line2Color} borderRadius="full" />
-            <Text fontSize="xs" color="gray.500">
+          <Flex align="center" gap={2}>
+            <Box w="16px" h="5px" bg={colorSegment2} borderRadius="full" />
+            <Text fontSize="10px" fontWeight="medium" color="text.muted">
               {line2}
             </Text>
           </Flex>
-        </Box>
+        </Stack>
       </Flex>
     </Box>
   );
