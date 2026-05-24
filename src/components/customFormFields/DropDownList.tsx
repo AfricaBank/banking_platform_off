@@ -27,7 +27,6 @@ export const DropDownList: React.FC<DropDownListProps> = ({
   size = "md",
   value,
   onValueChange,
-  isDisabled,
 }) => {
   const selectValue = value ? [value] : [];
 

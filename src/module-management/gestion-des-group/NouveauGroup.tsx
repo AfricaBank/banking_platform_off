@@ -1,14 +1,21 @@
+"use client";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, GridItem, HStack, VStack } from "@chakra-ui/react";
+import { Box, GridItem, HStack, VStack, Text, Center } from "@chakra-ui/react";
 import { ModuleFormHeader } from "@/components/moduleComponents/ModuleFormHeader";
 import { FormContainer } from "@/components/moduleComponents/FormContainer";
 import { InputTextField } from "@/components/customFormFields/InputTextField";
 import { DropDownList } from "@/components/customFormFields/DropDownList";
 import { codeSiege } from "@/dataObject/ListCollection";
 
+// Importation du hook mis à jour
+import { useGroupes } from "@/hooks/useGroupes";
+
 export const NouveauGroup = () => {
   const navigate = useNavigate();
+
+  // Consommation de la logique de création du hook personnalisé
+  const { createGroupe, isSubmitting, error } = useGroupes();
 
   // État local du formulaire
   const [formValues, setFormValues] = useState({
@@ -17,26 +24,53 @@ export const NouveauGroup = () => {
     description: "",
   });
 
-  const handleSave = () => {
-    console.log("Données du groupe prêtes pour l'API :", formValues);
-    navigate("/groupes");
+  const handleSave = async () => {
+    // Validation rapide de sécurité avant envoi
+    if (!formValues.agence || !formValues.nomGroupe) {
+      alert(
+        "Veuillez remplir tous les champs obligatoires (Agence et Nom du groupe).",
+      );
+      return;
+    }
+
+    try {
+      // Exécution de l'appel API via le hook et redirection en cas de succès
+      await createGroupe(formValues, () => {
+        navigate("/groupes");
+      });
+    } catch (err) {
+      // L'erreur est interceptée ici mais elle est déjà stockée dans l'état 'error' du hook
+      console.error("Échec de la création du groupe :", err);
+    }
   };
 
   const handleCancel = () => {
-    // Retour à la liste principale lors du clic sur Annuler
     navigate("/groupes");
   };
 
   return (
     <Box p={2}>
       <VStack align="stretch" gap={4}>
-        {/* Composant de titre d'action déjà créé */}
         <ModuleFormHeader title="Créer un nouveau groupe" />
 
-        {/* Notre structure de formulaire réutilisable */}
+        {/* Affichage d'un bandeau d'erreur si la création échoue */}
+        {error && (
+          <Box
+            p={3}
+            bg="red.50"
+            borderWidth={1}
+            borderColor="red.200"
+            borderRadius="md"
+          >
+            <Text color="red.600" fontSize="sm" fontWeight="bold">
+              {error}
+            </Text>
+          </Box>
+        )}
+
+        {/* FormContainer gère le mode chargement via un paramètre si votre composant le supporte */}
         <FormContainer onSave={handleSave} onCancel={handleCancel}>
-          <HStack>
-            {" "}
+          <HStack width="100%" alignItems="flex-start">
             <DropDownList
               label="Agence"
               placeholder="Choisir une agence"
@@ -46,7 +80,6 @@ export const NouveauGroup = () => {
                 setFormValues({ ...formValues, agence: val })
               }
             />
-            {/* Champ Nom du groupe */}
             <InputTextField
               label="Nom du groupe"
               placeholder="Nom du groupe"
@@ -57,7 +90,6 @@ export const NouveauGroup = () => {
             />
           </HStack>
 
-          {/* Champ Description - Étendu sur 2 colonnes via GridItem */}
           <GridItem colSpan={{ base: 1, md: 2 }}>
             <InputTextField
               label="Description"
@@ -69,6 +101,15 @@ export const NouveauGroup = () => {
             />
           </GridItem>
         </FormContainer>
+
+        {/* Indicateur optionnel visuel discret de soumission */}
+        {isSubmitting && (
+          <Center>
+            <Text fontSize="xs" color="gray.500">
+              Enregistrement du groupe sur le serveur en cours...
+            </Text>
+          </Center>
+        )}
       </VStack>
     </Box>
   );
