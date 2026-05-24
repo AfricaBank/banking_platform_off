@@ -65,9 +65,8 @@ export const Dashboard = () => {
           />
         </Box>
 
-        {/* Conteneur du Graphique ajusté */}
         <Box
-          flex={{ base: "1", xl: "2" }} // Donne plus de flexibilité (proportion de 2) pour s'étendre sans étouffer les KPI
+          flex={{ base: "1", xl: "2" }}
           width="100%"
           minWidth={0}
           height="450px"
@@ -76,8 +75,6 @@ export const Dashboard = () => {
           <NombreDossierParStatut />
         </Box>
       </Flex>
-
-      {/* Le tableau principal positionné à l'intérieur du flux responsive global */}
       <Box width="100%">
         <TaskManagement />
       </Box>

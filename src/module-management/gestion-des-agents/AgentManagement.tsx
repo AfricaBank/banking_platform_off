@@ -1,16 +1,30 @@
 "use client";
-import { Box, Flex, IconButton, Badge, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Badge,
+  Text,
+  Spinner,
+  Center,
+  VStack,
+} from "@chakra-ui/react";
 import { LuEye, LuTrash2 } from "react-icons/lu";
 import { FiEdit3 } from "react-icons/fi";
 import {
   GenericTable,
   ColumnConfig,
 } from "@/components/pageContents/GenericTable.tsx";
+
+// Importations du Hook personnalisé et du type
+import { useAgents } from "@/hooks/useAgents";
 import { AgentData } from "@/components/pageContents/pageContents.type.ts";
-import { agentMockData } from "@/components/pageContents/pageContents.mock.ts";
 
 const AgentManagement = () => {
-  // Configuration des colonnes calquée sur la capture d'écran de gestion des agents
+  // 1. Consommation du custom hook (Toute la logique réseau est ici)
+  const { agents, isLoading, error } = useAgents();
+
+  // Configuration des colonnes
   const columns: ColumnConfig<AgentData>[] = [
     { header: "Matricule", key: "matricule" },
     { header: "Nom complet", key: "nomComplet" },
@@ -43,7 +57,6 @@ const AgentManagement = () => {
       key: "actions",
       render: (item) => (
         <Flex gap={2} justify="center" align="center">
-          {/* Bouton Voir / Détails */}
           <IconButton
             rounded="8px"
             aria-label="Voir l'agent"
@@ -57,7 +70,6 @@ const AgentManagement = () => {
             <LuEye size={14} />
           </IconButton>
 
-          {/* Bouton Modifier */}
           <IconButton
             rounded="8px"
             aria-label="Modifier l'agent"
@@ -71,7 +83,6 @@ const AgentManagement = () => {
             <FiEdit3 size={14} />
           </IconButton>
 
-          {/* Bouton Supprimer */}
           <IconButton
             rounded="8px"
             aria-label="Supprimer l'agent"
@@ -87,17 +98,51 @@ const AgentManagement = () => {
     },
   ];
 
+  // 2. Gestion des affichages d'attente (Loading) et des erreurs
+  if (isLoading) {
+    return (
+      <Center p={10}>
+        <VStack gap={3}>
+          <Spinner size="xl" color="dogerBlue.500" borderWidth="4px" />
+          <Text fontSize="sm" color="gray.500">
+            Chargement de la liste des agents...
+          </Text>
+        </VStack>
+      </Center>
+    );
+  }
+
+  if (error) {
+    return (
+      <Center p={10}>
+        <Box
+          textAlign="center"
+          p={5}
+          borderWidth={1}
+          borderColor="red.200"
+          borderRadius="md"
+          bg="red.50"
+        >
+          <Text color="red.600" fontWeight="bold" mb={2}>
+            Erreur de communication
+          </Text>
+          <Text color="red.500" fontSize="sm">
+            {error}
+          </Text>
+        </Box>
+      </Center>
+    );
+  }
+
   return (
     <Box width="100%">
-      {/* Bandeau d'en-tête de la table */}
       <Flex mb="4" px="2">
         <Text fontSize="md" fontWeight="bold" color="gray.800">
-          Gestion des agents
+          Gestion des agents ({agents.length})
         </Text>
       </Flex>
 
-      {/* Rendu de la table générique avec les données des agents */}
-      <GenericTable data={agentMockData} columns={columns} />
+      <GenericTable data={agents} columns={columns} />
     </Box>
   );
 };
