@@ -8,6 +8,11 @@ export const useGroupes = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  // 1. Nouvel état pour stocker les détails d'un seul groupe
+  const [groupeSelectionne, setGroupeSelectionne] = useState<GroupData | null>(
+    null,
+  );
+
   // Lecture de tous les groupes
   const fetchGroupes = useCallback(async () => {
     try {
@@ -22,6 +27,27 @@ export const useGroupes = () => {
         setError(
           "Une erreur inattendue est survenue lors du chargement des groupes.",
         );
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  // 2. Nouvelle fonction pour charger un groupe unique par son ID
+  const fetchGroupeById = useCallback(async (id: string) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // Appel à ton service (qui fait un GET /groupes/id)
+      const data = await groupService.getById(id);
+
+      setGroupeSelectionne(data);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Impossible de charger les détails de ce groupe.");
       }
     } finally {
       setIsLoading(false);
@@ -72,10 +98,12 @@ export const useGroupes = () => {
 
   return {
     groupes,
+    groupeSelectionne, // Mis à disposition du composant DetailsGroup
     isLoading,
     isSubmitting,
     error,
     refreshGroupes: fetchGroupes,
+    fetchGroupeById, // Fonction à appeler au montage de l'écran de détails
     createGroupe,
   };
 };

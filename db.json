@@ -135,6 +135,14 @@
       "agence": "00002",
       "statut": "Actif",
       "id": "Gw5UCoy-oDc"
+    },
+    {
+      "matricule": "AG-00-424",
+      "nomComplet": "Karole  Kortas",
+      "email": "karol@gmail.com",
+      "agence": "00001",
+      "statut": "Actif",
+      "id": "SdCbooFK98M"
     }
   ],
   "roles": [
@@ -231,5 +239,6 @@
       "statut": "Annulé",
       "dateCreation": "2026-05-14"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
