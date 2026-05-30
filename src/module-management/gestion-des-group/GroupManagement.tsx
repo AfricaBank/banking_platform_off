@@ -18,10 +18,12 @@ import {
 // Remplacement du mock statique par le Hook personnalisé et l'interface globale
 import { useGroupes } from "@/hooks/useGroupes";
 import { GroupData } from "@/components/pageContents/pageContents.type.ts";
+import { useNavigate } from "react-router-dom";
 
 const GroupManagement = () => {
   // 1. Consommation du hook personnalisé (Logique de requêtage JSON Server)
   const { groupes, isLoading, error } = useGroupes();
+  const navigate = useNavigate();
 
   // Configuration des colonnes calquée sur la capture d'écran
   const columns: ColumnConfig<GroupData>[] = [
@@ -42,9 +44,7 @@ const GroupManagement = () => {
             size="xs"
             bg="dogerBlue.500"
             color="white"
-            onClick={() =>
-              console.log("Visualisation du groupe :", item.nomGroupe)
-            }
+            onClick={() => navigate(`/groupes/${item.id}`)}
           >
             <LuEye size={14} />
           </IconButton>
