@@ -10,9 +10,51 @@ import type {
     TiersDTO,
     PieceJustificativeDTO,
     CRConseillerDTO,
+    PageResponse,
 } from "@/types/dossier.types";
 
 const BASE = "/api/v1/dossiers-eer";
+
+// ─── Liste des dossiers ───────────────────────────────────────────────────────
+
+export const getAllDossiers = async (
+    page = 0,
+    size = 20
+): Promise<PageResponse<DossierEER>> => {
+    const response = await axiosInstance.get<PageResponse<DossierEER>>(
+        `${BASE}?page=${page}&size=${size}&sort=dateCreation,desc`
+    );
+    return response.data;
+};
+
+export const getDossiersByCreateur = async (
+    createur: string
+): Promise<DossierEER[]> => {
+    const response = await axiosInstance.get<DossierEER[]>(
+        `${BASE}/createur/${createur}`
+    );
+    return response.data;
+};
+
+// ─── Abandon / Reprise ────────────────────────────────────────────────────────
+
+export const abandonnerDossier = async (
+    dossierId: number
+): Promise<DossierEER> => {
+    const response = await axiosInstance.post<DossierEER>(
+        `${BASE}/${dossierId}/abandonner`
+    );
+    return response.data;
+};
+
+export const reprendreDossier = async (
+    dossierId: number
+): Promise<DossierEER> => {
+    const response = await axiosInstance.post<DossierEER>(
+        `${BASE}/${dossierId}/reprendre`
+    );
+    return response.data;
+};
 
 // ─── Étape 1 : Initiation ─────────────────────────────────────────────────────
 
@@ -20,8 +62,7 @@ export const initierDossier = async (
     data: InitiationDossierRequest
 ): Promise<DossierEER> => {
     const response = await axiosInstance.post<DossierEER>(
-        `${BASE}/initier`,
-        data
+        `${BASE}/initier`, data
     );
     return response.data;
 };
@@ -32,8 +73,7 @@ export const rechercherPersonne = async (
     data: RecherchePersonneRequest
 ): Promise<RecherchePersonneResponse> => {
     const response = await axiosInstance.post<RecherchePersonneResponse>(
-        `${BASE}/rechercher-personne`,
-        data
+        `${BASE}/rechercher-personne`, data
     );
     return response.data;
 };
@@ -69,8 +109,7 @@ export const ajouterPersonnePhysique = async (
     dto: object
 ): Promise<DossierEER> => {
     const response = await axiosInstance.post<DossierEER>(
-        `${BASE}/${dossierId}/personnes-physiques`,
-        dto
+        `${BASE}/${dossierId}/personnes-physiques`, dto
     );
     return response.data;
 };
@@ -80,8 +119,7 @@ export const ajouterPersonneMorale = async (
     dto: object
 ): Promise<DossierEER> => {
     const response = await axiosInstance.post<DossierEER>(
-        `${BASE}/${dossierId}/personnes-morales`,
-        dto
+        `${BASE}/${dossierId}/personnes-morales`, dto
     );
     return response.data;
 };
@@ -93,8 +131,7 @@ export const attacherPJ = async (
     pj: PieceJustificativeDTO
 ): Promise<PieceJustificativeDTO> => {
     const response = await axiosInstance.post<PieceJustificativeDTO>(
-        `${BASE}/${dossierId}/pieces-justificatives`,
-        pj
+        `${BASE}/${dossierId}/pieces-justificatives`, pj
     );
     return response.data;
 };
@@ -117,6 +154,15 @@ export const supprimerPJ = async (
     );
 };
 
+export const confirmerPJ = async (
+    dossierId: number
+): Promise<DossierEER> => {
+    const response = await axiosInstance.post<DossierEER>(
+        `${BASE}/${dossierId}/confirmer-pj`
+    );
+    return response.data;
+};
+
 // ─── Étape 6 : CR Conseiller ──────────────────────────────────────────────────
 
 export const sauvegarderCR = async (
@@ -124,8 +170,7 @@ export const sauvegarderCR = async (
     cr: CRConseillerDTO
 ): Promise<CRConseillerDTO> => {
     const response = await axiosInstance.post<CRConseillerDTO>(
-        `${BASE}/${dossierId}/cr-conseiller`,
-        cr
+        `${BASE}/${dossierId}/cr-conseiller`, cr
     );
     return response.data;
 };
