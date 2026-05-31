@@ -1,17 +1,44 @@
 // src/types/dossier.types.ts
 
-// ─── Initiation ───────────────────────────────────────────────────────────────
+// ─── Pagination ───────────────────────────────────────────────────────────────
 
-export interface InitiationDossierRequest {
-  createur?: string;
-  typePersonne: string;
-  codeSiege: string;
-  natureRelation: string;
-  codeExploitant: string;
-  nomExploitant?: string;
-  nomCollectivite?: string;
-  civiliteCollectivite?: string;
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;        // page courante (0-based)
+  first: boolean;
+  last: boolean;
 }
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+export type EtapeProcessus =
+    | "INITIATION"
+    | "RECHERCHE_PERSONNE"
+    | "CREATION_TIERS"
+    | "AJOUT_TITULAIRE"
+    | "AJOUT_PERSONNES_LIEES"
+    | "ATTACHEMENT_PJ"
+    | "CR_CONSEILLER"
+    | "SOUMISSION_VALIDATION"
+    | "EDITION_DOCUMENTS"
+    | "ATTENTE_SIGNATURE"
+    | "TERMINE";
+
+export type StatutDossier =
+    | "EN_COURS"
+    | "COMPLET"
+    | "ANNULE"
+    | "VALIDE"
+    | "A_COMPLETER_CONFORMITE"
+    | "A_COMPLETER_METIER"
+    | "A_COMPLETER_DG"
+    | "A_REGULARISER_METIER"
+    | "A_REGULARISER_BO_CN1"
+    | "A_REGULARISER_SIGNATURE"
+    | "A_ABANDONNER_RESAISIE";
 
 // ─── Dossier EER ─────────────────────────────────────────────────────────────
 
@@ -31,6 +58,8 @@ export interface DossierEER {
   dateCreation: string;
   dateModification?: string;
   dateTerminaison?: string;
+  titulairePrincipal?: TiersDTO;
+  coTitulaires?: TiersDTO[];
 }
 
 // ─── Statut workflow ──────────────────────────────────────────────────────────
@@ -50,35 +79,64 @@ export interface StatutWorkflow {
   crRenseigne: boolean;
 }
 
-// ─── Enums ────────────────────────────────────────────────────────────────────
+// ─── Initiation ───────────────────────────────────────────────────────────────
 
-export type EtapeProcessus =
-  | "INITIATION"
-  | "RECHERCHE_PERSONNE"
-  | "CREATION_TIERS"
-  | "AJOUT_TITULAIRE"
-  | "AJOUT_PERSONNES_LIEES"
-  | "ATTACHEMENT_PJ"
-  | "CR_CONSEILLER"
-  | "SOUMISSION_VALIDATION"
-  | "EDITION_DOCUMENTS"
-  | "ATTENTE_SIGNATURE"
-  | "TERMINE";
+export interface InitiationDossierRequest {
+  createur?: string;
+  typePersonne: string;
+  codeSiege: string;
+  natureRelation: string;
+  codeExploitant: string;
+  nomExploitant?: string;
+  nomCollectivite?: string;
+  civiliteCollectivite?: string;
+}
 
-export type StatutDossier =
-  | "EN_COURS"
-  | "COMPLET"
-  | "ANNULE"
-  | "VALIDE"
-  | "A_COMPLETER_CONFORMITE"
-  | "A_COMPLETER_METIER"
-  | "A_COMPLETER_DG"
-  | "A_REGULARISER_METIER"
-  | "A_REGULARISER_BO_CN1"
-  | "A_REGULARISER_SIGNATURE"
-  | "A_ABANDONNER_RESAISIE";
+// ─── Tiers ────────────────────────────────────────────────────────────────────
 
-// ─── Recherche tiers ──────────────────────────────────────────────────────────
+export interface TiersDTO {
+  id?: number;
+  typeTiers?: string;
+  nom?: string;
+  prenom?: string;
+  nomAbrege?: string;
+  dateNaissance?: string;
+  lieuNaissance?: string;
+  paysNaissance?: string;
+  paysNationalite?: string;
+  paysAdresseFiscale?: string;
+  civilite?: string;
+  sexe?: string;
+  email?: string;
+  mobile?: string;
+  adresse?: string;
+  ville?: string;
+  codePostal?: string;
+  comptes?: CompteBancaireDTO[];
+  personnesEnCharge?: PersonneEnChargeDTO[];
+}
+
+export interface CompteBancaireDTO {
+  id?: number;
+  typeCompte?: string;
+  devise?: string;
+  motifOuverture?: string;
+  racine?: string;
+  cle?: string;
+  cleRib?: string;
+  conventionCompte?: string;
+  cartonSignature?: string;
+}
+
+export interface PersonneEnChargeDTO {
+  id?: number;
+  nom?: string;
+  prenom?: string;
+  dateNaissance?: string;
+  sexe?: string;
+}
+
+// ─── Recherche ────────────────────────────────────────────────────────────────
 
 export interface RecherchePersonneRequest {
   nom?: string;
@@ -91,24 +149,6 @@ export interface RecherchePersonneRequest {
   nomBE?: string;
   prenomBE?: string;
   dossierId?: number;
-}
-
-export interface TiersDTO {
-  id?: number;
-  typeTiers?: string;
-  nom?: string;
-  prenom?: string;
-  nomAbrege?: string;
-  dateNaissance?: string;
-  lieuNaissance?: string;
-  paysNaissance?: string;
-  civilite?: string;
-  sexe?: string;
-  email?: string;
-  mobile?: string;
-  adresse?: string;
-  ville?: string;
-  codePostal?: string;
 }
 
 export interface RecherchePersonneResponse {
