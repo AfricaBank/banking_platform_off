@@ -53,33 +53,17 @@
       "agence": "00003",
       "effectifs": 0,
       "id": "WUo1evH8wYQ"
+    },
+    {
+      "identifiant": "GRP-4273",
+      "nomGroupe": "ffffff",
+      "description": "fffff",
+      "agence": "00003",
+      "effectifs": 0,
+      "id": "B67O_Ef1IdI"
     }
   ],
   "agents": [
-    {
-      "id": "1",
-      "matricule": "AG-PL-001",
-      "nomComplet": "Abdou DIALLO",
-      "email": "abdou.diallo@yopmail.com",
-      "agence": "AB - Plateau",
-      "statut": "Actif"
-    },
-    {
-      "id": "2",
-      "matricule": "AG-PL-001",
-      "nomComplet": "Abdou DIALLO",
-      "email": "abdou.diallo@yopmail.com",
-      "agence": "AB - Plateau",
-      "statut": "Actif"
-    },
-    {
-      "id": "3",
-      "matricule": "AG-PL-001",
-      "nomComplet": "Abdou DIALLO",
-      "email": "abdou.diallo@yopmail.com",
-      "agence": "AB - Plateau",
-      "statut": "Actif"
-    },
     {
       "id": "4",
       "matricule": "AG-PL-001",
@@ -105,12 +89,24 @@
       "id": "Gw5UCoy-oDc"
     },
     {
-      "matricule": "AG-00-424",
-      "nomComplet": "Karole  Kortas",
-      "email": "karol@gmail.com",
-      "agence": "00001",
+      "matricule": "AG-00-655",
+      "nomComplet": "Nouvel agent  Abou",
+      "email": "abou@gmail.com",
+      "agence": "00002",
       "statut": "Actif",
-      "id": "SdCbooFK98M"
+      "id": "bRJ0XHgslxI"
+    },
+    {
+      "matricule": "AG-00-109",
+      "prenom": "Hakim",
+      "nom": "Josh",
+      "email": "hakim@gmail.com",
+      "agence": "00003",
+      "role": "Noiuveau role ",
+      "groupe": "DSI",
+      "statut": "Inactif",
+      "nomComplet": "Hakim Josh",
+      "id": "3ryB6jsp-Hk"
     }
   ],
   "roles": [
