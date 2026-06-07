@@ -1,4 +1,5 @@
 "use client";
+
 import { Portal, Select, ListCollection } from "@chakra-ui/react";
 import { FiChevronDown } from "react-icons/fi"; // flèche
 import { FaCheck } from "react-icons/fa"; // coche
@@ -14,7 +15,7 @@ interface DropDownListProps {
   size?: "sm" | "md" | "lg";
   value?: string;
   onValueChange?: (value: string) => void;
-  isDisabled?: boolean;
+  disabled?: boolean; // Mise à jour de l'interface pour s'aligner sur les standards v3
 }
 
 export const DropDownList: React.FC<DropDownListProps> = ({
@@ -27,6 +28,7 @@ export const DropDownList: React.FC<DropDownListProps> = ({
   size = "md",
   value,
   onValueChange,
+  disabled = false, // 1. Récupération explicite de la propriété
 }) => {
   const selectValue = value ? [value] : [];
 
@@ -36,6 +38,7 @@ export const DropDownList: React.FC<DropDownListProps> = ({
       size={size}
       width={width}
       value={selectValue}
+      disabled={disabled} // 2. Transmission de l'état bloqué au composant racine v3
       onValueChange={(details) => {
         if (onValueChange && details.value.length > 0) {
           onValueChange(details.value[0]);
@@ -45,15 +48,30 @@ export const DropDownList: React.FC<DropDownListProps> = ({
       }}
     >
       <Select.HiddenSelect />
-      <Select.Label>{label}</Select.Label>
+      {/* Label stylisé pour correspondre au design du InputTextField */}
+      <Select.Label color="#6E7C7C" fontSize="sm" mb={1} fontWeight="medium">
+        {label}
+      </Select.Label>
+      
       <Select.Control>
-        <Select.Trigger>
+        <Select.Trigger
+          bg="white"
+          rounded="7px"
+          // 3. Application du style visuel grisé pour l'état désactivé
+          _disabled={{
+            bg: "gray.100",
+            borderColor: "gray.300",
+            color: "gray.500",
+            cursor: "not-allowed",
+            opacity: 0.8,
+          }}
+        >
           <Select.ValueText placeholder={placeholder} />
         </Select.Trigger>
         <Select.IndicatorGroup>
           {withIndicator && (
             <Select.Indicator>
-              <FiChevronDown /> {/* Icône de flèche */}
+              <FiChevronDown />
             </Select.Indicator>
           )}
         </Select.IndicatorGroup>
@@ -71,7 +89,7 @@ export const DropDownList: React.FC<DropDownListProps> = ({
                 {item.label}
                 {withIndicator && (
                   <Select.ItemIndicator>
-                    <FaCheck /> {/* Icône de validation */}
+                    <FaCheck />
                   </Select.ItemIndicator>
                 )}
               </Select.Item>

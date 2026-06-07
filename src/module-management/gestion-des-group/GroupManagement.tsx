@@ -1,4 +1,6 @@
 "use client";
+
+import { useState } from "react";
 import {
   Box,
   Flex,
@@ -15,17 +17,62 @@ import {
   ColumnConfig,
 } from "@/components/pageContents/GenericTable.tsx";
 
-// Remplacement du mock statique par le Hook personnalisé et l'interface globale
 import { useGroupes } from "@/hooks/useGroupes";
 import { GroupData } from "@/components/pageContents/pageContents.type.ts";
 import { useNavigate } from "react-router-dom";
+import { ConfirmDeleteDialog } from "@/components/moduleComponents/ConfirmDeleteDialog.tsx";
+
+// 1. Définition stricte de la structure de retour du Hook pour éliminer ESLint explicit-any
+interface UseGroupesReturn {
+  groupes: GroupData[];
+  isLoading: boolean;
+  error: string | null;
+  mutate?: () => void;
+}
 
 const GroupManagement = () => {
-  // 1. Consommation du hook personnalisé (Logique de requêtage JSON Server)
-  const { groupes, isLoading, error } = useGroupes();
+  // 2. Application de l'interface typée en remplacement du "as any"
+  const { groupes, isLoading, error, mutate } = useGroupes() as UseGroupesReturn;
   const navigate = useNavigate();
 
-  // Configuration des colonnes calquée sur la capture d'écran
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [groupToDelete, setGroupToDelete] = useState<GroupData | null>(null);
+
+  const handleDeleteClick = (group: GroupData) => {
+    setGroupToDelete(group);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteClose = () => {
+    setIsDeleteDialogOpen(false);
+    setGroupToDelete(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!groupToDelete) return;
+
+    try {
+      const response = await fetch(`http://localhost:3001/groupes/${groupToDelete.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de la suppression sur le serveur.");
+      }
+
+      console.log(`Groupe "${groupToDelete.nomGroupe}" supprimé avec succès.`);
+      
+      if (typeof mutate === "function") {
+        mutate();
+      } else {
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error("Échec de la suppression :", err);
+      throw err; 
+    }
+  };
+
   const columns: ColumnConfig<GroupData>[] = [
     { header: "Identifiant", key: "identifiant" },
     { header: "Nom du groupe", key: "nomGroupe" },
@@ -37,7 +84,6 @@ const GroupManagement = () => {
       key: "actions",
       render: (item) => (
         <Flex gap={2} justify="center" align="center">
-          {/* Bouton Voir Détails */}
           <IconButton
             rounded="8px"
             aria-label="Voir les détails"
@@ -49,33 +95,28 @@ const GroupManagement = () => {
             <LuEye size={14} />
           </IconButton>
 
-          {/* Bouton Modifier */}
           <IconButton
             rounded="8px"
             aria-label="Modifier le groupe"
             size="xs"
             bg="orange.400"
             color="white"
-            onClick={() =>
-              console.log("Modification du groupe :", item.nomGroupe)
-            }
+            onClick={() => navigate(`/groupes/${item.id}/modifier`)}
           >
             <FiEdit3 size={14} />
           </IconButton>
 
-          {/* Bouton Supprimer */}
           <IconButton
             rounded="8px"
             aria-label="Supprimer le groupe"
             size="xs"
             bg="red.500"
             color="white"
-            onClick={() => console.log("Suppression du groupe ID :", item.id)}
+            onClick={() => handleDeleteClick(item)}
           >
             <LuTrash2 size={14} />
           </IconButton>
 
-          {/* Bouton Assigner / Action externe */}
           <IconButton
             rounded="8px"
             aria-label="Assigner"
@@ -91,7 +132,6 @@ const GroupManagement = () => {
     },
   ];
 
-  // 2. Gestion de l'affichage de chargement (Spinner)
   if (isLoading) {
     return (
       <Center p={10}>
@@ -105,7 +145,6 @@ const GroupManagement = () => {
     );
   }
 
-  // 3. Gestion de l'affichage des erreurs réseau
   if (error) {
     return (
       <Center p={10}>
@@ -128,18 +167,23 @@ const GroupManagement = () => {
     );
   }
 
-  // 4. Rendu de l'interface principale avec les données réelles
   return (
     <Box width="100%">
-      {/* Bandeau d'en-tête de la table */}
       <Flex mb="4" px="2">
         <Text fontSize="md" fontWeight="bold" color="gray.800">
-          Gestion des groupes ({groupes.length})
+          Gestion des groupes ({groupes?.length || 0})
         </Text>
       </Flex>
 
-      {/* Rendu de la table générique avec les données dynamiques de l'API */}
       <GenericTable data={groupes} columns={columns} />
+
+      <ConfirmDeleteDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={handleDeleteClose}
+        onConfirm={handleConfirmDelete}
+        title="Suppression d'un groupe"
+        description={`Êtes-vous sûr de vouloir supprimer le groupe "${groupToDelete?.nomGroupe}" ? Cette action est irréversible.`}
+      />
     </Box>
   );
 };
