@@ -1,11 +1,12 @@
 "use client";
 
 import { Portal, Select, ListCollection } from "@chakra-ui/react";
-import { FiChevronDown } from "react-icons/fi"; // flèche
-import { FaCheck } from "react-icons/fa"; // coche
+import { FiChevronDown } from "react-icons/fi"; 
+import { FaCheck } from "react-icons/fa"; 
 import React from "react";
 
-interface DropDownListProps {
+// Types de base partagés par les deux modes
+interface BaseDropDownProps {
   highlightColor?: string;
   withIndicator?: boolean;
   label: string;
@@ -13,10 +14,25 @@ interface DropDownListProps {
   placeholder?: string;
   width?: string;
   size?: "sm" | "md" | "lg";
+  disabled?: boolean;
+}
+
+// Configuration 1 : Mode sélection Unique (Comportement historique par défaut)
+interface SingleDropDownProps extends BaseDropDownProps {
+  multiple?: false; // Absent ou explicitement à false
   value?: string;
   onValueChange?: (value: string) => void;
-  disabled?: boolean; // Mise à jour de l'interface pour s'aligner sur les standards v3
 }
+
+// Configuration 2 : Mode sélection Multiple (Nouveau besoin)
+interface MultipleDropDownProps extends BaseDropDownProps {
+  multiple: true;   // Obligatoirement défini à true
+  value?: string[];
+  onValueChange?: (value: string[]) => void;
+}
+
+// L'union assure la flexibilité et la sécurité du typage à la compilation
+type DropDownListProps = SingleDropDownProps | MultipleDropDownProps;
 
 export const DropDownList: React.FC<DropDownListProps> = ({
   highlightColor = "blue.200",
@@ -26,29 +42,48 @@ export const DropDownList: React.FC<DropDownListProps> = ({
   placeholder = "Select an option",
   width = "100%",
   size = "md",
+  disabled = false,
+  multiple = false, // Par défaut, sélection simple si non spécifié
   value,
   onValueChange,
-  disabled = false, // 1. Récupération explicite de la propriété
 }) => {
-  const selectValue = value ? [value] : [];
+  
+  // Adaptation de la valeur d'entrée pour le composant racine Select.Root de Chakra UI v3
+  // Select.Root attend systématiquement un tableau (string[])
+  const getSelectValue = (): string[] => {
+    if (!value) return [];
+    if (multiple) {
+      return Array.isArray(value) ? value : [];
+    }
+    return typeof value === "string" ? [value] : [];
+  };
+
+  // Gestion unifiée de la modification de valeur
+  const handleSelectionChange = (details: { value: string[] }) => {
+    if (!onValueChange) return;
+
+    if (multiple) {
+      // En mode multiple, on renvoie directement l'intégralité du tableau collecté
+      (onValueChange as (value: string[]) => void)(details.value);
+    } else {
+      // En mode simple, on extrait le premier élément ou une chaîne vide
+      const singleVal = details.value.length > 0 ? details.value[0] : "";
+      (onValueChange as (value: string) => void)(singleVal);
+    }
+  };
 
   return (
     <Select.Root
       collection={collection}
       size={size}
       width={width}
-      value={selectValue}
-      disabled={disabled} // 2. Transmission de l'état bloqué au composant racine v3
-      onValueChange={(details) => {
-        if (onValueChange && details.value.length > 0) {
-          onValueChange(details.value[0]);
-        } else if (onValueChange) {
-          onValueChange("");
-        }
-      }}
+      value={getSelectValue()}
+      disabled={disabled}
+      multiple={multiple} // Propriété native de Chakra v3 pour activer le multi-sélection
+      onValueChange={handleSelectionChange}
     >
       <Select.HiddenSelect />
-      {/* Label stylisé pour correspondre au design du InputTextField */}
+      
       <Select.Label color="#6E7C7C" fontSize="sm" mb={1} fontWeight="medium">
         {label}
       </Select.Label>
@@ -57,7 +92,6 @@ export const DropDownList: React.FC<DropDownListProps> = ({
         <Select.Trigger
           bg="white"
           rounded="7px"
-          // 3. Application du style visuel grisé pour l'état désactivé
           _disabled={{
             bg: "gray.100",
             borderColor: "gray.300",

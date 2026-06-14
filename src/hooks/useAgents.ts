@@ -5,6 +5,16 @@ import { roleService } from "@/services/roleService";
 import { AgentData } from "@/components/pageContents/pageContents.type.ts";
 import { createListCollection } from "@chakra-ui/react";
 
+// Structure des données provenant directement du formulaire de l'interface utilisateur
+export interface NewAgentFormData {
+  prenom: string;
+  nom: string;
+  email: string;
+  agence: string;
+  role: string[]; // Reçu sous forme de tableau depuis le DropDownList multiple
+  groupe: string;
+}
+
 export const useAgents = () => {
   const [agents, setAgents] = useState<AgentData[]>([]);
 
@@ -61,27 +71,24 @@ export const useAgents = () => {
     fetchAllData();
   }, [fetchAllData]);
 
-  // CORRECTION ICI : Remplacement de group par groupe dans le typage de formData
+  // La fonction accepte désormais directement l'objet du formulaire UI
   const createAgent = async (
-    formData: {
-      prenom: string;
-      nom: string;
-      email: string;
-      agence: string;
-      role: string;
-      groupe: string;
-    },
+    formData: NewAgentFormData,
     onSuccess?: () => void,
   ) => {
     try {
       setIsSubmitting(true);
       setError(null);
 
+      // Factorisation : La préparation et les transformations du payload sont isolées ici
       const payload: Omit<AgentData, "id"> = {
         matricule: `AG-${formData.agence.substring(0, 2).toUpperCase()}-${Date.now().toString().slice(-3)}`,
         nomComplet: `${formData.prenom} ${formData.nom}`.trim(),
         email: formData.email,
         agence: formData.agence,
+        // Transformation transparente du tableau de l'UI en chaîne de caractères pour le service
+        role: formData.role.join(", "),
+        groupe: formData.groupe,
         statut: "Actif",
       };
 

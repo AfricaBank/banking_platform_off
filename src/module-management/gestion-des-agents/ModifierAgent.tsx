@@ -18,11 +18,12 @@ import { FormContainer } from "@/components/moduleComponents/FormContainer";
 import { FormSection } from "@/components/moduleComponents/FormSection";
 import { InputTextField } from "@/components/customFormFields/InputTextField";
 import { DropDownList } from "@/components/customFormFields/DropDownList";
+import { DropDownListMulti } from "@/components/customFormFields/DropDownListMulti";
 import { codeSiege } from "@/dataObject/ListCollection";
 import { useAgents } from "@/hooks/useAgents";
 
 export const ModifierAgent = () => {
-  const { id } = useParams<{ id: string }>(); // Étape 1 : Récupération de l'identifiant dans l'URL
+  const { id } = useParams<{ id: string }>(); 
   const navigate = useNavigate();
 
   // Consommation du hook des agents
@@ -39,17 +40,17 @@ export const ModifierAgent = () => {
   const [localError, setLocalError] = useState<string | null>(null);
 
   const [formValues, setFormValues] = useState({
-    matricule: "", // Ajout du matricule dans l'état local
+    matricule: "", 
     prenom: "",
     nom: "",
     email: "",
     agence: "",
-    role: "",
+    role: [] as string[], // Étape 1 : Mutation du type initial string vers string[]
     groupe: "",
-    statut: "Actif", // Valeur par défaut
+    statut: "Actif", 
   });
 
-  // Étape 2 : Chargement des données initiales de l'agent à modifier
+  // Étape 2 : Chargement et normalisation des données de l'agent
   useEffect(() => {
     const fetchAgentData = async () => {
       if (!id) return;
@@ -63,14 +64,22 @@ export const ModifierAgent = () => {
         
         const data = await response.json();
         
+        // Étape 3 : Normalisation sécurisée du champ rôle pour DropDownListMulti
+        let parsedRoles: string[] = [];
+        if (Array.isArray(data.role)) {
+          parsedRoles = data.role;
+        } else if (typeof data.role === "string" && data.role.trim() !== "") {
+          parsedRoles = data.role.split(",").map((r: string) => r.trim());
+        }
+
         // Injection des valeurs récupérées du serveur dans le formulaire
         setFormValues({
-          matricule: data.matricule || "", // Récupération du matricule depuis l'API
+          matricule: data.matricule || "", 
           prenom: data.prenom || data.nomComplet?.split(" ")[0] || "",
           nom: data.nom || data.nomComplet?.split(" ")[1] || "",
           email: data.email || "",
           agence: data.agence || "",
-          role: data.role || "",
+          role: parsedRoles, // Attribution du tableau de rôles nettoyé
           groupe: data.groupe || "",
           statut: data.statut || "Actif",
         });
@@ -93,14 +102,13 @@ export const ModifierAgent = () => {
   const handleSave = async () => {
     if (!id) return;
     
-    // Validation minimale des champs éditables obligatoires
-    if (!formValues.email || !formValues.agence) {
-      alert("Veuillez renseigner l'adresse email et l'agence de rattachement.");
+    // Validation minimale incluant la présence d'au moins un rôle sélectionné dans les tags
+    if (!formValues.email || !formValues.agence || formValues.role.length === 0) {
+      alert("Veuillez renseigner l'adresse email, l'agence de rattachement et au moins un rôle.");
       return;
     }
 
     try {
-      // Reconstitution du nom complet si nécessaire pour conserver la cohérence avec ta table
       const updatedAgent = {
         ...formValues,
         nomComplet: `${formValues.prenom} ${formValues.nom}`.trim()
@@ -118,7 +126,6 @@ export const ModifierAgent = () => {
         throw new Error("Échec de la sauvegarde des modifications sur le serveur.");
       }
 
-      // Retour à l'écran de gestion après succès
       navigate("/agents");
     } catch (err) {
       console.error("Erreur détectée lors de la mise à jour :", err);
@@ -152,15 +159,8 @@ export const ModifierAgent = () => {
       <VStack align="stretch" gap={4}>
         <ModuleFormHeader title="Modification d'un agent" />
 
-        {/* Affichage des anomalies de traitement */}
         {activeError && (
-          <Box
-            p={3}
-            bg="red.50"
-            borderWidth={1}
-            borderColor="red.200"
-            borderRadius="md"
-          >
+          <Box p={3} bg="red.50" borderWidth={1} borderColor="red.200" borderRadius="md">
             <Text color="red.600" fontSize="sm" fontWeight="bold">
               {activeError}
             </Text>
@@ -174,7 +174,6 @@ export const ModifierAgent = () => {
         >
           {/* Sous-bloc 1 : Identité */}
           <FormSection title="Identité" columns={3}>
-            {/* CONTRAINTE METIER : Matricule affiché mais non modifiable */}
             <InputTextField
               label="Matricule"
               placeholder="Ex: AG-001"
@@ -215,13 +214,14 @@ export const ModifierAgent = () => {
               }
             />
 
-            <DropDownList
+            {/* Raccordement au nouveau DropDownListMulti mis à jour graphiquement */}
+            <DropDownListMulti
               label="Rôle"
-              placeholder="Sélectionner un rôle"
+              placeholder="Sélectionner un ou plusieurs rôles"
               collection={rolesCollection}
               value={formValues.role}
-              onValueChange={(val) =>
-                setFormValues({ ...formValues, role: val })
+              onValueChange={(vals) =>
+                setFormValues({ ...formValues, role: vals })
               }
             />
 
@@ -236,7 +236,7 @@ export const ModifierAgent = () => {
             />
           </FormSection>
 
-          {/* Sous-bloc 3 : Écran spécifique de statut présent sur ta maquette d'édition */}
+          {/* Sous-bloc 3 : Statut de l'agent */}
           <FormSection title="Activation / Désactivation" columns={1}>
             <Flex align="center" gap={4} py={2}>
               <Switch.Root

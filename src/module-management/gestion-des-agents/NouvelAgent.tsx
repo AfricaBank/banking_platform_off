@@ -1,4 +1,5 @@
 "use client";
+
 import { Box, VStack, Text, Center, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,15 +8,16 @@ import { FormContainer } from "@/components/moduleComponents/FormContainer";
 import { FormSection } from "@/components/moduleComponents/FormSection";
 import { InputTextField } from "@/components/customFormFields/InputTextField";
 import { DropDownList } from "@/components/customFormFields/DropDownList";
-import { codeSiege } from "@/dataObject/ListCollection";
 
-// Importation de notre hook connecté aux référentiels
+// Importation du nouveau composant multi-sélection avec badges interactifs
+import { DropDownListMulti } from "@/components/customFormFields/DropDownListMulti";
+
+import { codeSiege } from "@/dataObject/ListCollection";
 import { useAgents } from "@/hooks/useAgents";
 
 export const NouvelAgent = () => {
   const navigate = useNavigate();
 
-  // Consommation du hook avec récupération des états globaux et collections formatées
   const {
     createAgent,
     rolesCollection,
@@ -30,34 +32,31 @@ export const NouvelAgent = () => {
     nom: "",
     email: "",
     agence: "",
-    role: "",
+    role: [] as string[], 
     groupe: "",
   });
 
   const handleSave = async () => {
-    // Validation des champs requis avant soumission
+    // Validation stricte incluant la présence d'au moins un rôle sélectionné
     if (
       !formValues.prenom ||
       !formValues.nom ||
       !formValues.email ||
-      !formValues.agence
+      !formValues.agence ||
+      formValues.role.length === 0 
     ) {
       alert(
-        "Veuillez renseigner toutes les informations obligatoires de l'identité et l'agence.",
+        "Veuillez renseigner toutes les informations obligatoires (Identité, Agence et au moins un Rôle).",
       );
       return;
     }
 
     try {
-      // Transmission des données au service et retour à la liste principale des agents
       await createAgent(formValues, () => {
         navigate("/agents");
       });
     } catch (err) {
-      console.error(
-        "Erreur détectée lors de l'enregistrement de l'agent :",
-        err,
-      );
+      console.error("Erreur détectée lors de l'enregistrement de l'agent :", err);
     }
   };
 
@@ -65,7 +64,6 @@ export const NouvelAgent = () => {
     navigate("/agents");
   };
 
-  // Blocage visuel tant que les listes de rôles et groupes ne sont pas chargées depuis l'API
   if (isLoading) {
     return (
       <Center p={10}>
@@ -84,15 +82,8 @@ export const NouvelAgent = () => {
       <VStack align="stretch" gap={4}>
         <ModuleFormHeader title="Création d'un agent" />
 
-        {/* Notification d'anomalie réseau */}
         {error && (
-          <Box
-            p={3}
-            bg="red.50"
-            borderWidth={1}
-            borderColor="red.200"
-            borderRadius="md"
-          >
+          <Box p={3} bg="red.50" borderWidth={1} borderColor="red.200" borderRadius="md">
             <Text color="red.600" fontSize="sm" fontWeight="bold">
               {error}
             </Text>
@@ -134,7 +125,7 @@ export const NouvelAgent = () => {
 
           {/* Sous-bloc 2 : Habilitations */}
           <FormSection title="Habilitations" columns={3}>
-            {/* L'agence reste basée sur la collection locale fixe codeSiege */}
+            {/* Sélection Unique (Comportement Classique) */}
             <DropDownList
               label="Agence"
               placeholder="Agence"
@@ -145,18 +136,18 @@ export const NouvelAgent = () => {
               }
             />
 
-            {/* Rôle alimenté dynamiquement par l'API via le Hook */}
-            <DropDownList
+            {/* Remplacement par le nouveau composant multi-sélection visuelle */}
+            <DropDownListMulti
               label="Rôle"
-              placeholder="Sélectionner un rôle"
+              placeholder="Sélectionner un ou plusieurs rôles"
               collection={rolesCollection}
               value={formValues.role}
-              onValueChange={(val) =>
-                setFormValues({ ...formValues, role: val })
+              onValueChange={(vals) =>
+                setFormValues({ ...formValues, role: vals })
               }
             />
 
-            {/* Groupe alimenté dynamiquement par l'API via le Hook */}
+            {/* Sélection Unique (Comportement Classique) */}
             <DropDownList
               label="Groupe"
               placeholder="Sélectionner un groupe"
