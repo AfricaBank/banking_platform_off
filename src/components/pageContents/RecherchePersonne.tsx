@@ -114,7 +114,7 @@ const RecherchePersonne = () => {
     setIsSelecting(true);
     try {
       await selectionnerTiersExistant(dossierId, selectedTiersId);
-      navigate("/ajout-titulaire", {
+      navigate("/dossier-synthese", {
         state: { dossierId, tiersId: selectedTiersId },
       });
     } catch (err: any) {

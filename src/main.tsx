@@ -24,6 +24,7 @@ import { ModifierAgent } from "./module-management/gestion-des-agents/ModifierAg
 import { NouveauRole } from "./module-management/gestion-des-roles/NouveauRole.tsx";
 import { ModifierRole } from "./module-management/gestion-des-roles/ModifierRole.tsx";
 import { DetailsRole } from "./module-management/gestion-des-roles/DetailsRole.tsx";
+import DossierSynthese from "@/components/pageContents/DossierSynthese.tsx";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,8 @@ const router = createBrowserRouter([
       { path: "dossiers", element: <Gestiondossiers /> },
       { path: "initiation", element: <InitiationDossier /> },
       { path: "recherchePersonne", element: <RecherchePersonne /> },
+      { path: "dossier-synthese", element: <DossierSynthese /> },
+
     ],
   },
 ]);
