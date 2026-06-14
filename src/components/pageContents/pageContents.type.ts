@@ -48,6 +48,8 @@ export interface AgentData {
   nomComplet: string;
   email: string;
   agence: string;
+  role: string;
+  groupe: string;
   statut: "Actif" | "Inactif";
 }
 // Types des donnèes de la liste des roles
@@ -55,6 +57,7 @@ export interface RoleData {
   id: string;
   libelle: string;
   description: string;
+  permissions: string;
   statut: "Activé" | "Désactivé";
 }
 // Type de donnèes de la liste des taches actives

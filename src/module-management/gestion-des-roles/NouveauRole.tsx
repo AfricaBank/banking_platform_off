@@ -1,13 +1,15 @@
 "use client";
-import { Box, VStack, Text, Center } from "@chakra-ui/react";
+
+import { Box, VStack, Text, Center, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ModuleFormHeader } from "@/components/moduleComponents/ModuleFormHeader";
 import { FormContainer } from "@/components/moduleComponents/FormContainer";
 import { FormSection } from "@/components/moduleComponents/FormSection";
 import { InputTextField } from "@/components/customFormFields/InputTextField";
-import { DropDownList } from "@/components/customFormFields/DropDownList";
-import { codeSiege } from "@/dataObject/ListCollection";
+
+// Remplacement de l'ancien DropDownList par notre nouveau composant multi-sélection typé
+import { DropDownListMulti } from "@/components/customFormFields/DropDownListMulti";
 
 // Importation du hook personnalisé mis à jour
 import { useRoles } from "@/hooks/useRoles";
@@ -15,25 +17,35 @@ import { useRoles } from "@/hooks/useRoles";
 export const NouveauRole = () => {
   const navigate = useNavigate();
 
-  // Consommation de la logique métier centralisée dans le hook
-  const { createRole, isSubmitting, error } = useRoles();
+  // Récupération des états globaux et de la collection simulée des permissions
+  const { 
+    createRole, 
+    permissionsCollection, 
+    isLoading, 
+    isSubmitting, 
+    error 
+  } = useRoles();
 
-  // État local pour capturer les 3 champs du formulaire
+  // Structure de données locale accueillant un tableau de chaînes pour les permissions
   const [formValues, setFormValues] = useState({
     libelle: "",
     description: "",
-    permissions: "",
+    permissions: [] as string[],
   });
 
   const handleSave = async () => {
-    // Validation rapide de surface
-    if (!formValues.libelle || !formValues.description) {
-      alert("Veuillez renseigner le libellé et la description du rôle.");
+    // Validation de surface : s'assure qu'au moins une permission a été sélectionnée dans les tags
+    if (
+      !formValues.libelle || 
+      !formValues.description || 
+      formValues.permissions.length === 0
+    ) {
+      alert("Veuillez renseigner le libellé, la description et au moins une permission pour ce rôle.");
       return;
     }
 
     try {
-      // Exécution de l'appel asynchrone et redirection vers la table principale
+      // Transmission directe de l'état local nettoyé au Hook métier
       await createRole(formValues, () => {
         navigate("/roles");
       });
@@ -45,6 +57,20 @@ export const NouveauRole = () => {
   const handleCancel = () => {
     navigate("/roles");
   };
+
+  // Écran de chargement pendant l'initialisation des référentiels
+  if (isLoading) {
+    return (
+      <Center p={10}>
+        <VStack gap={3}>
+          <Spinner size="xl" color="dogerBlue.500" borderWidth="4px" />
+          <Text fontSize="sm" color="gray.500">
+            Chargement des référentiels et des permissions...
+          </Text>
+        </VStack>
+      </Center>
+    );
+  }
 
   return (
     <Box p={2}>
@@ -74,7 +100,7 @@ export const NouveauRole = () => {
           onSave={handleSave}
           onCancel={handleCancel}
         >
-          {/* Section unique configurée explicitement sur 3 colonnes */}
+          {/* Section de formulaire configurée sur 3 colonnes de manière égale */}
           <FormSection title="Information du role" columns={3}>
             {/* Colonne 1 : Libellé */}
             <InputTextField
@@ -96,14 +122,14 @@ export const NouveauRole = () => {
               }
             />
 
-            {/* Colonne 3 : Permissions */}
-            <DropDownList
+            {/* Colonne 3 : Intégration du composant d'affichage et de suppression en ligne */}
+            <DropDownListMulti
               label="Permissions"
-              placeholder="Permissions"
-              collection={codeSiege}
+              placeholder="Sélectionner une ou plusieurs permissions"
+              collection={permissionsCollection}
               value={formValues.permissions}
-              onValueChange={(val) =>
-                setFormValues({ ...formValues, permissions: val })
+              onValueChange={(vals) =>
+                setFormValues({ ...formValues, permissions: vals })
               }
             />
           </FormSection>

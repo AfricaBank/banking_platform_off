@@ -1,4 +1,6 @@
 "use client";
+
+import { useState } from "react";
 import {
   Box,
   Flex,
@@ -11,18 +13,73 @@ import {
 } from "@chakra-ui/react";
 import { LuEye, LuTrash2 } from "react-icons/lu";
 import { FiEdit3 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+
 import {
   GenericTable,
   ColumnConfig,
 } from "@/components/pageContents/GenericTable.tsx";
 
-// Remplacement du mock par le Hook personnalisé et l'interface globale
+// Consommation des Hooks et types globaux de l'application
 import { useRoles } from "@/hooks/useRoles";
 import { RoleData } from "@/components/pageContents/pageContents.type.ts";
+import { ConfirmDeleteDialog } from "@/components/moduleComponents/ConfirmDeleteDialog.tsx";
+
+// 1. Contrat d'interface strict pour éliminer les types implicites 'any'
+interface UseRolesReturn {
+  roles: RoleData[];
+  isLoading: boolean;
+  error: string | null;
+  mutate?: () => void;
+}
 
 const RoleManagement = () => {
-  // 1. Consommation du hook personnalisé connecté à JSON Server
-  const { roles, isLoading, error } = useRoles();
+  // 2. Application du typage sur le retour du Hook et initialisation du routeur
+  const { roles, isLoading, error, mutate } = useRoles() as UseRolesReturn;
+  const navigate = useNavigate();
+
+  // 3. Gestion des états locaux pour l'affichage de l'alerte de suppression
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [roleToDelete, setRoleToDelete] = useState<RoleData | null>(null);
+
+  // Ouverture de la boîte de dialogue pour le rôle sélectionné
+  const handleDeleteClick = (role: RoleData) => {
+    setRoleToDelete(role);
+    setIsDeleteDialogOpen(true);
+  };
+
+  // Fermeture et remise à zéro de la cible de suppression
+  const handleDeleteClose = () => {
+    setIsDeleteDialogOpen(false);
+    setRoleToDelete(null);
+  };
+
+  // 4. Mutation réseau : Suppression asynchrone du rôle sur le serveur
+  const handleConfirmDelete = async () => {
+    if (!roleToDelete) return;
+
+    try {
+      const response = await fetch(`http://localhost:3001/roles/${roleToDelete.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de la suppression du rôle sur le serveur.");
+      }
+
+      console.log(`Rôle "${roleToDelete.libelle}" supprimé avec succès.`);
+      
+      // Re-validation ou rechargement de la table sans rupture d'expérience
+      if (typeof mutate === "function") {
+        mutate();
+      } else {
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error("Échec de l'opération de suppression :", err);
+      throw err;
+    }
+  };
 
   // Configuration des colonnes pour la gestion des rôles
   const columns: ColumnConfig<RoleData>[] = [
@@ -55,38 +112,38 @@ const RoleManagement = () => {
       key: "actions",
       render: (item) => (
         <Flex gap={2} justify="center" align="center">
-          {/* Bouton Voir / Détails */}
+          {/* Redirection vers l'écran Détails du rôle */}
           <IconButton
             rounded="8px"
             aria-label="Voir le rôle"
             size="xs"
             bg="dogerBlue.500"
             color="white"
-            onClick={() => console.log("Visualisation du rôle :", item.libelle)}
+            onClick={() => navigate(`/roles/${item.id}`)}
           >
             <LuEye size={14} />
           </IconButton>
 
-          {/* Bouton Modifier */}
+          {/* Redirection vers l'écran de Modification du rôle */}
           <IconButton
             rounded="8px"
             aria-label="Modifier le rôle"
             size="xs"
             bg="orange.400"
             color="white"
-            onClick={() => console.log("Modification du rôle :", item.libelle)}
+            onClick={() => navigate(`/roles/${item.id}/modifier`)}
           >
             <FiEdit3 size={14} />
           </IconButton>
 
-          {/* Bouton Supprimer */}
+          {/* Déclenchement sécurisé du modal de suppression */}
           <IconButton
             rounded="8px"
             aria-label="Supprimer le rôle"
             size="xs"
             bg="red.500"
             color="white"
-            onClick={() => console.log("Suppression du rôle ID :", item.id)}
+            onClick={() => handleDeleteClick(item)}
           >
             <LuTrash2 size={14} />
           </IconButton>
@@ -95,7 +152,7 @@ const RoleManagement = () => {
     },
   ];
 
-  // 2. Gestion de l'affichage de chargement (Spinner)
+  // Affichage de chargement (Spinner)
   if (isLoading) {
     return (
       <Center p={10}>
@@ -109,7 +166,7 @@ const RoleManagement = () => {
     );
   }
 
-  // 3. Gestion de l'affichage des erreurs réseau
+  // Affichage des erreurs de communication réseau
   if (error) {
     return (
       <Center p={10}>
@@ -132,18 +189,24 @@ const RoleManagement = () => {
     );
   }
 
-  // 4. Rendu de la vue principale avec les données réelles du serveur
   return (
     <Box width="100%">
-      {/* Bandeau d'en-tête de la table */}
       <Flex mb="4" px="2">
         <Text fontSize="md" fontWeight="bold" color="gray.800">
-          Gestion des rôles ({roles.length})
+          Gestion des rôles ({roles?.length || 0})
         </Text>
       </Flex>
 
-      {/* Rendu de la table générique avec les données dynamiques de l'API */}
       <GenericTable data={roles} columns={columns} />
+
+      {/* Raccordement du modal de confirmation de suppression */}
+      <ConfirmDeleteDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={handleDeleteClose}
+        onConfirm={handleConfirmDelete}
+        title="Suppression d'un rôle"
+        description={`Êtes-vous sûr de vouloir supprimer le rôle "${roleToDelete?.libelle}" ? Cette action entraînera le retrait des habilitations associées.`}
+      />
     </Box>
   );
 };

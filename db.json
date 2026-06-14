@@ -39,62 +39,37 @@
   ],
   "groupes": [
     {
-      "id": "2",
-      "identifiant": "Groupe-001",
-      "nomGroupe": "DSI",
-      "description": "Description",
-      "agence": "AB - Plateau",
-      "effectifs": 20
-    },
-    {
-      "identifiant": "GRP-1354",
-      "nomGroupe": "Nouveau groupe de test ",
-      "description": "description ",
-      "agence": "00003",
-      "effectifs": 0,
-      "id": "WUo1evH8wYQ"
-    },
-    {
       "identifiant": "GRP-4273",
       "nomGroupe": "ffffff",
       "description": "fffff",
       "agence": "00003",
       "effectifs": 0,
       "id": "B67O_Ef1IdI"
+    },
+    {
+      "identifiant": "GRP-6254",
+      "nomGroupe": "bnnhg",
+      "description": "hhhhh",
+      "agence": "00002",
+      "effectifs": 0,
+      "id": "Ij8RqDgSnH0"
     }
   ],
   "agents": [
     {
-      "id": "4",
       "matricule": "AG-PL-001",
-      "nomComplet": "Abdou DIALLO",
+      "prenom": "Abdou",
+      "nom": "DIALLO",
       "email": "abdou.diallo@yopmail.com",
       "agence": "AB - Plateau",
-      "statut": "Actif"
-    },
-    {
-      "id": "5",
-      "matricule": "AG-PL-001",
+      "role": [
+        "Noiuveau role ",
+        "New new "
+      ],
+      "groupe": "ffffff",
+      "statut": "Inactif",
       "nomComplet": "Abdou DIALLO",
-      "email": "abdou.diallo@yopmail.com",
-      "agence": "AB - Plateau",
-      "statut": "Inactif"
-    },
-    {
-      "matricule": "AG-00-065",
-      "nomComplet": "Ahmada  Msihiri",
-      "email": "ahmada@gmail.com",
-      "agence": "00002",
-      "statut": "Actif",
-      "id": "Gw5UCoy-oDc"
-    },
-    {
-      "matricule": "AG-00-655",
-      "nomComplet": "Nouvel agent  Abou",
-      "email": "abou@gmail.com",
-      "agence": "00002",
-      "statut": "Actif",
-      "id": "bRJ0XHgslxI"
+      "id": "5"
     },
     {
       "matricule": "AG-00-109",
@@ -107,44 +82,32 @@
       "statut": "Inactif",
       "nomComplet": "Hakim Josh",
       "id": "3ryB6jsp-Hk"
+    },
+    {
+      "matricule": "AG-00-918",
+      "nomComplet": "hjdyjkhkjrgg ttttttt",
+      "email": "haha@yopmail.com",
+      "agence": "00001",
+      "role": "Noiuveau role , New new ",
+      "groupe": "bnnhg",
+      "statut": "Actif",
+      "id": "rbVR0IpcTyA"
     }
   ],
   "roles": [
     {
-      "id": "1",
-      "libelle": "Création de compte",
-      "description": "Description du role de création de compte",
-      "statut": "Activé"
-    },
-    {
-      "id": "2",
-      "libelle": "Création de compte",
-      "description": "Description du role de création de compte",
-      "statut": "Activé"
-    },
-    {
-      "id": "3",
-      "libelle": "Création de compte",
-      "description": "Description du role de création de compte",
-      "statut": "Activé"
-    },
-    {
-      "id": "4",
-      "libelle": "Création de compte",
-      "description": "Description du role de création de compte",
-      "statut": "Activé"
-    },
-    {
-      "id": "5",
-      "libelle": "Création de compte",
-      "description": "Description du role de création de compte",
-      "statut": "Désactivé"
-    },
-    {
-      "libelle": "Noiuveau role ",
-      "description": "Description du nouveau role ",
+      "libelle": "ggb",
+      "description": "ggggg",
+      "permissions": "PERM_AGENTS_EDIT, PERM_ROLES_MANAGEMENT",
       "statut": "Activé",
-      "id": "yvxaByqRhug"
+      "id": "N2eC_x4X4nM"
+    },
+    {
+      "libelle": ",nn,,nn,",
+      "description": " ,,n,,n,n,",
+      "permissions": "PERM_AGENTS_LIST, PERM_AGENTS_CREATE, PERM_AGENTS_EDIT",
+      "statut": "Désactivé",
+      "id": "SZzA5NC6aVs"
     }
   ],
   "taches": [
