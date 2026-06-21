@@ -10,32 +10,45 @@ import { AgentData } from "@/components/pageContents/pageContents.type.ts";
 
 import { SimpleButton } from "@/components/customButtons/SimpleButton.tsx";
 
-// Importations des éléments extraits
+// Nouveaux imports pour la gestion des filtres
+import { FilterContainer } from "@/components/moduleComponents/FilterContainer.tsx";
+import { InputTextField } from "@/components/customFormFields/InputTextField.tsx";
+
+// Importations des éléments extraits et du nouveau composant modal
 import { useDetailsGroupData } from "@/hooks/useDetailsGroupData.ts";
 import { getAgentColumns } from "./DetailsGroup.columns";
+import { ModalSelectionAgents } from "./ModalSelectionAgents";
 
 export const DetailsGroup = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  
   const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 1. Consommation du hook de données unique
+  // 1. État local pour stocker les valeurs saisies dans les filtres
+  const [filterValues, setFilterValues] = useState({
+    matricule: "",
+    email: "",
+  });
+
+  // Consommation du hook de données unique
   const { groupeSelectionne, agentsDuGroupe, isLoading, error } =
     useDetailsGroupData(id);
 
-  // 2. Définition des handlers d'action
   const handleViewAgent = (agent: AgentData) => {
-    console.log("Consultation de l'agent :", agent.nomComplet);
+    if (agent && agent.id) {
+      navigate(`/agents/${agent.id}`);
+    } else {
+      console.warn("Impossible de rediriger : l'identifiant de l'agent est manquant.");
+    }
   };
 
   const handleToggleStatus = (agent: AgentData) => {
     const futurStatut = agent.statut === "Actif" ? "Désactivé" : "Actif";
-    console.log(
-      `Changer le statut de l'agent ID ${agent.id} vers : ${futurStatut}`,
-    );
+    console.log(`Changer le statut de l'agent ID ${agent.id} vers : ${futurStatut}`);
   };
 
-  // 3. Récupération des colonnes via la configuration externe
   const columns = useMemo(
     () =>
       getAgentColumns({
@@ -45,8 +58,59 @@ export const DetailsGroup = () => {
     [],
   );
 
+  // 2. Filtrage logique des agents en temps réel ou à la soumission
+  // Applique une vérification insensible à la casse pour le matricule et l'adresse email
+  const agentsVisualises = useMemo(() => {
+    if (!agentsDuGroupe) return [];
+    
+    return agentsDuGroupe.filter((agent) => {
+      const matchMatricule = agent.matricule
+        ?.toLowerCase()
+        .includes(filterValues.matricule.toLowerCase());
+      const matchEmail = agent.email
+        ?.toLowerCase()
+        .includes(filterValues.email.toLowerCase());
+
+      return matchMatricule && matchEmail;
+    });
+  }, [agentsDuGroupe, filterValues]);
+
   const handleAddAgentClick = () => {
-    console.log("Ouverture du panneau d'affectation pour les agents globaux");
+    setIsModalOpen(true);
+  };
+
+  // Actions requises par le composant FilterContainer
+  const handleSearch = () => {
+    console.log("Filtres appliqués sur les agents :", filterValues);
+  };
+
+  const handleReset = () => {
+    setFilterValues({ matricule: "", email: "" });
+  };
+
+  const handleConfirmAddAgents = async (selectedAgentIds: string[]) => {
+    if (!groupeSelectionne) return;
+
+    try {
+      const updatePromises = selectedAgentIds.map((agentId) =>
+        fetch(`http://localhost:3001/agents/${agentId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            groupe: groupeSelectionne.nomGroupe,
+          }),
+        })
+      );
+
+      await Promise.all(updatePromises);
+      setIsModalOpen(false);
+      navigate(0); 
+    } catch (err) {
+      console.error("Erreur lors de l'affectation des agents au groupe :", err);
+      alert("Une erreur est survenue lors de l'affectation des agents.");
+    }
   };
 
   if (isLoading) {
@@ -98,27 +162,35 @@ export const DetailsGroup = () => {
           isFilterActive={isFilterVisible}
         />
 
+        {/* 3. Bloc de Filtres Dynamique conforme à Gestionsgroupes */}
         {isFilterVisible && (
-          <Box
-            p={4}
-            bg="gray.50"
-            borderRadius="md"
-            borderWidth="1px"
-            borderColor="gray.200"
-          >
-            <Text fontSize="xs" color="gray.500">
-              Composants de filtrage de la liste des agents membres...
-            </Text>
-          </Box>
+          <FilterContainer onSearch={handleSearch} onReset={handleReset}>
+            <InputTextField
+              label="Matricule de l'agent"
+              placeholder="Ex: AG-00-109..."
+              value={filterValues.matricule}
+              onChange={(e) =>
+                setFilterValues({ ...filterValues, matricule: e.target.value })
+              }
+            />
+
+            <InputTextField
+              label="Adresse email"
+              placeholder="Ex: agent@gmail.com..."
+              value={filterValues.email}
+              onChange={(e) =>
+                setFilterValues({ ...filterValues, email: e.target.value })
+              }
+            />
+          </FilterContainer>
         )}
 
-        <GenericTable data={agentsDuGroupe} columns={columns} />
+        {/* La table reçoit désormais la liste filtrée d'agents */}
+        <GenericTable data={agentsVisualises} columns={columns} />
 
-        {/* 4. Bouton Retour aligné et stylisé selon la maquette */}
         <Center mt={6}>
           <SimpleButton
             variant="outline"
-            colorScheme="red"
             borderColor="red.300"
             color="red.400"
             bg="white"
@@ -129,7 +201,7 @@ export const DetailsGroup = () => {
             fontWeight="medium"
             _hover={{
               bg: "red.50",
-              borderColor: "red.400", // Corrigé ici : '=' remplacé par ':'
+              borderColor: "red.400",
             }}
             onClick={() => navigate("/groupes")}
           >
@@ -137,6 +209,15 @@ export const DetailsGroup = () => {
           </SimpleButton>
         </Center>
       </VStack>
+
+      {isModalOpen && (
+        <ModalSelectionAgents
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          nomGroupeCourant={groupeSelectionne.nomGroupe}
+          onConfirm={handleConfirmAddAgents}
+        />
+      )}
     </Box>
   );
 };

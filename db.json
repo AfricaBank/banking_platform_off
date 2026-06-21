@@ -53,6 +53,14 @@
       "agence": "00002",
       "effectifs": 0,
       "id": "Ij8RqDgSnH0"
+    },
+    {
+      "identifiant": "GRP-5909",
+      "nomGroupe": "Groupe F",
+      "description": "Nouveau groupe de test ",
+      "agence": "00002",
+      "effectifs": 0,
+      "id": "TV2wOshsGp8"
     }
   ],
   "agents": [
@@ -67,7 +75,7 @@
         "New new "
       ],
       "groupe": "ffffff",
-      "statut": "Inactif",
+      "statut": "Actif",
       "nomComplet": "Abdou DIALLO",
       "id": "5"
     },
@@ -77,21 +85,38 @@
       "nom": "Josh",
       "email": "hakim@gmail.com",
       "agence": "00003",
-      "role": "Noiuveau role ",
-      "groupe": "DSI",
-      "statut": "Inactif",
+      "role": [
+        "Noiuveau role"
+      ],
+      "groupe": "ffffff",
+      "statut": "Actif",
       "nomComplet": "Hakim Josh",
       "id": "3ryB6jsp-Hk"
     },
     {
       "matricule": "AG-00-918",
-      "nomComplet": "hjdyjkhkjrgg ttttttt",
+      "prenom": "hjdyjkhkjrgg",
+      "nom": "ttttttt",
       "email": "haha@yopmail.com",
       "agence": "00001",
-      "role": "Noiuveau role , New new ",
-      "groupe": "bnnhg",
+      "role": [
+        "Noiuveau role",
+        "New new"
+      ],
+      "groupe": "Groupe F",
       "statut": "Actif",
+      "nomComplet": "hjdyjkhkjrgg ttttttt",
       "id": "rbVR0IpcTyA"
+    },
+    {
+      "matricule": "AG-00-434",
+      "nomComplet": "dddddd ddddddd",
+      "email": "didi@yopmail.com",
+      "agence": "00002",
+      "role": ",nn,,nn,",
+      "groupe": "ffffff",
+      "statut": "Actif",
+      "id": "HNaSopt2UFE"
     }
   ],
   "roles": [
