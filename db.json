@@ -96,18 +96,18 @@
   ],
   "roles": [
     {
-      "libelle": "ggb",
-      "description": "ggggg",
-      "permissions": "PERM_AGENTS_EDIT, PERM_ROLES_MANAGEMENT",
-      "statut": "Activé",
-      "id": "N2eC_x4X4nM"
-    },
-    {
       "libelle": ",nn,,nn,",
       "description": " ,,n,,n,n,",
       "permissions": "PERM_AGENTS_LIST, PERM_AGENTS_CREATE, PERM_AGENTS_EDIT",
       "statut": "Désactivé",
       "id": "SZzA5NC6aVs"
+    },
+    {
+      "libelle": "bjkdghjkgfhr",
+      "description": "khejkfhjksgjkhd",
+      "statut": "Activé",
+      "permissions": "PERM_AGENTS_EDIT, PERM_AGENTS_CREATE, PERM_ROLES_MANAGEMENT, PERM_AGENTS_LIST",
+      "id": "F-LSrvOY4_0"
     }
   ],
   "taches": [
