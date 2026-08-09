@@ -10,7 +10,7 @@ import type {
     TiersDTO,
     PieceJustificativeDTO,
     CRConseillerDTO,
-    PageResponse,
+    PageResponse, AvisDecisionDTO,
 } from "@/types/dossier.types";
 
 const BASE = "/api/v1/dossiers-eer";
@@ -213,4 +213,45 @@ export const getStatutWorkflow = async (
         `${BASE}/${dossierId}/statut`
     );
     return response.data;
+};
+
+// Ajout dans dossierApi.ts
+export const uploadFichier = async (
+    file: File
+): Promise<{ fileId: string; fileName: string }> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await axiosInstance.post<{
+        fileId: string;
+        fileName: string;
+        message: string;
+    }>("/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+};
+
+// ─── Avis & Décision ──────────────────────────────────────────────────────────
+
+export const soumettreAvisDecision = async (
+    dossierId: number,
+    dto: AvisDecisionDTO
+): Promise<AvisDecisionDTO> => {
+    const response = await axiosInstance.post<AvisDecisionDTO>(
+        `${BASE}/${dossierId}/avis-decision`, dto
+    );
+    return response.data;
+};
+
+export const getAvisDecision = async (
+    dossierId: number
+): Promise<AvisDecisionDTO | null> => {
+    try {
+        const response = await axiosInstance.get<AvisDecisionDTO>(
+            `${BASE}/${dossierId}/avis-decision`
+        );
+        return response.data;
+    } catch {
+        return null;
+    }
 };

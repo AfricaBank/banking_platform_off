@@ -16,6 +16,7 @@ import { MdArrowForward } from "react-icons/md";
 interface LocationState {
     dossierId: number;
     referenceDossier?: string;
+    modeConsultation?: boolean;
 }
 
 interface PersonneSynthese {
@@ -151,13 +152,21 @@ const DossierSynthese = () => {
     const location = useLocation();
     const { dossier: dossierContext } = useDossier();
 
-    const state        = location.state as LocationState | null;
-    const dossierId    = state?.dossierId ?? dossierContext?.id;
-    const reference    = state?.referenceDossier ?? dossierContext?.referenceDossier;
+    const state     = location.state as LocationState | null;
+    const dossierId = state?.dossierId ?? dossierContext?.id;
+    const reference = state?.referenceDossier ?? dossierContext?.referenceDossier;
 
-    const [dossier, setDossier]     = useState<any | null>(null);
+    const [dossier,   setDossier]   = useState<any | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [apiError, setApiError]   = useState<string | null>(null);
+    const [apiError,  setApiError]  = useState<string | null>(null);
+
+    // ── Mode consultation : validateur ou dossier déjà soumis/validé ─────────
+    // Calculé après chargement du dossier — d'où le || sur dossier?.statut
+    const modeConsultation =
+        state?.modeConsultation === true
+        || dossier?.statut === "VALIDE"
+        || dossier?.statut === "REJETE"
+        || dossier?.etapeActuelle === "SOUMISSION_VALIDATION";
 
     // ── Chargement du dossier ─────────────────────────────────────────────────
 
@@ -268,8 +277,21 @@ const DossierSynthese = () => {
                         </Badge>
                     )}
                     {dossier?.statut && (
-                        <Badge colorScheme="green" fontSize="sm">
+                        <Badge
+                            colorScheme={
+                                dossier.statut === "VALIDE"  ? "green"
+                                    : dossier.statut === "REJETE" ? "red"
+                                        : dossier.statut === "A_REGULARISER_METIER" ? "orange"
+                                            : "green"
+                            }
+                            fontSize="sm"
+                        >
                             {dossier.statut}
+                        </Badge>
+                    )}
+                    {modeConsultation && (
+                        <Badge colorScheme="purple" fontSize="sm" variant="outline">
+                            Mode consultation
                         </Badge>
                     )}
                 </HStack>
@@ -293,6 +315,17 @@ const DossierSynthese = () => {
                         </Flex>
                     ) : (
                         <Box bg="white" borderRadius="lg" boxShadow="lg" p={8}>
+
+                            {/* Bannière mode consultation */}
+                            {modeConsultation && (
+                                <Box mb={4} p={3} bg="purple.50" borderRadius="md"
+                                     border="1px solid" borderColor="purple.200">
+                                    <Text fontSize="sm" color="purple.700" fontWeight="medium">
+                                        Vous consultez ce dossier en lecture seule.
+                                        Les modifications ne sont pas autorisées.
+                                    </Text>
+                                </Box>
+                            )}
 
                             {/* Infos dossier */}
                             {dossier && (
@@ -328,7 +361,7 @@ const DossierSynthese = () => {
 
                             <Separator mb={6} />
 
-                            {/* Sections */}
+                            {/* Sections personnes */}
                             <Section
                                 titre="Titulaire principal"
                                 enfants={titulaires}
@@ -337,21 +370,21 @@ const DossierSynthese = () => {
                             <Section
                                 titre="Co-titulaires"
                                 enfants={coTitulaires}
-                                onAjouter={handleAjouterCoTitulaire}
+                                onAjouter={modeConsultation ? undefined : handleAjouterCoTitulaire}
                                 labelAjouter="Ajouter co-titulaire"
                             />
 
                             <Section
                                 titre="Personnes liées physiques (PLP)"
                                 enfants={plp}
-                                onAjouter={handleAjouterPLP}
+                                onAjouter={modeConsultation ? undefined : handleAjouterPLP}
                                 labelAjouter="Ajouter PLP"
                             />
 
                             <Section
                                 titre="Personnes liées morales (PLM)"
                                 enfants={plm}
-                                onAjouter={handleAjouterPLM}
+                                onAjouter={modeConsultation ? undefined : handleAjouterPLM}
                                 labelAjouter="Ajouter PLM"
                             />
 
@@ -367,25 +400,49 @@ const DossierSynthese = () => {
                                     Retour
                                 </Button>
 
-                                <HStack gap={4}>
-                                    <Button
-                                        colorScheme="blue"
-                                        onClick={chargerDossier}
-                                        isDisabled={isLoading}
-                                    >
-                                        Actualiser
-                                    </Button>
-                                    <Button
-                                        color="white"
-                                        bg="primary.dogerBlue.300"
-                                        _hover={{ bg: "white",
-                                            color: "primary.dogerBlue.300" }}
-                                        onClick={handleSuivre}
-                                        isDisabled={titulaires.length === 0}
-                                    >
-                                        Passer aux PJ <MdArrowForward />
-                                    </Button>
-                                </HStack>
+                                {modeConsultation ? (
+                                    <HStack gap={4}>
+                                        <Button
+                                            colorScheme="blue"
+                                            onClick={chargerDossier}
+                                            isDisabled={isLoading}
+                                        >
+                                            Actualiser
+                                        </Button>
+                                        <Button
+                                            color="white"
+                                            bg="primary.dogerBlue.300"
+                                            _hover={{ bg: "white",
+                                                color: "primary.dogerBlue.300" }}
+                                            onClick={() => navigate("/pieces-justificatives", {
+                                                state: { dossierId, referenceDossier: reference }
+                                            })}
+                                            isDisabled={titulaires.length === 0}
+                                        >
+                                            Passer aux PJ <MdArrowForward />
+                                        </Button>
+                                    </HStack>
+                                ) : (
+                                    <HStack gap={4}>
+                                        <Button
+                                            colorScheme="blue"
+                                            onClick={chargerDossier}
+                                            isDisabled={isLoading}
+                                        >
+                                            Actualiser
+                                        </Button>
+                                        <Button
+                                            color="white"
+                                            bg="primary.dogerBlue.300"
+                                            _hover={{ bg: "white",
+                                                color: "primary.dogerBlue.300" }}
+                                            onClick={handleSuivre}
+                                            isDisabled={titulaires.length === 0}
+                                        >
+                                            Passer aux PJ <MdArrowForward />
+                                        </Button>
+                                    </HStack>
+                                )}
                             </Flex>
                         </Box>
                     )}

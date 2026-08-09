@@ -24,6 +24,10 @@ import { NouveauRole } from "./module-management/gestion-des-roles/NouveauRole.t
 import { ModifierRole } from "./module-management/gestion-des-roles/ModifierRole.tsx";
 import { DetailsRole } from "./module-management/gestion-des-roles/DetailsRole.tsx";
 import DossierSynthese from "@/components/pageContents/DossierSynthese.tsx";
+import CreationTiers from "@/components/pageContents/Creationtiers.tsx";
+import {AjoutPersonnePhysique} from "@/components/formsComponents/AjoutPersonnePhysique.tsx";
+import PiecesJustificatives from "@/components/pageContents/PiecesJustificatives.tsx";
+import AvisDecision from "@/components/pageContents/AvisDecision.tsx";
 
 const router = createBrowserRouter([
   // 1. Route racine qui affiche l'écran de Login de manière indépendante (sans Sidebar)
@@ -78,7 +82,16 @@ const router = createBrowserRouter([
       { path: "initiation", element: <InitiationDossier /> },
       { path: "recherchePersonne", element: <RecherchePersonne /> },
       { path: "dossier-synthese", element: <DossierSynthese /> },
+
+      { path: "creation-tiers", element: <CreationTiers /> },
+      { path: "ajout-personne-physique", element: <AjoutPersonnePhysique /> },
+      //{ path: "ajout-personne-morale", element: <AjoutPersonneMorale /> },
+      // { path: "pieces-justificatives", element: <PiecesJustificatives /> },
+
+      { path: "pieces-justificatives", element: <PiecesJustificatives /> },
+      { path: "avis-decision", element: <AvisDecision /> },
     ],
+
   },
   
   // Route de secours (fallback) si l'utilisateur saisit une URL inexistante
