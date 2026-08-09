@@ -32,6 +32,7 @@ export type StatutDossier =
     | "COMPLET"
     | "ANNULE"
     | "VALIDE"
+    | "REJETE"
     | "A_COMPLETER_CONFORMITE"
     | "A_COMPLETER_METIER"
     | "A_COMPLETER_DG"
@@ -201,5 +202,18 @@ export interface CRConseillerDTO {
   analyseCohérence?: string;
   evaluationsQualitatives?: EvaluationQualitativeDTO[];
   crEntretien?: string;
+  dossierEERId?: number;
+}
+
+
+// Nouveau type AvisDecisionDTO
+export interface AvisDecisionDTO {
+  id?: number;
+  decision: "VALIDE" | "A_REGULARISER" | "REJETE";
+  commentaire?: string;
+  motifRenvoi?: string;
+  motifRejet?: string;
+  dateDecision?: string;
+  validateur?: string;
   dossierEERId?: number;
 }
